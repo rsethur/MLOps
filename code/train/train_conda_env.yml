@@ -1,0 +1,9 @@
+name: conda-env
+dependencies:
+  - python=3.6.2
+  - pip:
+    - azureml-sdk
+    - pandas
+    - scikit-learn
+    - joblib
+    - python-dotenv

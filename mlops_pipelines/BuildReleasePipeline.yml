@@ -1,0 +1,87 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: mlops-aml-vg
+
+# todo introduce variable for image name - format('Hello {0} {1}', 'John', 'Doe')
+stages:
+
+  - stage: Training
+    jobs:
+      - job: TrainJob
+        displayName: Training in Azure ML Compute
+        container:
+          image: mlopssetu1amlcr.azurecr.io/mlopsimage:latest
+          endpoint: ACRServiceConnection
+        steps:
+          - bash: |
+              python3 $(Build.SourcesDirectory)/code/TrainInAMLCompute.py
+            displayName: 'Train in Azure ML Compute'
+
+          - publish: $(System.DefaultWorkingDirectory)/run_id.txt
+            displayName: Publish run id as an artifact
+            artifact: run_id
+
+  - stage: RegisterModel
+    displayName: Register the model
+    jobs:
+
+      # Perform an empty deploy job for approval (This is the way in Azure Devops)
+      - deployment: Approval
+        displayName: Approval for model registration
+        environment: 'Dev'
+
+      - job: RegisterJob
+        displayName: Register the model
+        steps:
+          - task: AzureCLI@1
+            displayName: 'Install the CLI'
+            inputs:
+              azureSubscription: 'AzureResourceManagerConnection'
+              scriptLocation: inlineScript
+              inlineScript: 'az extension add -n azure-cli-ml'
+
+          - download: current
+            displayName: Download the run id details
+            artifact: run_id
+
+          - bash: |
+              echo "##vso[task.setvariable variable=RUN_ID]$(<$(Pipeline.Workspace)/run_id/run_id.txt)"
+            displayName: 'Load run id into an enviroment variable'
+
+          - task: AzureCLI@1
+            displayName: 'Register the model'
+            inputs:
+              azureSubscription: 'AzureResourceManagerConnection'
+              scriptLocation: inlineScript
+              inlineScript: 'az ml model register --workspace-name $(BASE_NAME)-AML-WS --resource-group $(BASE_NAME)-AML-RG --asset-path outputs/$(MODEL_NAME) --experiment-name $(MODEL_NAME)-experiment --run-id $(RUN_ID) -n $(MODEL_NAME) -t model.json'
+
+          - publish: $(System.DefaultWorkingDirectory)/model.json
+            displayName: Publish model metadata artifact
+            artifact: model-metadata
+
+  - stage: DeployToDev
+    displayName: Deploy model to Dev (Azure Container Instance)
+    jobs:
+      - job: DeployDevJob
+        steps:
+          - task: AzureCLI@1
+            displayName: 'Install the CLI'
+            inputs:
+              azureSubscription: 'AzureResourceManagerConnection'
+              scriptLocation: inlineScript
+              inlineScript: 'az extension add -n azure-cli-ml'
+
+          - download: current
+            displayName: Download artifact model metadata
+            artifact: model-metadata
+
+          - task: AzureCLI@1
+            displayName: 'Deploy the model to ACI'
+            inputs:
+              azureSubscription: 'AzureResourceManagerConnection'
+              scriptLocation: inlineScript
+              inlineScript: 'az ml model deploy -n $(BASE_NAME)-aml-aci -f $(Pipeline.Workspace)/model-metadata/model.json --ic  $(Build.SourcesDirectory)/code/score/inferenceConfig.yml --dc  $(Build.SourcesDirectory)/code/score/deploymentConfig.yml --overwrite --workspace-name $(BASE_NAME)-AML-WS --resource-group $(BASE_NAME)-AML-RG'

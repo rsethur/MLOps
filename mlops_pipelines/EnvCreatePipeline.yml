@@ -1,0 +1,44 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: mlops-aml-vg
+
+stages:
+  - stage: CreateEnvironment
+    displayName: "Create the Environment"
+    jobs:
+      - job: CreateEnvironmentJob
+        steps:
+          - task: AzureResourceGroupDeployment@2
+            displayName: 'Deploy MLOps resources to Azure'
+            inputs:
+              azureSubscription: 'AzureResourceManagerConnection'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: '$(BASE_NAME)-aml-rg'
+              location: $(LOCATION)
+              templateLocation: 'Linked artifact'
+              csmFile: '$(Build.SourcesDirectory)/mlops_pipelines/arm-templates/EnvCreateARMTemplete.json'
+              overrideParameters: '-baseName $(BASE_NAME) -location $(LOCATION)'
+              deploymentMode: 'Incremental'
+
+  - stage: CreateComputeForTraining
+    displayName: "Create compute cluster for Azure ML training jobs"
+    jobs:
+      - job: CreateComputeClusterJob
+        steps:
+          - task: AzureCLI@1
+            displayName: 'Install the CLI'
+            inputs:
+              azureSubscription: 'AzureResourceManagerConnection'
+              scriptLocation: inlineScript
+              inlineScript: 'az extension add -n azure-cli-ml'
+
+          - task: AzureCLI@1
+            displayName: 'Provision compute cluster for training'
+            inputs:
+              azureSubscription: 'AzureResourceManagerConnection'
+              scriptLocation: inlineScript
+              inlineScript: 'az ml computetarget create amlcompute --max-nodes 3 --name $(COMPUTE_CLUSTER_NAME) --vm-size $(COMPUTE_CLUSTER_SKU) --resource-group $(BASE_NAME)-aml-rg --vm-priority dedicated --workspace-name $(BASE_NAME)-aml-ws'
