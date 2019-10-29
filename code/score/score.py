@@ -1,6 +1,7 @@
 import json
 import numpy as np
-from sklearn.externals import joblib
+import pandas as pd
+import joblib
 from azureml.core.model import Model
 
 MODEL_NAME = "creditcard-risk-model"
@@ -14,9 +15,8 @@ def init():
 def run(raw_data):
     try:
         data = json.loads(raw_data)['data']
-        data = np.array(data)
-        result = model.predict(data)
-        # you can return any datatype as long as it is JSON-serializable
+        input_df = pd.DataFrame.from_dict(data)
+        result = model.predict(input_df)
         return result.tolist()
     except Exception as e:
         error = str(e)
