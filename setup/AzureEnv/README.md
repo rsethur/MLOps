@@ -32,8 +32,8 @@ note: you need to be the subscription owner in order to execute this command suc
 #### Part 2 - Setup Azure Devops
 
 1. If you don't have Azure DevOps account, [create](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/create-organization?view=azure-devops) one
-2. Create a project from the devops portal (top right of the portal). If you have trouble then refer to [docs](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?view=azure-devops)
-3. Create a Service Identity. This will be used by our application to access resources (like Azure ML workspace).portal
+2. Create a project from the devops portal (top right of the portal). Select the project visibility as `Enterprise`. If you have trouble then refer to [docs](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?view=azure-devops)
+3. Create a Service Identity - this will be used by our application to access resources (like Azure ML workspace):
 
     To create service principal, register an application entity in Azure Active Directory (Azure AD) and grant it the Contributor or Owner role of the subscription or the resource group where the web service belongs to.
     Instructions are [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal).
@@ -64,17 +64,19 @@ Please name your variable group **``mlops-aml-vg``** as we are using this name w
 
 The variable group should contain the following variables:
 
-| Variable Name               | Suggested Value              |
-| --------------------------- | ---------------------------- |
-| COMPUTE_CLUSTER_SKU         | STANDARD_DS2_V2              |
-| COMPUTE_CLUSTER_NAME        | traincluster                 |
-| BASE_NAME                   | [unique base name]           |
-| LOCATION                    | eastus2                      |
-| MODEL_NAME                  | creditcard-risk-model.pkl    |
-| SP_APP_ID                   |                              |
-| SP_APP_SECRET               |                              |
-| SUBSCRIPTION_ID             |                              |
-| TENANT_ID                   |                              |
+| Variable Name               | Suggested Value               |
+| --------------------------- | ----------------------------  |
+| BASE_NAME                   | [globally unique 10 char name]` Note:no caps|
+| COMPUTE_CLUSTER_NAME        | traincluster                  |
+| COMPUTE_CLUSTER_SKU         | STANDARD_DS2_V2               |
+| DATASET_FILE_NAME           | german_credit_data.csv        |
+| DATASET_NAME                | credit_dataset                |
+| LOCATION                    | eastus2                       |
+| MODEL_NAME                  | creditcard-risk-model         |
+| RM_SERVICE_CONNECTION       | AzureResourceManagerConnection|
+| SP_APP_ID                   |                               |
+| SP_APP_SECRET               |                               |
+| TENANT_ID                   |                               |
 
 Mark **SP_APP_SECRET** variable as a secret one.
 

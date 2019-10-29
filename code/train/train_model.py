@@ -1,4 +1,6 @@
 import os
+import sys
+import argparse
 
 import dotenv
 import joblib
@@ -13,21 +15,23 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
+from azureml.core import Dataset
 
 def main():
+
+    model_name, dataset_name = getRuntimeArgs()
     dotenv.load_dotenv()
-    model_name = os.environ.get("MODEL_NAME")
-    dataset_name = os.environ.get("DATASET_NAME")
-    dataset_filename = os.environ.get("DATASET_FILE_NAME")
+
     run = Run.get_context()
 
-    if not run._run_id.startswith("_OfflineRun"):
-        run=None
+    if run._run_id.startswith("_OfflineRun"):
+        run = None
 
     credit_data_df = None
 
     #Load data from Dataset or from local file(for offline runs)
     if run is None:
+        dataset_filename = os.environ.get("DATASET_FILE_NAME", )
         credit_data_df = pd.read_csv("dataset/" +dataset_filename)
     else:
         # get input dataset by name
@@ -46,7 +50,7 @@ def main():
 
 def model_train(credit_data_df, run):
     #credit_data_df = pd.read_csv("dataset/german_credit_data.csv")  # , nrows=200000, parse_dates=["LEG1_DEP_DATE_GMT", "LEG1_ARR_DATE_GMT","LEG2_DEP_DATE_GMT", "LEG2_ARR_DATE_GMT"])
-    credit_data_df.drop("Unnamed: 0", axis=1, inplace=True)
+    credit_data_df.drop("Sno", axis=1, inplace=True)
 
     y_raw = credit_data_df['Risk']
     X_raw = credit_data_df.drop('Risk', axis=1)
@@ -94,6 +98,13 @@ def model_train(credit_data_df, run):
         run.log('Test accuracy', test_acc)
 
     return lr_clf
+
+def getRuntimeArgs():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--MODEL_NAME', type=str)
+    parser.add_argument('--DATASET_NAME', type=str)
+    args = parser.parse_args()
+    return args.MODEL_NAME, args.DATASET_NAME
 
 if __name__ == "__main__":
     main()
