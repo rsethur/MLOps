@@ -1,7 +1,7 @@
 # Setup Devops Project
 #### Part 1 - Configuration
 1. Login to Azure Devops
-1. Create a project from the devops portal (top right of the portal). Select the project visibility as `Enterprise`. If you have trouble then refer to [docs](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?view=azure-devops)
+1. Create a project from the devops portal (top right of the portal). If you have trouble then refer to [docs](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?view=azure-devops)
 3. Create a Service Identity - this will be used by our application to access resources (like Azure ML workspace):
 
     To create service principal, register an application entity in Azure Active Directory (Azure AD) and grant it the Contributor or Owner role of the subscription or the resource group where the web service belongs to.
@@ -43,9 +43,9 @@ The variable group should contain the following variables:
 | LOCATION                    | eastus2                       |
 | MODEL_NAME                  | creditcard-risk-model         |
 | RM_SERVICE_CONNECTION       | AzureResourceManagerConnection|
-| SP_APP_ID                   |                               |
-| SP_APP_SECRET               |                               |
-| TENANT_ID                   |                               |
+| SP_APP_ID                   | [from above section]          |
+| SP_APP_SECRET               | [from above section]         |
+| TENANT_ID                   | [from above section]          |
 
 Mark **SP_APP_SECRET** variable as a secret one.
 
