@@ -9,7 +9,7 @@ variables:
 steps:
 - task: AzureResourceGroupDeployment@2
   inputs:
-    azureSubscription: 'AzureResourceConnection'
+    azureSubscription: '$(RM_SERVICE_CONNECTION)'
     action: 'DeleteRG'
     resourceGroupName: '$(BASE_NAME)-aml-rg'
     location: $(LOCATION)
