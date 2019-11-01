@@ -1,3 +1,4 @@
+# Run an end-to-end MLOps pipeline
 
 ## Section 1: Setup Github & Integration with Devops
 1. Perform the initial [setup](Setup.md) if not already done
@@ -86,4 +87,7 @@ You can monitor the status by clicking on the stages. Check if your pipeline ran
             }
            ```
             
-clean up
+## Section 6: Clean up
+Once you understand the concepts & ready to delete the resources you can fo the the following:
+
+From Azure Devops run the pipeline `mlops_pipelines/EnvTearDownPipeline.yml`. Alternatively you can login to Azure Portal and delete the resource group that we created (i.e. `your-unique-name-aml-rg`).
