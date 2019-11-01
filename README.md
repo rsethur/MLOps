@@ -21,7 +21,7 @@ _Note: Automated builds based on code/asset changes have been disabled by settin
 
 
 
-_Acknowledgments for the [German Creditcard Dataset](https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data)_
+_Acknowledgments for the [German Creditcard Dataset](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29)_
 
 `Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.`
 
