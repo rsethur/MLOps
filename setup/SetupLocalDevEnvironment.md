@@ -11,8 +11,10 @@
 `git clone <URL>`
 
     Optionally you click the "Clone or Download" button in github to download zip file & extract it.
+    
+4. In your local machine if you do not have Anaconda or __Miniconda__, please [install](https://docs.conda.io/en/latest/miniconda.html). Alternatively __if you do not want to use your local machine__, please provision a Datascience VM - [Ubuntu](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/dsvm-ubuntu-intro) or [Windows](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/provision-vm) VM
 
-4. Create conda environment: Via command prompt, navigate to project root folder and execute:
+5. Create conda environment: Via command prompt, navigate to project root folder and execute:
 `conda env create -f "code/train/conda_dependencies.yml"`
 
-5. (Optional) Install [postman](https://www.getpostman.com/downloads/) tool. This will give an easy way to inspect the deployed ML service
+6. (Optional) Install [postman](https://www.getpostman.com/downloads/) tool. This will give an easy way to inspect the deployed ML service

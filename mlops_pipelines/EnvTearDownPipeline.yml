@@ -13,4 +13,4 @@ steps:
     action: 'DeleteRG'
     resourceGroupName: '$(BASE_NAME)-aml-rg'
     location: $(LOCATION)
-  displayName: 'Tear down the environment (delete the resource group)'
+  displayName: 'Tear down the environment (delete the resource group will all resources in it)'

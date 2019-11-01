@@ -13,7 +13,7 @@ __Approach__
 __Technologies__: We will use Azure Machine Learning & Azure Devops to showcase CI/CD pipelines for a Machine Learning project. However the concepts are valid irrespective of vendor platforms.
 
 __Get Started__
-1. Understand what we are trying to do (below section)
+1. Understand what we are trying to do (below section - to be updated)
 2. [Setup the environment](setup/Setup.md)
 3. [Run an end to end MLOps pipeline](setup/StartBaseScenario.md)
 

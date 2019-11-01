@@ -48,5 +48,3 @@
 5. If you don't have Azure DevOps account, [create](https://dev.azure.com) one
 
 6. If you do not have a github account, [create](https://github.com/) one
-
-7. In your local machine if you do not have Anaconda or __Miniconda__, please [install](https://docs.conda.io/en/latest/miniconda.html). Alternatively __if you do not want to use your local machine__, please provision a Datascience VM - [Ubuntu](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/dsvm-ubuntu-intro) or [Windows](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/provision-vm) VM
