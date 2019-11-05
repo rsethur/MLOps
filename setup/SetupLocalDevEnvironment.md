@@ -15,6 +15,6 @@
 4. In your local machine if you do not have Anaconda or __Miniconda__, please [install](https://docs.conda.io/en/latest/miniconda.html). Alternatively __if you do not want to use your local machine__, please provision a Datascience VM - [Ubuntu](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/dsvm-ubuntu-intro) or [Windows](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/provision-vm) VM
 
 5. Create conda environment: Via command prompt, navigate to project root folder and execute:
-`conda env create -f "code/train/conda_dependencies.yml"`
+`conda env create -f "code/train/train_conda_env.yml"`
 
 6. (Optional) Install [postman](https://www.getpostman.com/downloads/) tool. This will give an easy way to inspect the deployed ML service

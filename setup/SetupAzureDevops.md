@@ -6,7 +6,7 @@
 
     To create service principal, register an application entity in Azure Active Directory (Azure AD) and grant it the Contributor or Owner role of the subscription or the resource group where the web service belongs to.
     Instructions are [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal).
-    __Important__: When you do the app registration, select Type as "Public client/native" instead of the default "Webapp"
+    __Important__: When you do the app registration, select this under Redirect URIType as "Public client/native" instead of the default "Webapp"
 
     __Please make note of the following values__ after creating a service principal, we will need them in subsequent steps
 

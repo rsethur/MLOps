@@ -1,9 +1,0 @@
-requests>=2.22
-azureml-sdk[explain,automl,notebooks]==1.0.65
-scipy
-scikit-learn
-pandas
-numpy
-joblib
-python-dotenv
-azure-cli==2.0.71

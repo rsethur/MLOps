@@ -91,3 +91,5 @@ You can monitor the status by clicking on the stages. Check if your pipeline ran
 Once you understand the concepts & ready to delete the resources you can fo the the following:
 
 From Azure Devops run the pipeline `mlops_pipelines/EnvTearDownPipeline.yml`. Alternatively you can login to Azure Portal and delete the resource group that we created (i.e. `your-unique-name-aml-rg`).
+
+Do :star: the repo if you like it.

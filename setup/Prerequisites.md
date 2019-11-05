@@ -24,14 +24,8 @@
     `az group delete --name "your-unique-name-aml-rg"`
 
     **If you don't have access** to create resource group, ask your admin to give you access (or alteast create the group `your-unique-name-aml-rg` with required permissions)
-
-3. Get subscription id (you need this for later part of the workshop):
-    1. Navigate to http://portal.azure.com
-    2. Navigate to Browse
-    3. In the search box being to type subscription
-    4. Select Subscription from the search
-    
-4. __Create a Service Identity__ - this will be used by our application to access resources (like Azure ML workspace):
+   
+3. __Create a Service Identity__ - this will be used by our application to access resources (like Azure ML workspace):
 
     To create service principal, register an application entity in Azure Active Directory (Azure AD) and grant it the Contributor or Owner role of the subscription or the resource group where the web service belongs to.
     Instructions are [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal).
@@ -45,6 +39,14 @@
 
    Note: If you don't have permission, ask your admin to create a Service Identity for you
 
-5. If you don't have Azure DevOps account, [create](https://dev.azure.com) one
+4. If you don't have Azure DevOps account, [create](https://dev.azure.com) one
 
-6. If you do not have a github account, [create](https://github.com/) one
+5. If you do not have a github account, [create](https://github.com/) one
+
+<!-- Not needed currently. Fot future reference.
+3. Get subscription id (you need this for later part of the workshop):
+    1. Navigate to http://portal.azure.com
+    2. Navigate to Browse
+    3. In the search box being to type subscription
+    4. Select Subscription from the search
+-->
