@@ -1,5 +1,5 @@
 # MLOps - Machine Learning Operations
-_We would like to thank the pioneers of the [MLOpsPython](https://github.com/microsoft/MLOpsPython/) repo - We have borrowed several aspects including variable groups, pipelines etc. This project would not have been possible without that repo._ 
+_We would like to thank the pioneers of the [MLOpsPython](https://github.com/microsoft/MLOpsPython/) repo - We have borrowed several aspects from the repo_ 
 
 __Goal__ is to teach the fundamentals of MLOps to practitioners of Machine Learning with a hands-on approach.
 
