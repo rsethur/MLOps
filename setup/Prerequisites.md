@@ -11,21 +11,7 @@
     
     If you dont have access, ask your __admin__.
 
-2. Check if you have access to create Resource Groups. Execute from cloud shell in Azure Portal:
-
-    __Important__: replace `your-unique-name` with your own __globally__ unique name (e.g. your userid) (to avoid namespace clashes). __Use only lowercase__
-
-    `az group create --name "your-unique-name-aml-rg" --location eastus2`
-    
-    `your-unique-name` will be used as BASE_NAME in the MLOps scenario
-
-    you can delete it by running:
-
-    `az group delete --name "your-unique-name-aml-rg"`
-
-    **If you don't have access** to create resource group, ask your admin to give you access (or alteast create the group `your-unique-name-aml-rg` with required permissions)
-   
-3. __Create a Service Identity__ - this will be used by our application to access resources (like Azure ML workspace):
+2. __Create a Service Identity__ - this will be used by our application(AZure Devops) to access resources (like Azure ML workspace):
 
     To create service principal, register an application entity in Azure Active Directory (Azure AD) and grant it the Contributor or Owner role of the subscription or the resource group where the web service belongs to.
     Instructions are [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal).
@@ -43,7 +29,7 @@
 
 5. If you do not have a github account, [create](https://github.com/) one
 
-<!-- Not needed currently. Fot future reference.
+<!-- Not needed currently. For future reference.
 3. Get subscription id (you need this for later part of the workshop):
     1. Navigate to http://portal.azure.com
     2. Navigate to Browse

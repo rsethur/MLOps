@@ -20,7 +20,9 @@ This step will create the cloud environment and provision all the required servi
 2. You can monitor the status by clicking on the stages. Check if your pipeline ran successfully.
 
 ## Section 3: Create a Dataset in Azure ML
-1. Explore the Azure ML workspace created for you by logging into the [Azure ML portal](https://ml.azure.com/)
+1. Login into the [Azure ML portal](https://ml.azure.com/) and switch to the new workspace that was created using the build pipeline:
+    1. In the top nav bar, click the Switch Directory icon
+    2. Click on the drop down `Machine learning workspace` and select the one that was just created (`BASE_NAME-aml-ws`)
 2. In the left panel click `Dataset` -> `Create Dataset` -> `from web files` 
     1. Paste this url `https://raw.githubusercontent.com/rsethur/MLOps/master/dataset/german_credit_data.csv`
     2. __Important__ Change dataset name to `credit_dataset`
