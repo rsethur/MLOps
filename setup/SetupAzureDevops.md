@@ -21,7 +21,7 @@ The variable group should contain the following variables:
 
 | Variable Name               | Suggested Value               |
 | --------------------------- | ----------------------------  |
-| BASE_NAME                   | `your-unique-name` e.g. xxxx-ml (max 10 chars & all lower case)|
+| BASE_NAME                   | globally unique name e.g. `xxxxml` <BR>__important__: no underscore, max 10 chars & all lower case|
 | COMPUTE_CLUSTER_NAME        | traincluster                  |
 | COMPUTE_CLUSTER_SKU         | STANDARD_DS2_V2               |
 | DATASET_FILE_NAME           | german_credit_data.csv        |
