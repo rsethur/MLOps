@@ -24,4 +24,4 @@ jobs:
         inputs:
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml model deploy -n ${{ parameters.base_name }}-aml-aks --ct ${{ parameters.aks_scoring_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  $(Build.SourcesDirectory)/code/score/inferenceConfig.yml --dc  $(Build.SourcesDirectory)/code/score/deploymentConfig.yml --overwrite --workspace-name ${{ parameters.base_name }}-aml-ws --resource-group ${{ parameters.base_name }}-aml-rg'
+          inlineScript: 'az ml model deploy -n ${{ parameters.model_name }}-service-aks --ct ${{ parameters.aks_scoring_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  $(Build.SourcesDirectory)/code/score/inferenceConfig.yml --dc  $(Build.SourcesDirectory)/code/score/deploymentConfig.yml --overwrite --workspace-name ${{ parameters.base_name }}-aml-ws --resource-group ${{ parameters.base_name }}-aml-rg'
