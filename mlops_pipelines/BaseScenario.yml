@@ -43,16 +43,16 @@ stages:
           model_name: '$(MODEL_NAME)'
 
   - stage: DeployToProd
-      displayName: Deploy to Prod with approval
-      jobs:
-        # Perform an empty deploy job for approval (This is the way in Azure Devops)
-        - deployment: Approval
-          displayName: Approval for rolling out to production
-          environment: 'Prod'
+    displayName: Deploy to Prod with approval
+    jobs:
+      # Perform an empty deploy job for approval (This is the way in Azure Devops)
+      - deployment: Approval
+        displayName: Approval for rolling out to production
+        environment: 'Prod'
 
-        - template: templates/cd/DeployToProd.yml
-            parameters:
-              rm_service_connection: '$(RM_SERVICE_CONNECTION)'
-              base_name: '$(BASE_NAME)'
-              model_name: '$(MODEL_NAME)'
-              aks_scoring_cluster: '$(AKS_SCORING_CLUSTER)'
+      - template: templates/cd/DeployToProd.yml
+          parameters:
+            rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+            base_name: '$(BASE_NAME)'
+            model_name: '$(MODEL_NAME)'
+            aks_scoring_cluster: '$(AKS_SCORING_CLUSTER)'
