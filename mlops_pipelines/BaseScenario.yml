@@ -28,16 +28,16 @@ stages:
         environment: 'Dev'
 
       - template: mlops_pipelines/templates/cd/Register.yml
-          parameters:
-            rm_service_connection: '$(RM_SERVICE_CONNECTION)'
-            base_name: '$(BASE_NAME)'
-            model_name: '$(MODEL_NAME)'
+        parameters:
+          rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+          base_name: '$(BASE_NAME)'
+          model_name: '$(MODEL_NAME)'
 
   - stage: DeployToDev
     displayName: Deploy model to Dev (Azure Container Instance)
     jobs:
       - template: mlops_pipelines/templates/cd/Deploy.yml
-          parameters:
-            rm_service_connection: '$(RM_SERVICE_CONNECTION)'
-            base_name: '$(BASE_NAME)'
-            model_name: '$(MODEL_NAME)'
+        parameters:
+          rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+          base_name: '$(BASE_NAME)'
+          model_name: '$(MODEL_NAME)'
