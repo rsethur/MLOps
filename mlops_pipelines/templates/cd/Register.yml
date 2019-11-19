@@ -1,0 +1,32 @@
+parameters:
+  rm_service_connection: ''
+  base_name: ''
+  model_name: ''
+  run_metadata_artifact: 'run-metadata'
+  model_metadata_artifact: 'model-metadata'
+
+jobs:
+      - job: RegisterJob
+        displayName: Register the model
+        steps:
+          - task: AzureCLI@1
+            displayName: 'Install the CLI'
+            inputs:
+              azureSubscription: ${{ parameters.rm_service_connection }}
+              scriptLocation: inlineScript
+              inlineScript: 'az extension add -n azure-cli-ml'
+
+          - download: current
+            displayName: Download the run details
+            artifact: ${{ parameters.run_metadata_artifact }}
+
+          - task: AzureCLI@1
+            displayName: 'Register the model'
+            inputs:
+              azureSubscription: ${{ parameters.rm_service_connection }}
+              scriptLocation: inlineScript
+              inlineScript: 'az ml model register --workspace-name ${{ parameters.base_name }}-aml-ws --resource-group ${{ parameters.base_name }}-aml-rg -f $(Pipeline.Workspace)/run-metadata/run.json --asset-path outputs/${{ parameters.model_name }} --experiment-name ${{ parameters.model_name }}-experiment -n ${{ parameters.model_name }} -t model.json'
+
+          - publish: $(System.DefaultWorkingDirectory)/model.json
+            displayName: Publish model metadata artifact
+            artifact: ${{ parameters.model_metadata_artifact }}

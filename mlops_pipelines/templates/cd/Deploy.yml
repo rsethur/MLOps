@@ -1,0 +1,27 @@
+parameters:
+  rm_service_connection: ''
+  base_name: ''
+  model_name: ''
+  model_metadata_artifact: 'model-metadata'
+
+jobs:
+  jobs:
+    - job: DeployDevJob
+      steps:
+        - task: AzureCLI@1
+          displayName: 'Install the CLI'
+          inputs:
+            azureSubscription: ${{ parameters.rm_service_connection }}
+            scriptLocation: inlineScript
+            inlineScript: 'az extension add -n azure-cli-ml'
+
+        - download: current
+          displayName: Download artifact model metadata
+          artifact: ${{ parameters.model_metadata_artifact }}
+
+        - task: AzureCLI@1
+          displayName: 'Deploy the model to ACI'
+          inputs:
+            azureSubscription: ${{ parameters.rm_service_connection }}
+            scriptLocation: inlineScript
+            inlineScript: 'az ml model deploy -n ${{ parameters.base_name }}-aml-aci -f $(Pipeline.Workspace)/model-metadata/model.json --ic  $(Build.SourcesDirectory)/code/score/inferenceConfig.yml --dc  $(Build.SourcesDirectory)/code/score/deploymentConfig.yml --overwrite --workspace-name ${{ parameters.base_name }}-aml-ws --resource-group ${{ parameters.base_name }}-aml-rg'

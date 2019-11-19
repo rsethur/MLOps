@@ -1,0 +1,43 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: mlops-aml-vg
+
+stages:
+
+  - stage: Training
+    displayName: Train the model
+    jobs:
+      - template: mlops_pipelines/templates/ci/Train.yml
+        parameters:
+          rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+          base_name: '$(BASE_NAME)'
+          model_name: '$(MODEL_NAME)'
+          compute_cluster_name: '$(COMPUTE_CLUSTER_NAME)'
+          dataset_name: '$(DATASET_NAME)'
+
+  - stage: RegisterModel
+    displayName: Register the model
+    jobs:
+      # Perform an empty deploy job for approval (This is the way in Azure Devops)
+      - deployment: Approval
+        displayName: Approval for model registration
+        environment: 'Dev'
+
+      - template: mlops_pipelines/templates/cd/Register.yml
+          parameters:
+            rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+            base_name: '$(BASE_NAME)'
+            model_name: '$(MODEL_NAME)'
+
+  - stage: DeployToDev
+    displayName: Deploy model to Dev (Azure Container Instance)
+    jobs:
+      - template: mlops_pipelines/templates/cd/Deploy.yml
+          parameters:
+            rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+            base_name: '$(BASE_NAME)'
+            model_name: '$(MODEL_NAME)'
