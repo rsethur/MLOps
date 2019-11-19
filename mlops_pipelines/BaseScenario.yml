@@ -16,7 +16,7 @@ stages:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
           model_name: '$(MODEL_NAME)'
-          compute_cluster_name: '$(COMPUTE_CLUSTER_NAME)'
+          TRAIN_CLUSTER: '$(TRAIN_CLUSTER)'
           dataset_name: '$(DATASET_NAME)'
 
   - stage: RegisterModel
@@ -25,7 +25,7 @@ stages:
       # Perform an empty deploy job for approval (This is the way in Azure Devops)
       - deployment: Approval
         displayName: Approval for model registration
-        environment: 'Dev'
+        environment: 'Test'
 
       - template: templates/cd/Register.yml
         parameters:
@@ -33,11 +33,26 @@ stages:
           base_name: '$(BASE_NAME)'
           model_name: '$(MODEL_NAME)'
 
-  - stage: DeployToDev
-    displayName: Deploy model to Dev (Azure Container Instance)
+  - stage: DeployToTest
+    displayName: Deploy model to Test (Azure Container Instance)
     jobs:
-      - template: templates/cd/Deploy.yml
+      - template: templates/cd/DeployToTest.yml
         parameters:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
           model_name: '$(MODEL_NAME)'
+
+  - stage: DeployToProd
+      displayName: Deploy to Prod with approval
+      jobs:
+        # Perform an empty deploy job for approval (This is the way in Azure Devops)
+        - deployment: Approval
+          displayName: Approval for rolling out to production
+          environment: 'Prod'
+
+        - template: templates/cd/DeployToProd.yml
+            parameters:
+              rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+              base_name: '$(BASE_NAME)'
+              model_name: '$(MODEL_NAME)'
+              aks_scoring_cluster: '$(AKS_SCORING_CLUSTER)'

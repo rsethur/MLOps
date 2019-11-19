@@ -25,7 +25,7 @@ stages:
             inputs:
               azureSubscription: 'AzureResourceManagerConnection'
               scriptLocation: inlineScript
-              inlineScript: 'az ml run submit-script --workspace-name $(BASE_NAME)-aml-ws --resource-group $(BASE_NAME)-aml-rg -e $(MODEL_NAME)-experiment -d code/train/train_conda_env.yml --ct $(COMPUTE_CLUSTER_NAME) --source-directory code/train -t run.json train_model.py --MODEL_NAME $(MODEL_NAME) --DATASET_NAME $(DATASET_NAME)'
+              inlineScript: 'az ml run submit-script --workspace-name $(BASE_NAME)-aml-ws --resource-group $(BASE_NAME)-aml-rg -e $(MODEL_NAME)-experiment -d code/train/train_conda_env.yml --ct $(TRAIN_CLUSTER) --source-directory code/train -t run.json train_model.py --MODEL_NAME $(MODEL_NAME) --DATASET_NAME $(DATASET_NAME)'
 
           - publish: $(System.DefaultWorkingDirectory)/run.json
             displayName: Publish run metadata artifact
@@ -38,7 +38,7 @@ stages:
       # Perform an empty deploy job for approval (This is the way in Azure Devops)
       - deployment: Approval
         displayName: Approval for model registration
-        environment: 'Dev'
+        environment: 'Test'
 
       - job: RegisterJob
         displayName: Register the model
@@ -65,8 +65,8 @@ stages:
             displayName: Publish model metadata artifact
             artifact: model-metadata
 
-  - stage: DeployToDev
-    displayName: Deploy model to Dev (Azure Container Instance)
+  - stage: DeployToTest
+    displayName: Deploy model to Test (Azure Container Instance)
     jobs:
       - job: DeployDevJob
         steps:

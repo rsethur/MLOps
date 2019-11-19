@@ -1,13 +1,17 @@
 # Prerequisites
 
-1. __Check if ACI(Azure Container Instance) is registered in your subscription__: Try executing the command from the Cloud Shell in the portal. Instructions [here](https://docs.microsoft.com/en-us/azure/cloud-shell/quickstart).
+1. __Check if ACI(Azure Container Instance) and AKS (Azure Kubernetes Service) are registered in your subscription__: Try executing the command from the Cloud Shell in the portal. Instructions [here](https://docs.microsoft.com/en-us/azure/cloud-shell/quickstart).
     If you dont have access, ask your __admin__.
 
     `az provider show -n Microsoft.ContainerInstance -o table`
+    
+    `az provider show -n Microsoft.ContainerService -o table`
 
-    if ACI is not registered, run the below command (you need to be the subscription owner in order to execute this command successfully)
+    if not registered, run the below command (you need to be the subscription owner in order to execute this command successfully)
 
     `az provider register -n Microsoft.ContainerInstance`
+    
+    `az provider register -n Microsoft.ContainerService`
     
     If you dont have access, ask your __admin__.
 

@@ -41,4 +41,4 @@ stages:
             inputs:
               azureSubscription: 'AzureResourceManagerConnection'
               scriptLocation: inlineScript
-              inlineScript: 'az ml computetarget create amlcompute --max-nodes 3 --name $(COMPUTE_CLUSTER_NAME) --vm-size $(COMPUTE_CLUSTER_SKU) --resource-group $(BASE_NAME)-aml-rg --vm-priority dedicated --workspace-name $(BASE_NAME)-aml-ws --remote-login-port-public-access disabled'
+              inlineScript: 'az ml computetarget create amlcompute --max-nodes 3 --name $(TRAIN_CLUSTER) --vm-size $(TRAIN_CLUSTER_SKU) --resource-group $(BASE_NAME)-aml-rg --vm-priority dedicated --workspace-name $(BASE_NAME)-aml-ws --remote-login-port-public-access disabled'
