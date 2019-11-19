@@ -1,0 +1,22 @@
+parameters:
+  rm_service_connection: ''
+  base_name: ''
+  aks_scoring_cluster: ''
+
+jobs:
+      - job: CreateAMLComputeCluster
+        steps:
+          - task: AzureCLI@1
+            displayName: 'Install the CLI'
+            inputs:
+              azureSubscription:  ${{ parameters.rm_service_connection }}
+              scriptLocation: inlineScript
+              inlineScript: 'az extension add -n azure-cli-ml'
+
+          - task: AzureCLI@1
+            displayName: 'Provision AKS Cluster'
+            inputs:
+              azureSubscription:  ${{ parameters.rm_service_connection }}
+              scriptLocation: inlineScript
+              inlineScript: 'az ml computetarget create amlcompute --max-nodes 3 --name ${{ parameters.train_cluster }} --vm-size ${{ parameters.train_cluster_sku }} --resource-group ${{ parameters.base_name }}-aml-rg --vm-priority dedicated --workspace-name ${{ parameters.base_name }}-aml-ws --remote-login-port-public-access disabled'
+              az ml computetarget create aks --name ${{ parameters.aks_scoring_cluster }} --resource-group ${{ parameters.base_name }}-aml-rg --workspace-name ${{ parameters.base_name }}-aml-ws --cluster-purpose FastProd

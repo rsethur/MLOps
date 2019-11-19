@@ -15,7 +15,7 @@ stages:
           - task: AzureResourceGroupDeployment@2
             displayName: 'Deploy MLOps resources to Azure'
             inputs:
-              azureSubscription: 'AzureResourceManagerConnection'
+              azureSubscription: '$(RM_SERVICE_CONNECTION)'
               action: 'Create Or Update Resource Group'
               resourceGroupName: '$(BASE_NAME)-aml-rg'
               location: $(LOCATION)
@@ -24,21 +24,21 @@ stages:
               overrideParameters: '-baseName $(BASE_NAME) -location $(LOCATION)'
               deploymentMode: 'Incremental'
 
-  - stage: CreateComputeForTraining
-    displayName: "Create compute cluster for Azure ML training jobs"
+  - stage: ProvisionCompute
+    displayName: "Create Azure ML compute & AKS clusters"
     jobs:
-      - job: CreateComputeClusterJob
-        steps:
-          - task: AzureCLI@1
-            displayName: 'Install the CLI'
-            inputs:
-              azureSubscription: 'AzureResourceManagerConnection'
-              scriptLocation: inlineScript
-              inlineScript: 'az extension add -n azure-cli-ml'
+      - template: templates/common/ProvisionAMLComputeCluster.yml
+        displayName: Provision AML compute cluster
+        parameters:
+          rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+          base_name: '$(BASE_NAME)'
+          train_cluster_sku: '$(TRAIN_CLUSTER_SKU)'
+          train_cluster: '$(TRAIN_CLUSTER)'
 
-          - task: AzureCLI@1
-            displayName: 'Provision compute cluster for training'
-            inputs:
-              azureSubscription: 'AzureResourceManagerConnection'
-              scriptLocation: inlineScript
-              inlineScript: 'az ml computetarget create amlcompute --max-nodes 3 --name $(TRAIN_CLUSTER) --vm-size $(TRAIN_CLUSTER_SKU) --resource-group $(BASE_NAME)-aml-rg --vm-priority dedicated --workspace-name $(BASE_NAME)-aml-ws --remote-login-port-public-access disabled'
+      - template: templates/common/ProvisionAKSCluster.yml
+        displayName: Provision AKS cluster
+        parameters:
+          rm_service_connection: '$(RM_SERVICE_CONNECTION)'
+          base_name: '$(BASE_NAME)'
+          aks_scoring_cluster: '$(AKS_SCORING_CLUSTER)'
+

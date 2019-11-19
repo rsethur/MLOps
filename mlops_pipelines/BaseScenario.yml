@@ -16,7 +16,7 @@ stages:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
           model_name: '$(MODEL_NAME)'
-          TRAIN_CLUSTER: '$(TRAIN_CLUSTER)'
+          train_cluster: '$(TRAIN_CLUSTER)'
           dataset_name: '$(DATASET_NAME)'
 
   - stage: RegisterModel
