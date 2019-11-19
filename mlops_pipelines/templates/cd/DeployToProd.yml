@@ -1,5 +1,3 @@
-trigger: none
-
 parameters:
   rm_service_connection: ''
   base_name: ''
