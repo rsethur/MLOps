@@ -28,7 +28,6 @@ stages:
         environment: 'Test'
 
       - template: templates/cd/Register.yml
-        dependsOn: Approval
         parameters:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
@@ -52,7 +51,6 @@ stages:
         environment: 'Prod'
 
       - template: templates/cd/DeployToProd.yml
-        dependsOn: Approval
         parameters:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
