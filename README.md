@@ -31,7 +31,7 @@ _Note: Automated builds based on code/asset changes have been disabled by settin
 __MLOps Flow and Current Setup__
 ![MLOps Flow](setup/imgs/MLOpsFlow.jpg)
 
-The above diagram illustrates a possible end to end MLOps scenario. Our current Build-Release pipeline has a subset: `Training` :arrow_right: `Approval` :arrow_right: `Model Registration` :arrow_right: `Package` :arrow_right: `Deploy in test` :arrow_right: `Approval` :arrow_right: `Deploy to Prodd`
+The above diagram illustrates a possible end to end MLOps scenario. Our current Build-Release pipeline has a subset: `Training` :arrow_right: `Approval` :arrow_right: `Model Registration` :arrow_right: `Package` :arrow_right: `Deploy in test` :arrow_right: `Approval` :arrow_right: `Deploy to Production`
 <BR><br>__Notes on our Base scenario:__
 1. Directory Structure
     1. `mlops_pipelines` contains the devops pipelines
