@@ -21,7 +21,7 @@ stages:
               location: '${{ variables.LOCATION }}'
               templateLocation: 'Linked artifact'
               csmFile: '$(Build.SourcesDirectory)/mlops_pipelines/templates/setup/IaCAzureResourceManager.json'
-              overrideParameters: '-amlWorkspaceName ${{ variables.WORKSPACE }} -storageAccountName ${{ variables.STORAGE_ACCOUNT }} -keyVaultName ${{ variables.KEY_VAULT }} -applicationInsightsName ${{ variables.APP_INSIGHTS }} -location ${{ variables.LOCATION }} -containerRegistryName -location ${{ variables.ACR }}'
+              overrideParameters: '-workspaceName ${{ variables.WORKSPACE }} -storageAccountName ${{ variables.STORAGE_ACCOUNT }} -keyVaultName ${{ variables.KEY_VAULT }} -applicationInsightsName ${{ variables.APP_INSIGHTS }} -location ${{ variables.LOCATION }} -containerRegistryName -location ${{ variables.ACR }}'
               deploymentMode: 'Incremental'
 
   - stage: ProvisionCompute
