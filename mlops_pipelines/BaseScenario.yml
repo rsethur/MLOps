@@ -4,7 +4,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: mlops-aml-vg
+  - template: templates/common/Variables.yml
 
 stages:
 
