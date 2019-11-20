@@ -3,7 +3,7 @@ parameters:
   base_name: ''
   model_name: ''
   model_metadata_artifact: 'model-metadata'
-  aks_scoring_cluster: ''
+  AKS_CLUSTER: ''
 
 jobs:
   - job: DeployProdJob
@@ -24,4 +24,4 @@ jobs:
         inputs:
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml model deploy -n ${{ parameters.model_name }}-service-aks --ct ${{ parameters.aks_scoring_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  $(Build.SourcesDirectory)/code/score/inferenceConfig.yml --dc  $(Build.SourcesDirectory)/code/score/deploymentConfig.yml --overwrite --workspace-name ${{ parameters.base_name }}-aml-ws --resource-group ${{ parameters.base_name }}-aml-rg'
+          inlineScript: 'az ml model deploy -n ${{ parameters.model_name }}-service-aks --ct ${{ parameters.AKS_CLUSTER }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  $(Build.SourcesDirectory)/code/score/inferenceConfig.yml --dc  $(Build.SourcesDirectory)/code/score/deploymentConfig.yml --overwrite --workspace-name ${{ parameters.base_name }}-aml-ws --resource-group ${{ parameters.base_name }}-aml-rg'

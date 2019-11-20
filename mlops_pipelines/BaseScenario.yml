@@ -16,7 +16,7 @@ stages:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
           model_name: '$(MODEL_NAME)'
-          train_cluster: '$(TRAIN_CLUSTER)'
+          AML_COMPUTE_CLUSTER: '$(AML_COMPUTE_CLUSTER)'
           dataset_name: '$(DATASET_NAME)'
 
   - stage: RegisterModel
@@ -55,4 +55,4 @@ stages:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
           model_name: '$(MODEL_NAME)'
-          aks_scoring_cluster: '$(AKS_SCORING_CLUSTER)'
+          AKS_CLUSTER: '$(AKS_CLUSTER)'

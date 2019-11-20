@@ -25,7 +25,7 @@ stages:
             inputs:
               azureSubscription: 'AzureResourceManagerConnection'
               scriptLocation: inlineScript
-              inlineScript: 'az ml run submit-script --workspace-name $(BASE_NAME)-aml-ws --resource-group $(BASE_NAME)-aml-rg -e $(MODEL_NAME)-experiment -d code/train/train_conda_env.yml --ct $(TRAIN_CLUSTER) --source-directory code/train -t run.json train_model.py --MODEL_NAME $(MODEL_NAME) --DATASET_NAME $(DATASET_NAME)'
+              inlineScript: 'az ml run submit-script --workspace-name $(BASE_NAME)-aml-ws --resource-group $(BASE_NAME)-aml-rg -e $(MODEL_NAME)-experiment -d code/train/train_conda_env.yml --ct $(AML_COMPUTE_CLUSTER) --source-directory code/train -t run.json train_model.py --MODEL_NAME $(MODEL_NAME) --DATASET_NAME $(DATASET_NAME)'
 
           - publish: $(System.DefaultWorkingDirectory)/run.json
             displayName: Publish run metadata artifact

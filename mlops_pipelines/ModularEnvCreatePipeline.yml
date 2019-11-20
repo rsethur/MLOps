@@ -32,12 +32,12 @@ stages:
         parameters:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
-          train_cluster_sku: '$(TRAIN_CLUSTER_SKU)'
-          train_cluster: '$(TRAIN_CLUSTER)'
+          AML_COMPUTE_SKU: '$(AML_COMPUTE_SKU)'
+          AML_COMPUTE_CLUSTER: '$(AML_COMPUTE_CLUSTER)'
 
       # Provision AKS cluster
       - template: templates/common/ProvisionAKSCluster.yml
         parameters:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
           base_name: '$(BASE_NAME)'
-          aks_scoring_cluster: '$(AKS_SCORING_CLUSTER)'
+          AKS_CLUSTER: '$(AKS_CLUSTER)'

@@ -1,7 +1,7 @@
 parameters:
   rm_service_connection: ''
   base_name: ''
-  aks_scoring_cluster: ''
+  AKS_CLUSTER: ''
 
 jobs:
       - job: CreateAKSCluster
@@ -18,4 +18,4 @@ jobs:
             inputs:
               azureSubscription:  ${{ parameters.rm_service_connection }}
               scriptLocation: inlineScript
-              inlineScript: 'az ml computetarget create aks --name ${{ parameters.aks_scoring_cluster }} --resource-group ${{ parameters.base_name }}-aml-rg --workspace-name ${{ parameters.base_name }}-aml-ws --cluster-purpose FastProd'
+              inlineScript: 'az ml computetarget create aks --name ${{ parameters.AKS_CLUSTER }} --resource-group ${{ parameters.base_name }}-aml-rg --workspace-name ${{ parameters.base_name }}-aml-ws --cluster-purpose FastProd'

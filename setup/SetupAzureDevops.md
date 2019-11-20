@@ -22,9 +22,9 @@ The variable group should contain the following variables:
 | Variable Name               | Suggested Value               |
 | --------------------------- | ----------------------------  |
 | BASE_NAME                   | globally unique name e.g. `xxxxml` <BR>__important__: no underscore, max 10 chars & all lower case|
-| TRAIN_CLUSTER               | traincluster                  |
-| TRAIN_CLUSTER_SKU           | STANDARD_DS4_V2               |
-| AKS_SCORING_CLUSTER         | akscluster                    |
+| AML_COMPUTE_CLUSTER               | amlcompute                  |
+| AML_COMPUTE_SKU           | STANDARD_DS4_V2               |
+| AKS_CLUSTER         | akscluster                    |
 | DATASET_FILE_NAME           | german_credit_data.csv        |
 | DATASET_NAME                | credit_dataset                |
 | LOCATION                    | eastus2                       |
