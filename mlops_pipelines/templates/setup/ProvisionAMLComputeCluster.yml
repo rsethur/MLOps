@@ -1,8 +1,9 @@
 parameters:
   rm_service_connection: ''
-  base_name: ''
-  AML_COMPUTE_SKU: ''
-  AML_COMPUTE_CLUSTER: ''
+  resource_group: ''
+  workspace: ''
+  aml_compute_sku: ''
+  aml_compute_cluster: ''
 
 jobs:
       - job: CreateAMLComputeCluster
@@ -19,4 +20,4 @@ jobs:
             inputs:
               azureSubscription:  ${{ parameters.rm_service_connection }}
               scriptLocation: inlineScript
-              inlineScript: 'az ml computetarget create amlcompute --max-nodes 3 --name ${{ parameters.AML_COMPUTE_CLUSTER }} --vm-size ${{ parameters.AML_COMPUTE_SKU }} --resource-group ${{ parameters.base_name }}-aml-rg --vm-priority dedicated --workspace-name ${{ parameters.base_name }}-aml-ws --remote-login-port-public-access disabled'
+              inlineScript: 'az ml computetarget create amlcompute --max-nodes 3 --name ${{ parameters.aml_compute_cluster }} --vm-size ${{ parameters.aml_compute_sku }} --resource-group ${{ parameters.resource_group }} --vm-priority dedicated --workspace-name ${{ parameters.workspace }} --remote-login-port-public-access disabled'
