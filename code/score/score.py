@@ -4,11 +4,11 @@ import pandas as pd
 import joblib
 from azureml.core.model import Model
 
-MODEL_NAME = "creditcard-risk-model"
+MODEL_FILE_NAME = "risk-model"
 
 def init():
     global model
-    model_path = Model.get_model_path(MODEL_NAME)
+    model_path = Model.get_model_path(MODEL_FILE_NAME)
     # deserialize the model file back into a sklearn model
     model = joblib.load(model_path)
 
