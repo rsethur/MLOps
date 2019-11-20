@@ -14,9 +14,10 @@ stages:
       - template: templates/ci/Train.yml
         parameters:
           rm_service_connection: '$(RM_SERVICE_CONNECTION)'
-          base_name: '$(BASE_NAME)'
+          workspace: '${{ variables.WORKSPACE }}'
+          resource_group: '${{ variables.RESOURCE_GROUP }}'
           model_name: '$(MODEL_NAME)'
-          AML_COMPUTE_CLUSTER: '$(AML_COMPUTE_CLUSTER)'
+          aml_compute_cluster: '$(AML_COMPUTE_CLUSTER)'
           dataset_name: '$(DATASET_NAME)'
 
   - stage: RegisterModel

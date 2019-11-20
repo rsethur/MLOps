@@ -1,8 +1,9 @@
 parameters:
   rm_service_connection: ''
-  base_name: ''
+  workspace: ''
+  resource_group: ''
   model_name: ''
-  AML_COMPUTE_CLUSTER: ''
+  aml_compute_cluster: ''
   dataset_name: ''
   run_metadata_artifact: 'run-metadata'
 
@@ -22,7 +23,7 @@ jobs:
         inputs:
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml run submit-script --workspace-name ${{ parameters.base_name }}-aml-ws --resource-group ${{ parameters.base_name }}-aml-rg -e ${{ parameters.model_name }}-experiment -d code/train/train_conda_env.yml --ct ${{ parameters.AML_COMPUTE_CLUSTER }} --source-directory code/train -t run.json train_model.py --MODEL_NAME ${{ parameters.model_name }} --DATASET_NAME ${{ parameters.dataset_name }}'
+          inlineScript: 'az ml run submit-script --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} -e ${{ parameters.model_name }}-experiment -d code/train/train_conda_env.yml --ct ${{ parameters.aml_compute_cluster }} --source-directory code/train -t run.json train_model.py --MODEL_NAME ${{ parameters.model_name }} --DATASET_NAME ${{ parameters.dataset_name }}'
 
       - publish: $(System.DefaultWorkingDirectory)/run.json
         displayName: Publish run metadata artifact
