@@ -4,7 +4,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: mlops-aml-vg
+  - template: recipes/common/Variables.yml
 
 stages:
   - stage: CreateEnvironment
@@ -15,30 +15,31 @@ stages:
           - task: AzureResourceGroupDeployment@2
             displayName: 'Deploy MLOps resources to Azure'
             inputs:
-              azureSubscription: 'AzureResourceManagerConnection'
+              azureSubscription: '${{ variables.RM_SERVICE_CONNECTION }}'
               action: 'Create Or Update Resource Group'
-              resourceGroupName: '$(BASE_NAME)-aml-rg'
-              location: $(LOCATION)
+              resourceGroupName: '${{ variables.RESOURCE_GROUP }}'
+              location: '${{ variables.LOCATION }}'
               templateLocation: 'Linked artifact'
-              csmFile: '$(Build.SourcesDirectory)/mlops_pipelines/arm-templates/EnvCreateARMTemplete.json'
-              overrideParameters: '-baseName $(BASE_NAME) -location $(LOCATION)'
+              csmFile: '$(Build.SourcesDirectory)/mlops_pipelines/recipes/setup/IaCAzureResourceManager.json'
+              overrideParameters: '-workspaceName ${{ variables.WORKSPACE }} -storageAccountName ${{ variables.STORAGE_ACCOUNT }} -keyVaultName ${{ variables.KEY_VAULT }} -applicationInsightsName ${{ variables.APP_INSIGHTS }} -location ${{ variables.LOCATION }} -containerRegistryName ${{ variables.ACR }}'
               deploymentMode: 'Incremental'
 
-  - stage: CreateComputeForTraining
-    displayName: "Create compute cluster for Azure ML training jobs"
+  - stage: ProvisionCompute
+    displayName: "Create Azure ML compute & AKS clusters"
     jobs:
-      - job: CreateComputeClusterJob
-        steps:
-          - task: AzureCLI@1
-            displayName: 'Install the CLI'
-            inputs:
-              azureSubscription: 'AzureResourceManagerConnection'
-              scriptLocation: inlineScript
-              inlineScript: 'az extension add -n azure-cli-ml'
+      # Provision Azure ML compute cluster
+      - template: recipes/setup/ProvisionAMLComputeCluster.yml
+        parameters:
+          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          workspace: '${{ variables.WORKSPACE }}'
+          resource_group: '${{ variables.RESOURCE_GROUP }}'
+          aml_compute_sku: '${{ variables.AML_COMPUTE_SKU }}'
+          aml_compute_cluster: '${{ variables.AML_COMPUTE_CLUSTER }}'
 
-          - task: AzureCLI@1
-            displayName: 'Provision compute cluster for training'
-            inputs:
-              azureSubscription: 'AzureResourceManagerConnection'
-              scriptLocation: inlineScript
-              inlineScript: 'az ml computetarget create amlcompute --max-nodes 3 --name $(AML_COMPUTE_CLUSTER) --vm-size $(AML_COMPUTE_SKU) --resource-group $(BASE_NAME)-aml-rg --vm-priority dedicated --workspace-name $(BASE_NAME)-aml-ws --remote-login-port-public-access disabled'
+      # Provision AKS cluster
+      - template: recipes/setup/ProvisionAKSCluster.yml
+        parameters:
+          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          workspace: '${{ variables.WORKSPACE }}'
+          resource_group: '${{ variables.RESOURCE_GROUP }}'
+          aks_cluster: '${{ variables.AKS_CLUSTER }}'

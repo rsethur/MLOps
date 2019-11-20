@@ -5,6 +5,7 @@
 2. Fork the MLOps repository
     1. Visit the MLOps [github project](https://github.com/rsethur/MLOps) and click `Fork` on top right.
     2. Give a name & let it remain "Public" for course of this workshop
+    4. From your github repository, directly edit the file `mlops_pipelines/recipes/common/Variables.yml`: Change the `BASE_NAME` as per the instructions given there.
     3. In your project page copy your clone https url by clicking on the `Clone or Download` button - you will need this for next step
 3. Setup integration between Devops & Github
     1. In the Azure Devops project you created earlier goto: Pipelines -> Pipelines
@@ -34,7 +35,7 @@ Now we can run training & automate the deployment by running the build release p
 2. Create new pipeline by clicking "New pipeline" button on top right
 3. To respond to question "Where is your code", click `Github (YAML)`
     1. Click `Existing Azure Pipelines YAML file`
-    2. Now you will see a list of YML (yaml) files: select `mlops_pipelines/BuildReleasePipeline.yml` -> Click Continue -> Click Run
+    2. Now you will see a list of YML (yaml) files: select `mlops_pipelines/BasicBuildRelease.yml` -> Click Continue -> Click Run
 
 You can monitor the status by clicking on the stages. Check if your pipeline ran successfully.
 

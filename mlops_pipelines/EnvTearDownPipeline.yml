@@ -4,13 +4,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: mlops-aml-vg
+  - template: recipes/common/Variables.yml
 
 steps:
 - task: AzureResourceGroupDeployment@2
   inputs:
-    azureSubscription: '$(RM_SERVICE_CONNECTION)'
+    azureSubscription: '${{ variables.RM_SERVICE_CONNECTION }}'
     action: 'DeleteRG'
-    resourceGroupName: '$(BASE_NAME)-aml-rg'
-    location: $(LOCATION)
+    resourceGroupName: '${{ variables.RESOURCE_GROUP }}'
+    location: '${{ variables.LOCATION }}'
   displayName: 'Tear down the environment (delete the resource group will all resources in it)'
