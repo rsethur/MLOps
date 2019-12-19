@@ -4,7 +4,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - template: recipes/common/Variables.yml
+  - template: ../recipes/common/Variables.yml
 
 steps:
 - task: AzureResourceGroupDeployment@2
@@ -13,4 +13,4 @@ steps:
     action: 'DeleteRG'
     resourceGroupName: '${{ variables.RESOURCE_GROUP }}'
     location: '${{ variables.LOCATION }}'
-  displayName: 'Tear down the environment (delete the resource group will all resources in it)'
+  displayName: 'Tear down the environment'

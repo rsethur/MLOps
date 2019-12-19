@@ -4,6 +4,8 @@ parameters:
   resource_group: ''
   model_name: ''
   aks_cluster: ''
+  inference_config: models/${{ parameters.model_name }}/score/InferenceConfig.yml
+  deployment_config: models/${{ parameters.model_name }}/score/deploymentConfig.yml
   model_metadata_artifact: 'model-metadata'
 
 jobs:
@@ -25,4 +27,4 @@ jobs:
         inputs:
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml model deploy -n ${{ parameters.model_name }}-svc-aks --ct ${{ parameters.aks_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  $(Build.SourcesDirectory)/code/score/inferenceConfig.yml --dc  $(Build.SourcesDirectory)/code/score/deploymentConfig.yml --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }}'
+          inlineScript: 'az ml model deploy -n ${{ parameters.model_name }}-svc-aks --ct ${{ parameters.aks_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic ${{ parameters.inference_config }} --dc  ${{ parameters.deployment_config }} --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }}'

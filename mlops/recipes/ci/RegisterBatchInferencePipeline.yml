@@ -1,0 +1,27 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+#variables:
+#  - template: recipes/common/Variables.yml
+
+#parameters:
+#  rm_service_connection: ''
+#  workspace: ''
+#  resource_group: ''
+#  model_name: ''
+#  model_metadata_artifact: 'model-metadata'
+
+jobs:
+  - job: BatchInferencePipelineRegister
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.6.2'
+
+    - script: pip install azureml-sdk azureml-contrib-pipeline-steps
+      displayName: 'Install libraries'
+
+    - script: python $(Build.SourcesDirectory)models/batch_score/register_batch_inference_pipeline.py
+      displayName: "Register batch inference pipeline"

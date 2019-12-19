@@ -4,14 +4,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - template: recipes/common/Variables.yml
+  - template: ../recipes/common/Variables.yml
 
 stages:
 
   - stage: Training
     displayName: Train the model
     jobs:
-      - template: recipes/ci/Train.yml
+      - template: ../recipes/ci/Train.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
@@ -28,7 +28,7 @@ stages:
         displayName: Approval for model registration
         environment: 'Test'
 
-      - template: recipes/cd/Register.yml
+      - template: ../recipes/cd/Register.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
@@ -38,7 +38,7 @@ stages:
   - stage: DeployToTest
     displayName: Deploy model to Test (Azure Container Instance)
     jobs:
-      - template: recipes/cd/DeployToTest.yml
+      - template: ../recipes/cd/DeployToTest.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
@@ -53,7 +53,7 @@ stages:
         displayName: Approval for rolling out to production
         environment: 'Prod'
 
-      - template: recipes/cd/DeployToProd.yml
+      - template: ../recipes/cd/DeployToProd.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'

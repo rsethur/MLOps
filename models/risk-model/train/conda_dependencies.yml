@@ -1,4 +1,4 @@
-name: aml1.0.72
+name: aml1.0.74
 channels:
   - conda-forge
   - defaults
@@ -9,16 +9,26 @@ dependencies:
 - python=3.6.2
 - pip
 - pip:
-  - jupyter==1.0.0
-  - azureml-sdk[explain,automl,notebooks]==1.0.72
+  # Azure ML
+  - azureml-sdk[explain,automl,notebooks]==1.0.74
   - azureml-dataprep[fuse,pandas]>=1.1.19
-  #- azureml-contrib-interpret==1.0.72
+  - azureml-monitoring
+  - azureml-datadrift
+  - azureml-contrib-pipeline-steps
+  - interpret
+  - azureml-interpret
+  - azureml-contrib-interpret
+  - azureml-opendatasets
+  - azureml-widgets
+  - inference-schema[numpy-support]
+  # Other
+  - jupyter
+  - ipywidgets
   - scipy==1.2.1
   - scikit-learn==0.20.3  
   - joblib==0.13.2
-  - pandas==0.25.2
+  - pandas==0.25.3
   - numpy==1.16.2
   - python-dotenv==0.10.3
-  - inference-schema[numpy-support]
   - tqdm==4.36.1
-  - matplotlib==3.1.1
+  - matplotlib==3.1.2

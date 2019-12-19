@@ -1,6 +1,6 @@
 variables:
   #IMPORTANT: Update BASE_NAME with your GLOBALLY unique name. Rules: No underscore, max 10 chars & all lower case
-  BASE_NAME: 'setu47'
+  BASE_NAME: 'setu48' #used only during environment creation
   #If you want to use an existing workspace, change all the below values according to current setup
   WORKSPACE: '${{ variables.BASE_NAME }}-ws'
   RESOURCE_GROUP: '${{ variables.BASE_NAME }}-rg'
@@ -8,13 +8,16 @@ variables:
   KEY_VAULT: '${{ variables.BASE_NAME }}kv'
   APP_INSIGHTS: '${{ variables.BASE_NAME }}appins'
   ACR: '${{ variables.BASE_NAME }}acr'
-
-  #Configuration information
-  AML_COMPUTE_SKU: 'STANDARD_DS4_V2'
   AML_COMPUTE_CLUSTER: 'amlcluster'
-  AKS_CLUSTER: 'akscluster'
+  AKS_CLUSTER: '${{ variables.BASE_NAME }}-akscluster'
+
+  #Other configuration information
+  AML_COMPUTE_SKU: 'STANDARD_DS4_V2'
+
   LOCATION: 'eastus2'
+  RM_SERVICE_CONNECTION: 'AzureResourceManagerConnection'
+
+  #Details for risk-model
   MODEL_NAME: 'risk-model'
   DATASET_FILE_NAME: 'german_credit_data.csv'
   DATASET_NAME: 'credit_dataset'
-  RM_SERVICE_CONNECTION: 'AzureResourceManagerConnection'

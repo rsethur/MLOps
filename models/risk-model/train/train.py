@@ -17,6 +17,8 @@ from sklearn.preprocessing import StandardScaler
 
 from azureml.core import Dataset
 
+from azureml.pipeline.core import Pipeline, PipelineData
+
 def main():
 
     model_name, dataset_name = getRuntimeArgs()

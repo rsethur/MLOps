@@ -1,6 +1,6 @@
-entryScript: code/score/score.py
+entryScript: models/score/batch_score.py
 runtime: python
-condaFile: code/score/score_conda_env.yml
+condaFile: models/risk-model/batch_score/conda_dependencies.yml
 extraDockerfileSteps:
 schemaFile:
 sourceDirectory:
