@@ -21,3 +21,5 @@ variables:
   RISK_MODEL.NAME: 'risk-model'
   RISK_MODEL.DATASET_FILE_NAME: 'german_credit_data.csv'
   RISK_MODEL.DATASET_NAME: 'credit_dataset'
+  RISK_MODEL.ACI_SERVICE_NAME: 'risk-model-aci'
+  RISK_MODEL.AKS_SERVICE_NAME: 'risk-model-aks'

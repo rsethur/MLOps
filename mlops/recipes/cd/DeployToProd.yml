@@ -1,5 +1,6 @@
 parameters:
   rm_service_connection: ''
+  service_name: 'aks-svc'
   workspace: ''
   resource_group: ''
   model_name: ''
@@ -35,4 +36,4 @@ jobs:
         inputs:
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml model deploy -n ${{ parameters.model_name }}-svc-aks --ct ${{ parameters.aks_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }}'
+          inlineScript: 'az ml model deploy -n ${{ parameters.service_name }} --ct ${{ parameters.aks_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }}'
