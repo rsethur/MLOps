@@ -9,7 +9,7 @@ variables:
   APP_INSIGHTS: '${{ variables.BASE_NAME }}appins'
   ACR: '${{ variables.BASE_NAME }}acr'
   AML_COMPUTE_CLUSTER: 'amlcluster'
-  AKS_CLUSTER: '${{ variables.BASE_NAME }}-akscluster'
+  AKS_CLUSTER: '${{ variables.BASE_NAME }}-aks'
 
   #Other configuration information
   AML_COMPUTE_SKU: 'STANDARD_DS4_V2'
