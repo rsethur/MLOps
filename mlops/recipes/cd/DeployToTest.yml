@@ -11,7 +11,7 @@ parameters:
 jobs:
   - job: DeployToTest
     variables:
-      default_inference_config: $(Build.SourcesDirectory)/models/${{ parameters.model_name }}/score/InferenceConfig.yml
+      default_inference_config: $(Build.SourcesDirectory)/models/${{ parameters.model_name }}/score/inferenceConfig.yml
       inference_config_var: ${{ coalesce(parameters.inference_config ,  variables.default_inference_config) }}
       # source directory
       default_deployment_config: $(Build.SourcesDirectory)/models/${{ parameters.model_name }}/score/deploymentConfig.yml
