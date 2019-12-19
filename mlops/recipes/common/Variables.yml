@@ -17,9 +17,13 @@ variables:
   LOCATION: 'eastus2'
   RM_SERVICE_CONNECTION: 'AzureResourceManagerConnection'
 
-  #Details for risk-model
+  #Details of individual models
+
+  #Model 1:  credit risk model
   RISK_MODEL_NAME: 'risk-model'
   RISK_MODEL_DATASET_FILE_NAME: 'german_credit_data.csv'
   RISK_MODEL_DATASET_NAME: 'credit_dataset'
   RISK_MODEL_ACI_SERVICE_NAME: 'risk-model-aci'
   RISK_MODEL_AKS_SERVICE_NAME: 'risk-model-aks'
+
+  #Model 2: ...
