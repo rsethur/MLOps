@@ -1,4 +1,4 @@
-name: aml1.0.74
+name: aml1.0.79
 channels:
   - conda-forge
   - defaults
@@ -10,7 +10,7 @@ dependencies:
 - pip
 - pip:
   # Azure ML
-  - azureml-sdk[explain,automl,notebooks]==1.0.74
+  - azureml-sdk[explain,automl,notebooks]==1.0.79
   - azureml-dataprep[fuse,pandas]>=1.1.19
   - azureml-monitoring
   - azureml-datadrift
