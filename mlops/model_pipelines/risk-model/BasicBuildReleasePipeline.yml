@@ -57,7 +57,7 @@ stages:
       - template: ../../recipes/cd/DeployToProd.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.RISK_MODEL-AKS_SERVICE_NAME }}'
+          service_name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
           workspace: '${{ variables.WORKSPACE }}'
           resource_group: '${{ variables.RESOURCE_GROUP }}'
           model_name: '${{ variables.RISK_MODEL_NAME }}'
