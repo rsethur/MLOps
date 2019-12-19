@@ -1,6 +1,6 @@
-entryScript: models/score/score.py
+entryScript: models/risk-model/score/score.py
 runtime: python
-condaFile: models/score/conda_dependencies.yml
+condaFile: models/risk-model/score/conda_dependencies.yml
 extraDockerfileSteps:
 schemaFile:
 sourceDirectory:
