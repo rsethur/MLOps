@@ -18,8 +18,8 @@ variables:
   RM_SERVICE_CONNECTION: 'AzureResourceManagerConnection'
 
   #Details for risk-model
-  RISK_MODEL.NAME: 'risk-model'
-  RISK_MODEL.DATASET_FILE_NAME: 'german_credit_data.csv'
-  RISK_MODEL.DATASET_NAME: 'credit_dataset'
-  RISK_MODEL.ACI_SERVICE_NAME: 'risk-model-aci'
-  RISK_MODEL.AKS_SERVICE_NAME: 'risk-model-aks'
+  RISK_MODEL_NAME: 'risk-model'
+  RISK_MODEL_DATASET_FILE_NAME: 'german_credit_data.csv'
+  RISK_MODEL_DATASET_NAME: 'credit_dataset'
+  RISK_MODEL_ACI_SERVICE_NAME: 'risk-model-aci'
+  RISK_MODEL_AKS_SERVICE_NAME: 'risk-model-aks'
