@@ -17,9 +17,8 @@ stages:
           workspace: '${{ variables.WORKSPACE }}'
           resource_group: '${{ variables.RESOURCE_GROUP }}'
           model_name: '${{ variables.RISK_MODEL_NAME }}'
-          dataset_name: '${{ variables.RISK_DATASET_NAME }}'
           aml_compute_cluster: '${{ variables.AML_COMPUTE_CLUSTER }}'
-          dataset_name: '${{ variables.RISK_MODEL.DATASET_NAME }}'
+          dataset_name: '${{ variables.RISK_MODEL_DATASET_NAME }}'
 
   - stage: RegisterModel
     displayName: Register the model
@@ -42,7 +41,7 @@ stages:
       - template: ../../recipes/cd/DeployToTest.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.RISK_MODEL.ACI_SERVICE_NAME }}'
+          service_name: '${{ variables.RISK_MODEL-ACI_SERVICE_NAME }}'
           workspace: '${{ variables.WORKSPACE }}'
           resource_group: '${{ variables.RESOURCE_GROUP }}'
           model_name: '${{ variables.RISK_MODEL_NAME }}'
@@ -58,7 +57,7 @@ stages:
       - template: ../../recipes/cd/DeployToProd.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.RISK_MODEL.ACI_SERVICE_NAME }}'
+          service_name: '${{ variables.RISK_MODEL-AKS_SERVICE_NAME }}'
           workspace: '${{ variables.WORKSPACE }}'
           resource_group: '${{ variables.RESOURCE_GROUP }}'
           model_name: '${{ variables.RISK_MODEL_NAME }}'
