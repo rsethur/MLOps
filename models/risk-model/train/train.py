@@ -17,8 +17,6 @@ from sklearn.preprocessing import StandardScaler
 
 from azureml.core import Dataset
 
-from azureml.pipeline.core import Pipeline, PipelineData
-
 def main():
 
     model_name, dataset_name = getRuntimeArgs()
@@ -36,11 +34,7 @@ def main():
         dataset_filename = os.environ.get("DATASET_FILE_NAME", )
         credit_data_df = pd.read_csv("dataset/" +dataset_filename)
     else:
-        # get input dataset by name
-        print("**** Bef4: ",run.experiment.workspace)
-        print("**** Bef42: ",run.experiment.workspace_object)
-        dataset = Dataset.get_by_name(workspace=Run.get_context().experiment.workspace, name=dataset_name)
-        print("after")
+        dataset = Dataset.get_by_name(workspace=run.experiment.workspace, name=dataset_name)
         #dataset = run.input_datasets[dataset_name]
         credit_data_df = dataset.to_pandas_dataframe()
 
