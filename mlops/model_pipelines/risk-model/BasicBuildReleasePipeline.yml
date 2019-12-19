@@ -4,7 +4,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - template: ../recipes/common/Variables.yml
+  - template: ../../recipes/common/Variables.yml
 
 stages:
 

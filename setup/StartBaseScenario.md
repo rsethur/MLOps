@@ -27,7 +27,8 @@ This step will create the cloud environment and provision all the required servi
 2. In the left panel click `Dataset` -> `Create Dataset` -> `from web files` 
     1. Paste this url `https://raw.githubusercontent.com/rsethur/MLOps/master/dataset/german_credit_data.csv`
     2. __Important__ Change dataset name to `credit_dataset`
-    3. Follow the onscreen instructions by clicking `Next` till completion
+    3. If a `CORS error` shows up, open the page and check all boxes in the `Allowed methods` drop down. 
+    4. Follow the onscreen instructions by clicking `Next` till completion
     
 ## Section 4: Run the Build Release pipeline
 Now we can run training & automate the deployment by running the build release pipeline.
