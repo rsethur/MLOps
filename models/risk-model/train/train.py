@@ -37,7 +37,10 @@ def main():
         credit_data_df = pd.read_csv("dataset/" +dataset_filename)
     else:
         # get input dataset by name
-        dataset = Dataset.get_by_name(Run.get_context().experiment.workspace, dataset_name)
+        print("**** Bef4: ",run.experiment.workspace)
+        print("**** Bef42: ",run.experiment.workspace_object)
+        dataset = Dataset.get_by_name(workspace=Run.get_context().experiment.workspace, name=dataset_name)
+        print("after")
         #dataset = run.input_datasets[dataset_name]
         credit_data_df = dataset.to_pandas_dataframe()
 
