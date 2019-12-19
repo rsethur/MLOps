@@ -21,7 +21,7 @@ jobs:
       source_directory_var: ${{ coalesce(parameters.source_directory ,  variables.default_source_directory) }}
       # source directory
       default_entry_script: models/${{ parameters.model_name }}/train.py
-      script_var: ${{ coalesce(parameters.entry_script ,  variables.default_entry_script) }}
+      entry_script_var: ${{ coalesce(parameters.entry_script ,  variables.default_entry_script) }}
 
     steps:
       - task: AzureCLI@1
