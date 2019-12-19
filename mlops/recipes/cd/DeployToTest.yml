@@ -3,12 +3,19 @@ parameters:
   workspace: ''
   resource_group: ''
   model_name: ''
-  inference_config: models/${{ parameters.model_name }}/score/InferenceConfig.yml
-  deployment_config: models/${{ parameters.model_name }}/score/deploymentConfig.yml
+  inference_config: ''
+  deployment_config: ''
   model_metadata_artifact: 'model-metadata'
 
 jobs:
-  - job: DeployDevJob
+  - job: DeployToTest
+    variables:
+      default_inference_config: models/${{ parameters.model_name }}/score/InferenceConfig.yml
+      inference_config_var: ${{ coalesce(parameters.conda_dependencies_file ,  variables.default_conda_dependencies_file) }}
+      # source directory
+      default_deployment_config: models/${{ parameters.model_name }}/score/deploymentConfig.yml
+      deployment_config_var: ${{ coalesce(parameters.source_directory ,  variables.default_source_directory) }}
+
     steps:
       - task: AzureCLI@1
         displayName: 'Install the CLI'

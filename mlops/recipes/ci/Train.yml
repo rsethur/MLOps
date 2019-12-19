@@ -18,10 +18,10 @@ jobs:
       conda_dependencies_file_var: ${{ coalesce(parameters.conda_dependencies_file ,  variables.default_conda_dependencies_file) }}
       # source directory
       default_source_directory: models/${{ parameters.model_name }}/train
-      default_source_directory_var: ${{ coalesce(parameters.source_directory ,  variables.default_source_directory) }}
+      source_directory_var: ${{ coalesce(parameters.source_directory ,  variables.default_source_directory) }}
       # source directory
       default_entry_script: models/${{ parameters.model_name }}/train.py
-      default_entry_script_var: ${{ coalesce(parameters.entry_script ,  variables.default_entry_script) }}
+      script_var: ${{ coalesce(parameters.entry_script ,  variables.default_entry_script) }}
 
     steps:
       - task: AzureCLI@1
