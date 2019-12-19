@@ -34,7 +34,7 @@ jobs:
         inputs:
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml run submit-script --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} -e ${{ parameters.model_name }}-experiment -d ${{ variables.conda_dependencies_file_var }} --ct ${{ parameters.aml_compute_cluster }} --source-directory ${{ variables.source_directory_var }} -t run.json ${{ parameters.entry_script }} --MODEL_NAME ${{ parameters.model_name }} --DATASET_NAME ${{ parameters.dataset_name }}'
+          inlineScript: 'az ml run submit-script --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} -e ${{ parameters.model_name }}-exp -d ${{ variables.conda_dependencies_file_var }} --ct ${{ parameters.aml_compute_cluster }} --source-directory ${{ variables.source_directory_var }} -t run.json ${{ parameters.entry_script }} --MODEL_NAME ${{ parameters.model_name }} --DATASET_NAME ${{ parameters.dataset_name }}'
 
       - publish: $(System.DefaultWorkingDirectory)/run.json
         displayName: Publish run metadata artifact
