@@ -1,3 +1,5 @@
+name: Build Release Pipeline - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
 trigger: none
 
 pool:
