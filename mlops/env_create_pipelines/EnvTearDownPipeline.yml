@@ -1,3 +1,5 @@
+name: Environment Teardown Pipeline - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
 trigger: none
 
 pool:
