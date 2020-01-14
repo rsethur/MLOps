@@ -19,5 +19,5 @@ stages:
           workspace: '${{ variables.WORKSPACE }}'
           resource_group: '${{ variables.RESOURCE_GROUP }}'
           model_name: '${{ variables.RISK_MODEL_NAME }}'
-          aml_pipeline_yaml_path: models/risk-model/batch_score/pipeline/AMLBatchPipeline.yml
+          aml_pipeline_yml_path: models/risk-model/batch_score/pipeline/AMLBatchPipeline.yml
           aml_pipeline_name: risk-batch-pipeline

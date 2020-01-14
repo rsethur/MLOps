@@ -14,6 +14,8 @@ def get_workspace():
     app_secret = os.environ.get("SP_APP_SECRET")
 
     print("TENANT_ID: ", tenant_id)
+    if tenant_id=="72f988bf-86f1-41af-91ab-2d7cd011db47":
+        print("YES")
     print("workspace_name: ", workspace_name)
     print("app_id: ", app_id)
 
