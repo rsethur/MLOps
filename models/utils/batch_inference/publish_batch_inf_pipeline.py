@@ -14,10 +14,7 @@ def main():
     load_dotenv()
     ws = AzureMLUtils.get_workspace()
     print("got workspace")
-    pipeline_yaml_path = os.environ.get("AML_PIPELINE_YML_PATH")
-    pipeline_name = os.environ.get("AML_PIPELINE_NAME")
-    print("pipeline_yaml_path: ",pipeline_yaml_path)
-    print("pipeline_name: ",pipeline_name)
+    pipeline_yaml_path, pipeline_name = getRuntimeArgs()
     #script_yaml = "models/risk-model/batch_score/pipeline/AMLBatchPipeline.yml"
     pipeline = Pipeline.load_yaml(ws, filename=pipeline_yaml_path)
     pipeline.publish(pipeline_name)
@@ -27,7 +24,7 @@ def getRuntimeArgs():
     parser.add_argument('--AML_PIPELINE_YML_PATH', type=str)
     parser.add_argument('--AML_PIPELINE_NAME', type=str)
     args = parser.parse_args()
-    return args.MODEL_NAME, args.DATASET_NAME
+    return args.AML_PIPELINE_YML_PATH, args.AML_PIPELINE_NAME
 
 if __name__ == "__main__":
     main()
