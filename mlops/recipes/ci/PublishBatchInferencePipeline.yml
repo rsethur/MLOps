@@ -19,6 +19,6 @@ jobs:
     - script: pip install azureml-sdk azureml-contrib-pipeline-steps
       displayName: 'Install libraries'
 
-    - script: python -m models/utils/batch_inference/publish_batch_inf_pipeline.py
+    - script: python -m models.utils.batch_inference.publish_batch_inf_pipeline
       workingDirectory: $(Build.SourcesDirectory)
       displayName: "Register batch inference pipeline"
