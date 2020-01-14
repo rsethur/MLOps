@@ -16,7 +16,7 @@ jobs:
       inputs:
         versionSpec: '3.6'
 
-    - script: pip install azureml-sdk azureml-contrib-pipeline-steps
+    - script: pip install azureml-sdk azureml-contrib-pipeline-steps python-dotenv
       displayName: 'Install libraries'
 
     - script: python -m models.utils.batch_inference.publish_batch_inf_pipeline
