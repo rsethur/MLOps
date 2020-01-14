@@ -1,8 +1,7 @@
-"""
-NOTE: This is a stopgap fix CLI support is released for batch inference. For python program to look up workspace
-we need to define the following variables in Azure Devops under MLOPSVG Variable group:
-SUBSCRIPTION_ID, TENANT_ID, SP_APP_ID, SP_APP_SECRET
-"""
+#NOTE: This is a stopgap fix CLI support is released for batch inference. For python program to look up workspace
+#we need to define the following variables in Azure Devops under MLOPSVG Variable group:
+#SUBSCRIPTION_ID, TENANT_ID, SP_APP_ID, SP_APP_SECRET
+
 parameters:
   rm_service_connection: ''
   workspace: ''
