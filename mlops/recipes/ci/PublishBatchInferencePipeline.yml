@@ -30,6 +30,7 @@ jobs:
       displayName: 'Publish Batch Inference Pipeline'
       inputs:
         azureSubscription: ${{ parameters.rm_service_connection }}
+        scriptType: bash
         workingDirectory: $(Build.SourcesDirectory)
         scriptLocation: inlineScript
         inlineScript: 'python -m models.utils.batch_inference.publish_batch_inf_pipeline'
