@@ -10,7 +10,7 @@ parameters:
   aml_pipeline_name: ''
 
 jobs:
-  - job: BatchInferencePipelineRegister
+  - job: BatchInferencePipelinePublish
     steps:
     - task: AzureCLI@1
       displayName: 'Install the CLI'
@@ -27,12 +27,12 @@ jobs:
       displayName: 'Install libraries'
 
     - task: AzureCLI@2
-      displayName: 'Run training'
+      displayName: 'Publish Batch Inference Pipeline'
       inputs:
         azureSubscription: ${{ parameters.rm_service_connection }}
         workingDirectory: $(Build.SourcesDirectory)
         scriptLocation: inlineScript
-        inlineScript: ' python -m models.utils.batch_inference.publish_batch_inf_pipeline'
+        inlineScript: 'python -m models.utils.batch_inference.publish_batch_inf_pipeline'
 
     #- script: python -m models.utils.batch_inference.publish_batch_inf_pipeline
     #  workingDirectory: $(Build.SourcesDirectory)
