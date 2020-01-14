@@ -33,8 +33,6 @@ jobs:
       inputs:
         scriptSource: inline
         script: print("##vso[task.setvariable variable=PIPELINE_ID]","87744497-04b1-4d6c-ad8e-519e84a4ca1c")
-       workingDirectory: $(Build.SourcesDirectory)
-       displayName: 'Publish Batch Inference Pipeline'
 
     - bash: python -m models.utils.batch_inference.run_batch_inf_pipeline --PIPELINE_ID $(PIPELINE_ID)
       workingDirectory: $(Build.SourcesDirectory)
