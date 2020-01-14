@@ -27,12 +27,12 @@ jobs:
       displayName: 'Install libraries'
 
     - task: AzureCLI@1
-        displayName: 'Run training'
-        workingDirectory: $(Build.SourcesDirectory)
-        inputs:
-          azureSubscription: ${{ parameters.rm_service_connection }}
-          scriptLocation: inlineScript
-          inlineScript: ' python -m models.utils.batch_inference.publish_batch_inf_pipeline'
+      displayName: 'Run training'
+      workingDirectory: $(Build.SourcesDirectory)
+      inputs:
+        azureSubscription: ${{ parameters.rm_service_connection }}
+        scriptLocation: inlineScript
+        inlineScript: ' python -m models.utils.batch_inference.publish_batch_inf_pipeline'
 
     #- script: python -m models.utils.batch_inference.publish_batch_inf_pipeline
     #  workingDirectory: $(Build.SourcesDirectory)
