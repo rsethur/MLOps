@@ -30,6 +30,6 @@ jobs:
       workingDirectory: $(Build.SourcesDirectory)
       displayName: 'Publish Batch Inference Pipeline'
 
-    - bash: 'python -m models.utils.batch_inference.run_batch_inf_pipeline --AML_PIPELINE_YML_PATH ${{ parameters.aml_pipeline_yml_path }} --AML_PIPELINE_NAME ${{ parameters.aml_pipeline_name }}'
-        workingDirectory: $(Build.SourcesDirectory)
-        displayName: 'Publish Batch Inference Pipeline'
+    - bash: 'python -m models.utils.batch_inference.run_batch_inf_pipeline'
+      workingDirectory: $(Build.SourcesDirectory)
+      displayName: 'Run Batch Inference Pipeline'
