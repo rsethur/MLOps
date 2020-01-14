@@ -13,11 +13,11 @@ jobs:
   - job: BatchInferencePipelineRegister
     steps:
     - task: AzureCLI@1
-        displayName: 'Install the CLI'
-        inputs:
-          azureSubscription: ${{ parameters.rm_service_connection }}
-          scriptLocation: inlineScript
-          inlineScript: 'az extension add -n azure-cli-ml'
+      displayName: 'Install the CLI'
+      inputs:
+        azureSubscription: ${{ parameters.rm_service_connection }}
+        scriptLocation: inlineScript
+        inlineScript: 'az extension add -n azure-cli-ml'
 
     - task: UsePythonVersion@0
       inputs:
