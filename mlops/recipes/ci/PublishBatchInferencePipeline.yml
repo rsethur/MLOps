@@ -28,9 +28,9 @@ jobs:
 
     - task: AzureCLI@2
       displayName: 'Run training'
-      workingDirectory: $(Build.SourcesDirectory)
       inputs:
         azureSubscription: ${{ parameters.rm_service_connection }}
+        workingDirectory: $(Build.SourcesDirectory)
         scriptLocation: inlineScript
         inlineScript: ' python -m models.utils.batch_inference.publish_batch_inf_pipeline'
 
