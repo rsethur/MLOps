@@ -8,7 +8,7 @@ def main():
     load_dotenv()
     ws = AzureMLUtils.get_workspace()
     print("got workspace")
-    pipeline_id = os.environ.get("PIPELINE_ID")
+    pipeline_id = "87744497-04b1-4d6c-ad8e-519e84a4ca1c"
     print("PIPELINE_ID !!!!: ",pipeline_id)
     published_pipeline = PublishedPipeline.get(workspace=ws, id=pipeline_id)
     pipeline_run = Experiment(ws, 'batch-run-code').submit(published_pipeline)
