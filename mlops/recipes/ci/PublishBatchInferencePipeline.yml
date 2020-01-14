@@ -26,7 +26,7 @@ jobs:
     - script: pip install azureml-sdk azureml-contrib-pipeline-steps python-dotenv
       displayName: 'Install libraries'
 
-    - task: AzureCLI@1
+    - task: AzureCLI@2
       displayName: 'Run training'
       workingDirectory: $(Build.SourcesDirectory)
       inputs:
