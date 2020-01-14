@@ -1,4 +1,4 @@
-#NOTE: This is a stopgap fix CLI support is released for batch inference. For python program to look up workspace
+#NOTE: This is a stopgap fix until CLI support is released for batch inference. For python program to look up workspace
 #we need to define the following variables in Azure Devops under MLOPSVG Variable group:
 #SUBSCRIPTION_ID, TENANT_ID, SP_APP_ID, SP_APP_SECRET
 
@@ -12,6 +12,13 @@ parameters:
 jobs:
   - job: BatchInferencePipelineRegister
     steps:
+    - task: AzureCLI@1
+        displayName: 'Install the CLI'
+        inputs:
+          azureSubscription: ${{ parameters.rm_service_connection }}
+          scriptLocation: inlineScript
+          inlineScript: 'az extension add -n azure-cli-ml'
+
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '3.6'
@@ -19,6 +26,14 @@ jobs:
     - script: pip install azureml-sdk azureml-contrib-pipeline-steps python-dotenv
       displayName: 'Install libraries'
 
-    - script: python -m models.utils.batch_inference.publish_batch_inf_pipeline
-      workingDirectory: $(Build.SourcesDirectory)
-      displayName: "Register batch inference pipeline"
+    - task: AzureCLI@1
+        displayName: 'Run training'
+        workingDirectory: $(Build.SourcesDirectory)
+        inputs:
+          azureSubscription: ${{ parameters.rm_service_connection }}
+          scriptLocation: inlineScript
+          inlineScript: ' python -m models.utils.batch_inference.publish_batch_inf_pipeline'
+
+    #- script: python -m models.utils.batch_inference.publish_batch_inf_pipeline
+    #  workingDirectory: $(Build.SourcesDirectory)
+    #  displayName: "Register batch inference pipeline"

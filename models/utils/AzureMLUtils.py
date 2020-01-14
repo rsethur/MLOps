@@ -13,6 +13,8 @@ def get_workspace():
     app_id = os.environ.get("SP_APP_ID")
     app_secret = os.environ.get("SP_APP_SECRET")
 
+    print("TENANT_ID: ", tenant_id)
+
     service_principal = ServicePrincipalAuthentication(
         tenant_id=tenant_id,
         service_principal_id=app_id,

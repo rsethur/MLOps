@@ -15,6 +15,8 @@ def main():
     print("got workspace")
     pipeline_yaml_path = os.environ.get("AML_PIPELINE_YAML_PATH")
     pipeline_name = os.environ.get("AML_PIPELINE_NAME")
+    print("pipeline_yaml_path: ",pipeline_yaml_path)
+    print("pipeline_name: ",pipeline_name)
     #script_yaml = "models/risk-model/batch_score/pipeline/AMLBatchPipeline.yml"
     pipeline = Pipeline.load_yaml(ws, filename=pipeline_yaml_path)
     pipeline.publish(pipeline_name)

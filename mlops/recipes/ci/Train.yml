@@ -22,7 +22,7 @@ jobs:
       source_directory_var: ${{ coalesce(parameters.source_directory ,  variables.default_source_directory) }}
 
     steps:
-      - bash: echo yay - ${{ parameters.model_name }}
+      - bash: echo Model Name- ${{ parameters.model_name }}
       - task: AzureCLI@1
         displayName: 'Install the CLI'
         inputs:
