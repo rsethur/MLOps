@@ -14,7 +14,7 @@ jobs:
     steps:
     - task: UsePythonVersion@0
       inputs:
-        versionSpec: '3.6.2'
+        versionSpec: '3.6'
 
     - script: pip install azureml-sdk azureml-contrib-pipeline-steps
       displayName: 'Install libraries'
