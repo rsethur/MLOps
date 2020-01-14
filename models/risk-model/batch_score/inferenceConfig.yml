@@ -1,9 +1,0 @@
-entryScript: models/score/batch_score.py
-runtime: python
-condaFile: models/risk-model/batch_score/conda_dependencies.yml
-extraDockerfileSteps:
-schemaFile:
-sourceDirectory:
-enableGpu: False
-baseImage:
-baseImageRegistry:

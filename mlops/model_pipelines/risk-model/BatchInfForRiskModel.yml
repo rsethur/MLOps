@@ -1,0 +1,23 @@
+name: Build Release Pipeline - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - template: ../../recipes/common/Variables.yml
+  - group: MLOPSVG
+
+stages:
+  - stage: PublishAndRunBatchInference
+    displayName: Publish and run the batch inference pipeline
+    jobs:
+      - template: ../../recipes/ci/PublishBatchInferencePipeline.yml
+        parameters:
+          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          workspace: '${{ variables.WORKSPACE }}'
+          resource_group: '${{ variables.RESOURCE_GROUP }}'
+          model_name: '${{ variables.RISK_MODEL_NAME }}'
+          aml_pipeline_yaml_path: models/risk-model/batch_score/pipeline/AMLBatchPipeline.yml
+          aml_pipeline_name: risk-batch-pipeline

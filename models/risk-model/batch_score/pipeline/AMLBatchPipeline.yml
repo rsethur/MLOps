@@ -1,0 +1,22 @@
+pipeline:
+    description: BatchScoringPipeline
+    default_compute: amlcluster
+    steps:
+        Step1:
+            parallel_run_config: "models/risk-model/batch_score/pipeline/parallel_run_config.yml"
+            type: "ParallelRunStep"
+            name: "risk-model-prs"
+            allow_reuse: False
+            arguments:
+                - "--progress_update_timeout"
+                - "1500"
+            models_id:
+                - risk-model:1
+            input_datasets:
+                MyMinistInput:
+                    dataset_name: credit_dataset
+            outputs:
+                OutputData:
+                    destination: risk_model_output
+                    datastore: workspaceblobstore
+                    bind_mode: mount
