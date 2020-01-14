@@ -5,7 +5,7 @@ pipeline:
         Step1:
             parallel_run_config: "models/risk-model/batch_score/pipeline/parallel_run_config.yml"
             type: "ParallelRunStep"
-            name: "risk-model-prs"
+            name: "riskmodel-prs"
             allow_reuse: False
             arguments:
                 - "--progress_update_timeout"
