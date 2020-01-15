@@ -39,4 +39,4 @@ stages:
           model_name: '${{ variables.RISK_MODEL_NAME }}'
           model_version: '1'
           aks_cluster: '${{ variables.AKS_CLUSTER }}'
-          overwrite: false
+          overwrite: true
