@@ -1,4 +1,3 @@
-import os
 import argparse
 from azureml.pipeline.core import PublishedPipeline
 from azureml.core import Experiment
