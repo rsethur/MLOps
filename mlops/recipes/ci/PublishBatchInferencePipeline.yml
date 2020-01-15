@@ -36,7 +36,7 @@ jobs:
 #      workingDirectory: $(Build.SourcesDirectory)
 #      displayName: 'Run Batch Inference Pipeline'
   - ${{ if eq(parameters.run_pipeline, 'true') }}:
-    - template: ../../recipes/ci/RunPipeline.yml
+    - template: ../../recipes/cd/RunPipeline.yml
       parameters:
         rm_service_connection: '${{ parameters.rm_service_connection }}'
         workspace: '${{ parameters.workspace }}'
