@@ -22,9 +22,11 @@ jobs:
 
       model_id: ${{ parameters.model_name }}:${{ parameters.model_version }}
 
-      overwrite_cli: ' '
       ${{ if eq(parameters.overwrite, true) }}:
         overwrite_cli: '--overwrite'
+
+      ${{ if eq(parameters.overwrite, false) }}:
+        overwrite_cli: ' '
 
     steps:
       - task: AzureCLI@2
