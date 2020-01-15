@@ -7,6 +7,7 @@ parameters:
   model_version: ''
   inference_config: ''
   deployment_config: ''
+  overwrite: false
 
 jobs:
   - job: DeployToACI
@@ -20,17 +21,25 @@ jobs:
 
       model_id: ${{ parameters.model_name }}:${{ parameters.model_version }}
 
+      ${{ if eq(parameters.overwrite, true) }}:
+        overwrite_cli: '--overwrite'
+
+      ${{ if eq(parameters.overwrite, false) }}:
+        overwrite_cli: ' '
+
     steps:
-      - task: AzureCLI@1
+      - task: AzureCLI@2
         displayName: 'Install the CLI'
         inputs:
+          scriptType: bash
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
           inlineScript: 'az extension add -n azure-cli-ml'
 
-      - task: AzureCLI@1
+      - task: AzureCLI@2
+        scriptType: bash
         displayName: 'Deploy the model to ACI'
         inputs:
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml model deploy -n ${{ parameters.service_name }} -m $(model_id) --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }}'
+          inlineScript: az ml model deploy -n ${{ parameters.service_name }} -m $(model_id) --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} $(overwrite_cli)
