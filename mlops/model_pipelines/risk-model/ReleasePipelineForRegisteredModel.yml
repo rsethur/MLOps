@@ -24,7 +24,7 @@ stages:
           overwrite: false
 
   - stage: DeployToProd
-    displayName: Deploy to Prod with approval
+    displayName: Deploy to Prod (AKS)
     jobs:
       # Perform an empty deploy job for approval (This is the way in Azure Devops)
       - deployment: Approval
