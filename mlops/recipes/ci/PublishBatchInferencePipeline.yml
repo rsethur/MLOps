@@ -9,6 +9,7 @@ parameters:
   aml_pipeline_yml_path: ''
   aml_pipeline_name: ''
   run_pipeline: ''
+  run_experiment_name: '' #This needs to be passed only when run_pipeline is true
 
 jobs:
   - job: BatchInferencePipelinePublish
@@ -42,3 +43,4 @@ jobs:
           workspace: '${{ parameters.workspace }}'
           resource_group: '${{ parameters.resource_group }}'
           pipeline_id: '$(PIPELINE_ID)'
+          run_experiment_name: '${{ parameters.run_experiment_name }}'
