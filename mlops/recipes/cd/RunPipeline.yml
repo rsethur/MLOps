@@ -5,7 +5,7 @@ parameters:
   pipeline_id: ''
   experiment_name: ''
 
-steps:
+#steps:
 - task: AzureCLI@1
   displayName: 'Install the CLI'
   inputs:
