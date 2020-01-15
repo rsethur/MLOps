@@ -3,7 +3,8 @@ parameters:
   service_name: ''
   workspace: ''
   resource_group: ''
-  model_id: ''
+  model_name: ''
+  model_version: ''
   aks_cluster: ''
   inference_config: ''
   deployment_config: ''
@@ -17,6 +18,8 @@ jobs:
       # source directory
       default_deployment_config: models/${{ parameters.model_name }}/score/aks_deployment_config.yml
       deployment_config_var: ${{ coalesce(parameters.deployment_config ,  variables.default_deployment_config) }}
+
+      model_id: ${{ parameters.model_name }}:${{ parameters.model_version }}
 
     steps:
       - task: AzureCLI@1

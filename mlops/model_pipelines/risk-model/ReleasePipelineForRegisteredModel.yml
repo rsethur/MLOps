@@ -19,7 +19,8 @@ stages:
           service_name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
           workspace: '${{ variables.WORKSPACE }}'
           resource_group: '${{ variables.RESOURCE_GROUP }}'
-          model_id: '${{ variables.RISK_MODEL_NAME }}:1'
+          model_name: '${{ variables.RISK_MODEL_NAME }}'
+          model_version: '1'
 
   - stage: DeployToProd
     displayName: Deploy to Prod with approval
@@ -35,5 +36,6 @@ stages:
           service_name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
           workspace: '${{ variables.WORKSPACE }}'
           resource_group: '${{ variables.RESOURCE_GROUP }}'
-          model_id: '${{ variables.RISK_MODEL_NAME }}:1'
+          model_name: '${{ variables.RISK_MODEL_NAME }}'
+          model_version: '1'
           aks_cluster: '${{ variables.AKS_CLUSTER }}'
