@@ -33,11 +33,6 @@ jobs:
       workingDirectory: $(Build.SourcesDirectory)
       displayName: 'Publish Batch Inference Pipeline'
 
-#    - bash: python -m models.utils.batch_inference.run_batch_inf_pipeline --PIPELINE_ID $(PIPELINE_ID)
-#      condition: eq('${{ parameters.doThing }}', true)
-#      workingDirectory: $(Build.SourcesDirectory)
-#      displayName: 'Run Batch Inference Pipeline'
-  #- ${{ if eq(parameters.run_pipeline, 'true') }}:
   - job: RunPipelineJob
     dependsOn: BatchInferencePipelinePublish
     condition: eq('${{ parameters.run_pipeline }}', true)
