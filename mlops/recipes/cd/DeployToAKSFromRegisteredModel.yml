@@ -1,0 +1,34 @@
+parameters:
+  rm_service_connection: ''
+  service_name: ''
+  workspace: ''
+  resource_group: ''
+  model_id: ''
+  aks_cluster: ''
+  inference_config: ''
+  deployment_config: ''
+
+jobs:
+  - job: DeployToAKS
+
+    variables:
+      default_inference_config: models/${{ parameters.model_name }}/score/inference_config.yml
+      inference_config_var: ${{ coalesce(parameters.inference_config ,  variables.default_inference_config) }}
+      # source directory
+      default_deployment_config: models/${{ parameters.model_name }}/score/aks_deployment_config.yml
+      deployment_config_var: ${{ coalesce(parameters.deployment_config ,  variables.default_deployment_config) }}
+
+    steps:
+      - task: AzureCLI@1
+        displayName: 'Install the CLI'
+        inputs:
+          azureSubscription: ${{ parameters.rm_service_connection }}
+          scriptLocation: inlineScript
+          inlineScript: 'az extension add -n azure-cli-ml'
+
+      - task: AzureCLI@1
+        displayName: 'Deploy the model to AKS'
+        inputs:
+          azureSubscription: ${{ parameters.rm_service_connection }}
+          scriptLocation: inlineScript
+          inlineScript: 'az ml model deploy -n ${{ parameters.service_name }} -m ${{ parameters.model_id }} --ct ${{ parameters.aks_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }}'
