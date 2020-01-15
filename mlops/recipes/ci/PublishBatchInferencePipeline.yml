@@ -29,6 +29,7 @@ jobs:
       displayName: 'Install libraries'
 
     - bash: 'python -m models.utils.batch_inference.publish_batch_inf_pipeline --AML_PIPELINE_YML_PATH ${{ parameters.aml_pipeline_yml_path }} --AML_PIPELINE_NAME ${{ parameters.aml_pipeline_name }}'
+      name: publishScript
       workingDirectory: $(Build.SourcesDirectory)
       displayName: 'Publish Batch Inference Pipeline'
 
@@ -36,11 +37,17 @@ jobs:
 #      condition: eq('${{ parameters.doThing }}', true)
 #      workingDirectory: $(Build.SourcesDirectory)
 #      displayName: 'Run Batch Inference Pipeline'
-    - ${{ if eq(parameters.run_pipeline, 'true') }}:
-      - template: ../../recipes/cd/RunPipeline.yml
-        parameters:
-          rm_service_connection: '${{ parameters.rm_service_connection }}'
-          workspace: '${{ parameters.workspace }}'
-          resource_group: '${{ parameters.resource_group }}'
-          pipeline_id: '$(PIPELINE_ID)'
-          run_experiment_name: '${{ parameters.run_experiment_name }}'
+  #- ${{ if eq(parameters.run_pipeline, 'true') }}:
+  - job: RunPipelineJob
+    dependsOn: BatchInferencePipelinePublish
+    condition: eq('${{ parameters.run_pipeline }}', true)
+    variables:
+      pipe_id: $[ dependencies.BatchInferencePipelinePublish.outputs['publishScript.PIPELINE_ID'] ]
+    - template: ../../recipes/cd/RunPipeline.yml
+      parameters:
+        rm_service_connection: '${{ parameters.rm_service_connection }}'
+        workspace: '${{ parameters.workspace }}'
+        resource_group: '${{ parameters.resource_group }}'
+        pipeline_id: '$(pipe_id)'
+        run_experiment_name: '${{ parameters.run_experiment_name }}'
+

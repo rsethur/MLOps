@@ -22,7 +22,7 @@ def main():
 
     # This line is needed to for Azure Devops to set PIPELINE_ID as environment variable.
     # This is needed in the next step (if there is need to run the pipeline)
-    print("##vso[task.setvariable variable=PIPELINE_ID]",published_pipeline.id)
+    print("##vso[task.setvariable variable=PIPELINE_ID;isOutput=true]",published_pipeline.id)
 
 def getRuntimeArgs():
     parser = argparse.ArgumentParser()
