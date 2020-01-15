@@ -29,7 +29,7 @@ stages:
         displayName: Approval for rolling out to production
         environment: 'Prod'
 
-      - template: ../../recipes/cd/DeployToAKSRegisteredModel.yml
+      - template: ../../recipes/cd/DeployToAKSRegisteredFromModel.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           service_name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
