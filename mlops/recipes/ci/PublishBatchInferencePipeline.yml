@@ -43,4 +43,4 @@ jobs:
           workspace: '${{ parameters.workspace }}'
           resource_group: '${{ parameters.resource_group }}'
           pipeline_id: '$(PIPELINE_ID)'
-          run_experiment_name: '${{ parameters.run_experiment_name }}'
+          experiment_name: '${{ parameters.run_experiment_name }}'
