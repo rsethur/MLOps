@@ -40,7 +40,7 @@ stages:
   - stage: DeployToTest
     displayName: Deploy model to Test (Azure Container Instance)
     jobs:
-      - template: ../../recipes/cd/DeployToTest.yml
+      - template: ../../recipes/cd/DeployToACIFromMetadata.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           service_name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
@@ -56,7 +56,7 @@ stages:
         displayName: Approval for rolling out to production
         environment: 'Prod'
 
-      - template: ../../recipes/cd/DeployToProd.yml
+      - template: ../../recipes/cd/DeployToAKSFromMetadata.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           service_name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'

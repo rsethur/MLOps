@@ -1,22 +1,20 @@
 parameters:
   rm_service_connection: ''
-  service_name: 'aks-svc'
+  service_name: ''
   workspace: ''
   resource_group: ''
   model_name: ''
-  aks_cluster: ''
   inference_config: ''
   deployment_config: ''
   model_metadata_artifact: 'model-metadata'
 
 jobs:
-  - job: DeployProdJob
-
+  - job: DeployToACI
     variables:
-      default_inference_config: models/${{ parameters.model_name }}/score/inference_config.yml
+      default_inference_config: $(Build.SourcesDirectory)/models/${{ parameters.model_name }}/score/inference_config.yml
       inference_config_var: ${{ coalesce(parameters.inference_config ,  variables.default_inference_config) }}
       # source directory
-      default_deployment_config: models/${{ parameters.model_name }}/score/aks_deployment_config.yml
+      default_deployment_config: $(Build.SourcesDirectory)/models/${{ parameters.model_name }}/score/aci_deployment_config.yml
       deployment_config_var: ${{ coalesce(parameters.deployment_config ,  variables.default_deployment_config) }}
 
     steps:
@@ -32,8 +30,8 @@ jobs:
         artifact: ${{ parameters.model_metadata_artifact }}
 
       - task: AzureCLI@1
-        displayName: 'Deploy the model to AKS'
+        displayName: 'Deploy the model to ACI'
         inputs:
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml model deploy -n ${{ parameters.service_name }} --ct ${{ parameters.aks_cluster }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }}'
+          inlineScript: 'az ml model deploy -n ${{ parameters.service_name }} -f $(Pipeline.Workspace)/model-metadata/model.json --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --overwrite --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }}'
