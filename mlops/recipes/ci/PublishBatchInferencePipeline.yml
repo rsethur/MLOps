@@ -35,10 +35,11 @@ jobs:
 #      condition: eq('${{ parameters.doThing }}', true)
 #      workingDirectory: $(Build.SourcesDirectory)
 #      displayName: 'Run Batch Inference Pipeline'
-  - ${{ if eq(parameters.run_pipeline, 'true') }}:
-    - template: ../../recipes/cd/RunPipeline.yml
-      parameters:
-        rm_service_connection: '${{ parameters.rm_service_connection }}'
-        workspace: '${{ parameters.workspace }}'
-        resource_group: '${{ parameters.resource_group }}'
-        pipeline_id: '$(PIPELINE_ID)'
+    - task:
+      - ${{ if eq(parameters.run_pipeline, 'true') }}:
+        - template: ../../recipes/cd/RunPipeline.yml
+          parameters:
+            rm_service_connection: '${{ parameters.rm_service_connection }}'
+            workspace: '${{ parameters.workspace }}'
+            resource_group: '${{ parameters.resource_group }}'
+            pipeline_id: '$(PIPELINE_ID)'
