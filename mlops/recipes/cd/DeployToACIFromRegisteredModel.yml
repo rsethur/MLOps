@@ -9,6 +9,14 @@ parameters:
 
 jobs:
   - job: DeployToACI
+    
+    variables:
+      default_inference_config: $(Build.SourcesDirectory)/models/${{ parameters.model_name }}/score/inference_config.yml
+      inference_config_var: ${{ coalesce(parameters.inference_config ,  variables.default_inference_config) }}
+      # source directory
+      default_deployment_config: $(Build.SourcesDirectory)/models/${{ parameters.model_name }}/score/aci_deployment_config.yml
+      deployment_config_var: ${{ coalesce(parameters.deployment_config ,  variables.default_deployment_config) }}
+
     steps:
       - task: AzureCLI@1
         displayName: 'Install the CLI'
