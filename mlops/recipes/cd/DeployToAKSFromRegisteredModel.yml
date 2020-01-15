@@ -23,7 +23,7 @@ jobs:
       model_id: ${{ parameters.model_name }}:${{ parameters.model_version }}
 
       overwrite_cli: ' '
-      ${{ if eq(variables.overwrite_cli, 'true') }}:
+      ${{ if eq(parameters.overwrite, true) }}:
         overwrite_cli: '--overwrite'
 
     steps:
@@ -35,9 +35,10 @@ jobs:
           scriptLocation: inlineScript
           inlineScript: 'az extension add -n azure-cli-ml'
 
-      - task: AzureCLI@1
+      - task: AzureCLI@2
         displayName: 'Deploy the model to AKS'
         inputs:
+          scriptType: bash
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: az ml model deploy -n ${{ parameters.service_name }} -m $(model_id) --ct ${{ parameters.aks_cluster }} --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} $[overwrite_cli]
+          inlineScript: az ml model deploy -n ${{ parameters.service_name }} -m $(model_id) --ct ${{ parameters.aks_cluster }} --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} $(overwrite_cli)
