@@ -29,8 +29,8 @@ jobs:
     steps:
       - task: AzureCLI@2
         displayName: 'Install the CLI'
-        scriptType: bash
         inputs:
+          scriptType: bash
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
           inlineScript: 'az extension add -n azure-cli-ml'
