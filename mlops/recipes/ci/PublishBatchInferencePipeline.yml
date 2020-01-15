@@ -43,7 +43,6 @@ jobs:
     condition: eq('${{ parameters.run_pipeline }}', true)
     variables:
       pipe_id: $[ dependencies.BatchInferencePipelinePublish.outputs['publishScript.PIPELINE_ID'] ]
-    steps:
     - template: ../../recipes/cd/RunPipeline.yml
       parameters:
         rm_service_connection: '${{ parameters.rm_service_connection }}'
