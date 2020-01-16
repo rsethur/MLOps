@@ -1,0 +1,24 @@
+name: Register Pretrained Risk Model - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - template: ../../recipes/common/Variables.yml
+
+stages:
+
+  - stage: RegisterPretrainedRiskModel
+    displayName: Register pretrained risk model
+    jobs:
+      - template: ../../recipes/ci/RegisterPretrainedModel.yml
+        parameters:
+          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          service_name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
+          workspace: '${{ variables.WORKSPACE }}'
+          resource_group: '${{ variables.RESOURCE_GROUP }}'
+          model_framework: 'ScikitLearn'
+          model_version: '0.20.3'
+          model_path: 'models/risk-model/model/risk-model.joblib'

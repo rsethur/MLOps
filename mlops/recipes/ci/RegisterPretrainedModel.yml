@@ -1,0 +1,64 @@
+parameters:
+  rm_service_connection: ''
+  workspace: ''
+  resource_group: ''
+  model_name: ''
+  model_framework: ''
+  model_framework_version: ''
+  model_path: ''
+  sample_input_dataset_id: ''
+  sample_output_dataset_id: ''
+  model_metadata_artifact: 'model-metadata'
+
+variables:
+  # model-framework cli input
+  ${{ if ne(parameters.model_framework, '') }}:
+    model_framework_cli: --model-framework ${{ parameters.model_framework }}
+
+  ${{ if eq(parameters.model_framework, '') }}:
+    model_framework_cli: ' '
+
+  # model-framework-version cli input
+  ${{ if ne(parameters.model_framework_version, '') }}:
+    model_framework_version_cli: --model-framework-version ${{ parameters.model_framework_version }}
+
+  ${{ if eq(parameters.model_framework_version, '') }}:
+    model_framework_version_cli: ' '
+
+  # sample-input-dataset-id cli input
+  ${{ if ne(parameters.sample_input_dataset_id, '') }}:
+    sample_input_dataset_id_cli: --sample-input-dataset-id ${{ parameters.sample_input_dataset_id }}
+
+  ${{ if eq(parameters.sample_input_dataset_id, '') }}:
+    sample_input_dataset_id_cli: ' '
+
+  # sample-output-dataset-id cli input
+  ${{ if ne(parameters.sample_output_dataset_id, '') }}:
+    sample_output_dataset_id_cli: --sample-output-dataset-id ${{ parameters.sample_output_dataset_id }}
+
+  ${{ if eq(parameters.sample_output_dataset_id, '') }}:
+    sample_output_dataset_id_cli: ' '
+
+jobs:
+      - job: RegisterJob
+        displayName: Register the pretrained model
+        steps:
+          - task: AzureCLI@2
+            displayName: 'Install the CLI'
+            inputs:
+              scriptType: bash
+              azureSubscription: ${{ parameters.rm_service_connection }}
+              scriptLocation: inlineScript
+              inlineScript: 'az extension add -n azure-cli-ml'
+
+          - task: AzureCLI@2
+            displayName: 'Register the model'
+            inputs:
+              scriptType: bash
+              azureSubscription: ${{ parameters.rm_service_connection }}
+              scriptLocation: inlineScript
+              inlineScript: az ml model register -n ${{ parameters.model_name }} -p ${{ parameters.model_path }} --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} -t model.json $(model_framework_cli) $(model_framework_version_cli) $(sample_input_dataset_id_cli) $(sample_output_dataset_id_cli)
+
+          - publish: $(System.DefaultWorkingDirectory)/model.json
+            displayName: Publish model metadata artifact
+            artifact: ${{ parameters.model_metadata_artifact }}
