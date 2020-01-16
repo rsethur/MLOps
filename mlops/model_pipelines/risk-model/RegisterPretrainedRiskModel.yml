@@ -21,5 +21,5 @@ stages:
           resource_group: '${{ variables.RESOURCE_GROUP }}'
           model_name: '${{ variables.RISK_MODEL_NAME }}'
           model_framework: 'ScikitLearn'
-          model_version: '0.20.3'
+          model_framework_version: '0.20.3'
           model_path: 'models/risk-model/model/risk-model.joblib'
