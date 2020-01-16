@@ -1,4 +1,4 @@
-name: Release Pipeline For Registered Model - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+name: Release Pipeline For Registered Model (No Code Deploy) - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
 trigger: none
 
