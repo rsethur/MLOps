@@ -23,16 +23,18 @@ jobs:
 
     steps:
       - bash: echo Model Name- ${{ parameters.model_name }}
-      - task: AzureCLI@1
+      - task: AzureCLI@2
         displayName: 'Install the CLI'
         inputs:
+          scriptType: bash
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
           inlineScript: 'az extension add -n azure-cli-ml'
 
-      - task: AzureCLI@1
+      - task: AzureCLI@2
         displayName: 'Run training'
         inputs:
+          scriptType: bash
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
           inlineScript: 'az ml run submit-script --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} -e ${{ parameters.model_name }}-exp -d ${{ variables.conda_dependencies_file_var }} --ct ${{ parameters.aml_compute_cluster }} --source-directory ${{ variables.source_directory_var }} -t run.json ${{ parameters.entry_script }} --MODEL_NAME ${{ parameters.model_name }} --DATASET_NAME ${{ parameters.dataset_name }}'

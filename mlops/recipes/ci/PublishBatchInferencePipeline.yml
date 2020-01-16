@@ -14,9 +14,10 @@ parameters:
 jobs:
   - job: BatchInferencePipelinePublish
     steps:
-    - task: AzureCLI@1
+    - task: AzureCLI@2
       displayName: 'Install the CLI'
       inputs:
+        scriptType: bash
         azureSubscription: ${{ parameters.rm_service_connection }}
         scriptLocation: inlineScript
         inlineScript: 'az extension add -n azure-cli-ml'

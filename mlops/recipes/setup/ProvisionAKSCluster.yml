@@ -7,16 +7,18 @@ parameters:
 jobs:
       - job: CreateAKSCluster
         steps:
-          - task: AzureCLI@1
+          - task: AzureCLI@2
             displayName: 'Install the CLI'
             inputs:
+              scriptType: bash
               azureSubscription:  ${{ parameters.rm_service_connection }}
               scriptLocation: inlineScript
               inlineScript: 'az extension add -n azure-cli-ml'
 
-          - task: AzureCLI@1
+          - task: AzureCLI@2
             displayName: 'Provision AKS Cluster'
             inputs:
+              scriptType: bash
               azureSubscription:  ${{ parameters.rm_service_connection }}
               scriptLocation: inlineScript
               inlineScript: 'az ml computetarget create aks --name ${{ parameters.aks_cluster }} --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} --cluster-purpose FastProd'
