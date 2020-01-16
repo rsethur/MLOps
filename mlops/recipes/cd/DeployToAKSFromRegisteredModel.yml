@@ -3,6 +3,7 @@ parameters:
   service_name: ''
   workspace: ''
   resource_group: ''
+  no_code_deploy: false
   model_name: ''
   model_version: ''
   aks_cluster: ''
@@ -21,6 +22,7 @@ jobs:
       deployment_config_var: ${{ coalesce(parameters.deployment_config ,  variables.default_deployment_config) }}
 
       model_id: ${{ parameters.model_name }}:${{ parameters.model_version }}
+      compute_type: aks
 
       ${{ if eq(parameters.overwrite, true) }}:
         overwrite_cli: '--overwrite'
@@ -43,4 +45,7 @@ jobs:
           scriptType: bash
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: az ml model deploy -n ${{ parameters.service_name }} -m $(model_id) --ct ${{ parameters.aks_cluster }} --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} $(overwrite_cli)
+          ${{ if eq(parameters.no_code_deploy, false) }}:
+            inlineScript: az ml model deploy -n ${{ parameters.service_name }} -m $(model_id) --ct ${{ parameters.aks_cluster }} --ic  ${{ variables.inference_config_var }} --dc  ${{ variables.deployment_config_var }} --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} $(overwrite_cli)
+          ${{ if eq(parameters.no_code_deploy, true) }}:
+            inlineScript: az ml model deploy -n ${{ parameters.service_name }} -m $(model_id) --compute-type $(compute_type) --ct ${{ parameters.aks_cluster }} --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} $(overwrite_cli)
