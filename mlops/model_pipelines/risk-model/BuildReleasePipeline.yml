@@ -30,7 +30,7 @@ stages:
         displayName: Approval for model registration
         environment: 'Test'
 
-      - template: ../../recipes/cd/Register.yml
+      - template: ../../recipes/ci/RegisterModelFromMetadata.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
