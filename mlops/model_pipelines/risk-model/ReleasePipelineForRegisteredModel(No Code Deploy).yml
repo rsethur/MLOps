@@ -22,7 +22,7 @@ stages:
           no_code_deploy: true
           model_name: '${{ variables.RISK_MODEL_NAME }}'
           model_version: '11'
-          overwrite: false
+          overwrite: true
 
   - stage: DeployToProd
     displayName: Deploy to Prod (AKS)
