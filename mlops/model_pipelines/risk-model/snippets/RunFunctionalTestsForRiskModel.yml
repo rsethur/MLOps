@@ -15,7 +15,7 @@ stages:
   - stage: RunFunctionalTests
     displayName: Run functional tests
     jobs:
-      - template: ../../recipes/ci/RunNewmanFunctionalTests.yml
+      - template: ../../../recipes/ci/RunNewmanFunctionalTests.yml
         parameters:
           service_name: 'risk-model-aci'
           postman_collection_file: 'models/risk-model/tests/functional/risk_service_postman_collection.json'
