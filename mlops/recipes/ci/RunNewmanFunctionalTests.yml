@@ -1,6 +1,5 @@
 parameters:
-  endpoint: ''
-  api_key: 'dummy'
+  service_name: ''
   postman_collection_file: ''
 
 jobs:
@@ -9,15 +8,19 @@ jobs:
     variables:
       newman_test_dir: '$(System.DefaultWorkingDirectory)/newman_tests'
     steps:
+      - bash: 'python -m models.utils.test.get_service_details --SERVICE_NAME ${{ parameters.service_name }}'
+        displayName: "Look up scoring uri & api key"
+        workingDirectory: $(Build.SourcesDirectory)
+
       - task: ShellScript@2
         displayName: install newman
         inputs:
-          scriptPath: models/utils/newman/install_newman.sh
+          scriptPath: models/utils/test/install_newman.sh
           cwd: $(Build.SourcesDirectory)
 
       - bash: |
           mkdir $(newman_test_dir)
-          newman run ${{ parameters.postman_collection_file }}  --global-var host="${{ parameters.endpoint }}" --global-var api_key="${{ parameters.api_key }}" -r cli,junit --reporter-junit-export  $(newman_test_dir)
+          newman run ${{ parameters.postman_collection_file }}  --global-var host="$(TMP_SCORING_URI)" --global-var api_key="$(TMP_API_KEY)" -r cli,junit --reporter-junit-export  $(newman_test_dir)
         displayName: "Run tests"
         workingDirectory: $(Build.SourcesDirectory)
 
