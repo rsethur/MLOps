@@ -8,6 +8,13 @@ jobs:
     variables:
       newman_test_dir: '$(System.DefaultWorkingDirectory)/newman_tests'
     steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+
+      - script: pip install azureml-sdk python-dotenv
+        displayName: 'Install libraries'
+
       - bash: 'python -m models.utils.test.get_service_details --SERVICE_NAME ${{ parameters.service_name }}'
         displayName: "Look up scoring uri & api key"
         workingDirectory: $(Build.SourcesDirectory)
