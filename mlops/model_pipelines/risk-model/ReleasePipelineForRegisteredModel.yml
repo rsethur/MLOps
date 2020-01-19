@@ -21,7 +21,7 @@ stages:
           resource_group: '${{ variables.RESOURCE_GROUP }}'
           model_name: '${{ variables.RISK_MODEL_NAME }}'
           model_version: '1'
-          overwrite: false
+          overwrite: true
 
   - stage: DeployToProd
     displayName: Deploy to Prod (AKS)
