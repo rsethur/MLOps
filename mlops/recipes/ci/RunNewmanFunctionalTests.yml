@@ -1,0 +1,27 @@
+parameters:
+  endpoint: ''
+  api_key: 'dummy'
+  postman_collection_file: ''
+
+jobs:
+  - job: RunNewmanTests
+
+    variables:
+      newman_test_dir: '$(System.DefaultWorkingDirectory)/newman_tests'
+    steps:
+      - task: ShellScript@2
+        displayName: install newman
+        inputs:
+          scriptPath: models/utils/newman/install_newman.sh
+          cwd: $(Build.SourcesDirectory)
+
+      - bash: |
+          mkdir $(newman_test_dir)
+          newman run ${{ parameters.postman_collection_file }}  --global-var host="${{ parameters.endpoint }}" --global-var api_key="${{ parameters.api_key }}" -r cli,junit --reporter-junit-export  $(newman_test_dir)
+        displayName: "Run tests"
+        workingDirectory: $(Build.SourcesDirectory)
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          searchFolder:  $(newman_test_dir)

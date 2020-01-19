@@ -1,0 +1,20 @@
+name: Functional Tests Pipeline - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - template: ../../recipes/common/Variables.yml
+  - group: MLOPSVG
+
+stages:
+  - stage: RunFunctionalTests
+    displayName: Run functional tests
+    jobs:
+      - template: ../../recipes/ci/RunNewmanFunctionalTests.yml
+        parameters:
+          endpoint: 'http://fc171732-764a-460e-8f09-095ab94234b9.eastus2.azurecontainer.io/score'
+          api_key: 'dummy'
+          postman_collection_file: 'models/risk-model/tests/functional/risk_service_postman_collection.json'

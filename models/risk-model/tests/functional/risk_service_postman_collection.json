@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "f3920fa2-635c-43ce-865c-c21489cec3a6",
+		"name": "RiskServiceCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TestRiskService",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ded3c35a-e5a8-4246-978b-8a80b972c4a3",
+						"exec": [
+							"//Test if REST call was sucessful",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check if response time is within 900ms",
+							"pm.test(\"Response time is less than 900ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(900);",
+							"});",
+							"",
+							"//Schema validation of response",
+							"var schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"predict_proba\": {",
+							"      \"type\": \"array\",",
+							"      \"items\": {",
+							"        \"type\": \"array\",",
+							"        \"items\": {",
+							"          \"type\": \"number\"",
+							"        }",
+							"      }",
+							"    }",
+							"  },",
+							"  \"required\": [\"predict_proba\"]",
+							"};",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(pm.response.json(), schema, true, true)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_key}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"data\": {\r\n    \"Age\": [\r\n      20\r\n    ],\r\n    \"Sex\": [\r\n      \"male\"\r\n    ],\r\n    \"Job\": [\r\n      0\r\n    ],\r\n    \"Housing\": [\r\n      \"own\"\r\n    ],\r\n    \"Saving accounts\": [\r\n      \"little\"\r\n    ],\r\n    \"Checking account\": [\r\n      \"little\"\r\n    ],\r\n    \"Credit amount\": [\r\n      100\r\n    ],\r\n    \"Duration\": [\r\n      48\r\n    ],\r\n    \"Purpose\": [\r\n      \"radio/TV\"\r\n    ]\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}",
+					"host": [
+						"{{host}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
