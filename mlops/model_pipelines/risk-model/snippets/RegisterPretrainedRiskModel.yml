@@ -6,14 +6,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - template: ../../recipes/common/Variables.yml
+  - template: ../../../recipes/common/Variables.yml
 
 stages:
 
   - stage: RegisterPretrainedRiskModel
     displayName: Register pretrained risk model
     jobs:
-      - template: ../../recipes/ci/RegisterPretrainedModel.yml
+      - template: ../../../recipes/ci/RegisterPretrainedModel.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           service_name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'

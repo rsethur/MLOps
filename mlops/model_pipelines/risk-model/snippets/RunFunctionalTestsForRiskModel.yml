@@ -18,5 +18,5 @@ stages:
     jobs:
       - template: ../../../recipes/ci/RunNewmanFunctionalTests.yml
         parameters:
-          service_name: 'risk-model-aki'
+          service_name: 'risk-model-aks'
           postman_collection_file: 'models/risk-model/tests/functional/risk_service_postman_collection.json'
