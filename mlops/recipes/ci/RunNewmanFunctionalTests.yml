@@ -24,4 +24,5 @@ jobs:
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'JUnit'
+          testResultsFiles: '*.xml'
           searchFolder:  $(newman_test_dir)
