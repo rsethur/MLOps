@@ -20,7 +20,7 @@ jobs:
           inlineScript: 'az extension add -n azure-cli-ml'
 
       - task: AzureCLI@2
-        displayName: 'Look up api key'
+        displayName: 'Look up API Key and Service Endpoint'
         inputs:
           scriptType: bash
           azureSubscription: ${{ parameters.rm_service_connection }}
@@ -28,6 +28,7 @@ jobs:
           inlineScript: |
             az ml service get-keys --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "primaryKey" | xargs echo "##vso[task.setvariable variable=TMP_API_KEY]"
             az ml service show --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "scoringUri" | xargs echo "##vso[task.setvariable variable=TMP_SCORING_URI]"
+            az ml service show --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "computeType" | xargs echo "##vso[task.setvariable variable=TMP_SERVICE_TYPE]"
 
       - task: ShellScript@2
         displayName: Install newman
