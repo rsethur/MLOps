@@ -10,7 +10,7 @@ pool:
 
 variables:
   - template: ../../../recipes/common/Variables.yml
-  - group: MLOPSVG
+#  - group: MLOPSVG
 
 stages:
   - stage: RunFunctionalTests
