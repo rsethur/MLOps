@@ -1,6 +1,9 @@
 parameters:
   service_name: ''
   postman_collection_file: ''
+  rm_service_connection: ''
+  workspace: ''
+  resource_group: ''
 
 jobs:
   - job: RunNewmanTests
