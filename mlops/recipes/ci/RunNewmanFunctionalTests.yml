@@ -15,9 +15,33 @@ jobs:
       - script: pip install azureml-sdk python-dotenv
         displayName: 'Install libraries'
 
-      - bash: 'python -m models.utils.test.get_service_details --SERVICE_NAME ${{ parameters.service_name }}'
-        displayName: "Look up scoring uri & api key"
-        workingDirectory: $(Build.SourcesDirectory)
+      - task: AzureCLI@2
+        displayName: 'Install the CLI'
+        inputs:
+          scriptType: bash
+          azureSubscription: ${{ parameters.rm_service_connection }}
+          scriptLocation: inlineScript
+          inlineScript: 'az extension add -n azure-cli-ml'
+
+      - task: AzureCLI@2
+        displayName: 'Look up api key'
+        inputs:
+          scriptType: bash
+          azureSubscription: ${{ parameters.rm_service_connection }}
+          scriptLocation: inlineScript
+          inlineScript: 'az ml service get-keys --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "primaryKey" | xargs echo "##vso[task.setvariable variable=TMP_API_KEY]"'
+
+      - task: AzureCLI@2
+        displayName: 'Look up scoring uri'
+        inputs:
+          scriptType: bash
+          azureSubscription: ${{ parameters.rm_service_connection }}
+          scriptLocation: inlineScript
+          inlineScript: 'az ml service show --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "scoringUri" | xargs echo "##vso[task.setvariable variable=TMP_SCORING_URI]"'
+
+      #- bash: 'python -m models.utils.test.get_service_details --SERVICE_NAME ${{ parameters.service_name }}'
+      #  displayName: "Look up scoring uri & api key"
+      #  workingDirectory: $(Build.SourcesDirectory)
 
       - task: ShellScript@2
         displayName: install newman
