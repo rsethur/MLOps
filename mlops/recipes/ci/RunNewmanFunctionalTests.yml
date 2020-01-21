@@ -11,13 +11,6 @@ jobs:
     variables:
       newman_test_dir: '$(System.DefaultWorkingDirectory)/newman_tests'
     steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.6'
-
-      - script: pip install azureml-sdk python-dotenv
-        displayName: 'Install libraries'
-
       - task: AzureCLI@2
         displayName: 'Install the CLI'
         inputs:
@@ -32,22 +25,12 @@ jobs:
           scriptType: bash
           azureSubscription: ${{ parameters.rm_service_connection }}
           scriptLocation: inlineScript
-          inlineScript: 'az ml service get-keys --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "primaryKey" | xargs echo "##vso[task.setvariable variable=TMP_API_KEY]"'
-
-      - task: AzureCLI@2
-        displayName: 'Look up scoring uri'
-        inputs:
-          scriptType: bash
-          azureSubscription: ${{ parameters.rm_service_connection }}
-          scriptLocation: inlineScript
-          inlineScript: 'az ml service show --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "scoringUri" | xargs echo "##vso[task.setvariable variable=TMP_SCORING_URI]"'
-
-      #- bash: 'python -m models.utils.test.get_service_details --SERVICE_NAME ${{ parameters.service_name }}'
-      #  displayName: "Look up scoring uri & api key"
-      #  workingDirectory: $(Build.SourcesDirectory)
+          inlineScript: |
+            az ml service get-keys --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "primaryKey" | xargs echo "##vso[task.setvariable variable=TMP_API_KEY]"
+            az ml service show --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "scoringUri" | xargs echo "##vso[task.setvariable variable=TMP_SCORING_URI]"
 
       - task: ShellScript@2
-        displayName: install newman
+        displayName: Install newman
         inputs:
           scriptPath: models/utils/test/install_newman.sh
           cwd: $(Build.SourcesDirectory)
