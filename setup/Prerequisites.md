@@ -26,7 +26,7 @@
     3. In the search box being to type subscription
     4. Select Subscription from the search
 
-2. __Create a Service Identity__ - this will be used by our application(AZure Devops) to access resources (like Azure ML workspace):
+2. __Create a Service Identity__ - this will be used by our application(Azure Devops) to access resources (like Azure ML workspace):
 
     To create service principal, register an application entity in Azure Active Directory (Azure AD) and grant it the Contributor or Owner role of the subscription or the resource group where the web service belongs to.
     Instructions are [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal).
