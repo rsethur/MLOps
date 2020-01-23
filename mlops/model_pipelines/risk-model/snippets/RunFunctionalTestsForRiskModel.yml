@@ -10,7 +10,6 @@ pool:
 
 variables:
   - template: ../../../recipes/common/Variables.yml
-  - group: MLOPSVG
 
 stages:
   - stage: RunFunctionalTests
@@ -20,3 +19,6 @@ stages:
         parameters:
           service_name: 'risk-model-aks'
           postman_collection_file: 'models/risk-model/tests/functional/risk_service_postman_collection.json'
+          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          workspace: '${{ variables.WORKSPACE }}'
+          resource_group: '${{ variables.RESOURCE_GROUP }}'
