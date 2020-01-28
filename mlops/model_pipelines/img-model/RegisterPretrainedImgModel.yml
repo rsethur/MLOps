@@ -1,4 +1,4 @@
-name: Register Pretrained Risk Model - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+name: Register Pretrained Img Model - $(Build.DefinitionName) - $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
 trigger: none
 
@@ -10,7 +10,7 @@ variables:
 
 stages:
 
-  - stage: RegisterPretrainedRiskModel
+  - stage: RegisterPretrainedImgkModel
     displayName: Register pretrained img model
     jobs:
       - template: ../../../recipes/ci/RegisterPretrainedModel.yml
