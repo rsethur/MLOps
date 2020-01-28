@@ -1,0 +1,15 @@
+parallel_run_config:
+  input_format:
+  mini_batch_size: 3
+  error_threshold: 10
+  output_action: append_row
+  logging_level: INFO
+  compute_target_name: gpuc
+  node_count: 2
+  process_count_per_node: 1
+  entry_script: batch_score.py
+  source_directory: models/img-model/batch_score/
+  description: Batch scoring for image classification model
+  run_invocation_timeout: 60
+  environment_name: batch_environment
+  environment_dir_path: models/img-model/batch_score/env

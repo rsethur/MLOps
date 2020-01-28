@@ -1,0 +1,9 @@
+entryScript: models/img-model/score/score.py
+runtime: python
+condaFile: models/img-model/score/conda_dependencies.yml
+extraDockerfileSteps:
+schemaFile:
+sourceDirectory:
+enableGpu: False
+baseImage:
+baseImageRegistry:

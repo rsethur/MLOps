@@ -1,0 +1,18 @@
+name: project_environment
+dependencies:
+- python=3.6.2
+- pip==19.3.1
+
+- pip:
+  - python-dotenv
+  - azureml-defaults
+  - azureml-dataprep[fuse,pandas]>=1.1.19
+  - azureml-contrib-pipeline-steps
+  - inference-schema[numpy-support]
+  - numpy
+  - pandas
+  - pillow
+  - tensorflow-gpu==2.0.0
+
+channels:
+- conda-forge

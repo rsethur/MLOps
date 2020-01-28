@@ -17,4 +17,15 @@
 5. Create conda environment: Via command prompt, navigate to project root folder and execute:
 `conda env create -f "code/train/train_conda_env.yml"`
 
-6. (Optional) Install [postman](https://www.getpostman.com/downloads/) tool. This will give an easy way to inspect the deployed ML service
+6. [Install](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) the Azure CLI
+
+7. Install the Azure ML CLI extension by executing:
+<BR>`az extension add -n azure-cli-ml`
+<BR>Incase you already have it, you can upgrade it:
+<BR>`az extension update -n azure-cli-ml`
+
+8. Setup the environment variables to be used by python-dotenv
+    1. Rename the .envtemplate to .env
+    2. Fill in the values: BASE_NAME (if applicable), WORKSPACE_NAME, RESOURCE_GROUP, SUBSCRIPTION_ID, SP_APP_ID, SP_APP_SECRET, TENANT_ID
+
+9. (Optional) Install [postman](https://www.getpostman.com/downloads/) tool. This will give an easy way to inspect the deployed ML service

@@ -1,0 +1,18 @@
+computeType: AKS
+autoScaler:
+    autoscaleEnabled: True
+    minReplicas: 1
+    maxReplicas: 3
+    refreshPeriodInSeconds: 1 #10
+    targetUtilization: 70
+
+containerResourceRequirements:
+  cpu: 1
+  memoryInGB: 0.5
+
+authEnabled: True
+appInsightsEnabled: False
+#scoringTimeoutMs: 1500 #Defaults to 60000
+maxConcurrentRequestsPerContainer: 1
+#maxQueueWaitMs: 1500 # Defaults to 500 ms
+sslEnabled: False

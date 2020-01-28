@@ -1,0 +1,22 @@
+pipeline:
+    description: BatchScoringPipeline
+    default_compute: amlcluster
+    steps:
+        Step1:
+            parallel_run_config: "models/img-model/batch_score/pipeline/parallel_run_config.yml"
+            type: "ParallelRunStep"
+            name: "img-batch-pipeline-gpu-2"
+            allow_reuse: False
+            arguments:
+                - "--progress_update_timeout"
+                - "1500"
+            models_id:
+                - img-model:1
+            input_datasets:
+                MyMinistInput:
+                    dataset_name: img_dataset
+            outputs:
+                OutputData:
+                    destination: img_model_output
+                    datastore: workspaceblobstore
+                    bind_mode: mount
