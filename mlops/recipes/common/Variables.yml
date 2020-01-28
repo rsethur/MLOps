@@ -27,3 +27,7 @@ variables:
   RISK_MODEL_AKS_SERVICE_NAME: 'risk-model-aks'
 
   #Model 2: ...
+  IMG_MODEL_NAME: 'img-model'
+  IMG_MODEL_DATASET_NAME: 'img_dataset'
+  IMG_MODEL_ACI_SERVICE_NAME: 'img-model-aci'
+  IMG_MODEL_AKS_SERVICE_NAME: 'img-model-aks'
