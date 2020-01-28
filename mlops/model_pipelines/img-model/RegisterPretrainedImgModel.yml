@@ -13,7 +13,7 @@ stages:
   - stage: RegisterPretrainedImgkModel
     displayName: Register pretrained img model
     jobs:
-      - template: ../../../recipes/ci/RegisterPretrainedModel.yml
+      - template: ../../recipes/ci/RegisterPretrainedModel.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
