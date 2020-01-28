@@ -30,7 +30,7 @@ click the three dots in the right and click `rename`
     1. In the top nav bar, click the Switch Directory icon
     2. Click on the drop down `Machine learning workspace` and select the one that was just created (`BASE_NAME-aml-ws`)
 2. In the left panel click `Dataset` -> `Create Dataset` -> `from web files` 
-    1. Paste this url `https://raw.githubusercontent.com/rsethur/MLOps/master/dataset/german_credit_data.csv`
+    1. Paste this url `https://raw.githubusercontent.com/rsethur/MLOps/master/models/risk-model/dataset/german_credit_data.csv`
     2. __Important__ Change dataset name to `credit_dataset`
     3. If a `CORS error` shows up, open the page and check all boxes in the `Allowed methods` drop down. 
     4. Follow the onscreen instructions by clicking `Next` till completion
