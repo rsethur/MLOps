@@ -15,22 +15,6 @@
 
 4. If you do not have a github account, [create](https://github.com/) one
 
-5. __[Optional]__ If you need Batch Inference, we need to create Service Principal & look up Subscription id
-    1. Get subscription id (you need this for later part of the workshop):
-        1. Navigate to http://portal.azure.com
-        2. Navigate to Browse
-        3. In the search box being to type subscription
-        4. Select Subscription from the search
+5. __[Optional]__ If you need Batch Inference, we need to create Service Principal & look up Subscription id. Instructions [here](CreateServiceIdentity.md)
 
-    2. __Create a Service Identity__ - this will be used by our application(Azure Devops) to access resources (like Azure ML workspace):
-    
-        To create service principal, register an application entity in Azure Active Directory (Azure AD) and grant it the Contributor or Owner role of the subscription or the resource group where the web service belongs to.
-        Instructions are [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal).
-    
-        __Please make note of the following values__ after creating a service principal, we will need them in subsequent steps
-    
-        * Application (client) ID
-        * Directory (tenant) ID
-        * Application Secret
-    
-       Note: If you don't have permission, ask your admin to create a Service Identity for you
+6. __[Optional]__ If you plan to build your own models using your data, please make them available in blob store and get access to the store (like accountkey/SAS token)
