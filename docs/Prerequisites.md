@@ -1,6 +1,7 @@
 # Prerequisites
 
-1. __Check if ACI(Azure Container Instance) service is registered in your subscription__: Try executing the command from the Cloud Shell in the portal. Instructions [here](https://docs.microsoft.com/en-us/azure/cloud-shell/quickstart).
+1. Get `Owner` or `Contributor` access to a Resource Group from your __admin__. This is where you will create the workspace and other required resources.
+2. Check if ACI(Azure Container Instance) service is registered in your subscription: Try executing the command from the Cloud Shell in the portal. Instructions [here](https://docs.microsoft.com/en-us/azure/cloud-shell/quickstart).
     If you dont have access, ask your __admin__.
 
     `az provider show -n Microsoft.ContainerInstance -o table`
