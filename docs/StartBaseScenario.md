@@ -19,7 +19,7 @@
 ## Section 2: Create the environment 
 _Note: Skip this step if you wish to reuse your existing Azure ML workspace_<BR>
 This step will create the cloud environment and provision all the required services including Resource group & Azure ML Workspace
-1. Continuing from the last section: select `mlops/env_create_pipelines/EnvCreatePipeline.yml` -> Click Continue -> Click Run
+1. Continuing from the last section: select `mlops/recipes/IaC/ProvisionMLWorkspace.yml` -> Click Continue -> Click Run
 2. You can monitor the status by clicking on the stages. Check if your pipeline ran successfully.
 3. [Optional] Rename the pipeline run in Azure Devops to give a meaningful name. 
 You can do this by visiting `Pipeline` in the left nav bar of Azure Devops. You can then From the `recent runs`, you can 

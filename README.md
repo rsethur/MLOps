@@ -33,10 +33,9 @@ __MLOps Flow__
 <BR><br>__Notes on our Base scenario:__
 1. Directory Structure
     1. `mlops` contains the devops pipelines
-        1. `env_create_pipelines` contains pipelines to provision all the components in the cloud (ML workspace, AKS cluster etc)
-        2. `model_pipelines` contains individual pipelines for each of the models
-        3. `recipes`: contains parameterized, reusable devops pipeline for different scenarios
-    2. `models` directory has the source code for the individual models (training, scoring etc).
+        1. `model_pipelines` contains individual pipelines for each of the models. These leverage the recipes
+        2. `recipes`: contains parameterized, reusable devops pipeline for different scenarios
+    2. `models` directory has the source code for the individual models (training, scoring etc)
     3. `setup` directory contains documentation on usage
 2. Training: For training we use a simple LogisticRegression model on the German Credit card dataset. We build sklearn pipeline that does feature engineering. We export the whole pipeline as a the model binary (pkl file).
 3. We use Azure ML CLI as a mechanism for interacting with Azure ML due to simplicity reasons.

@@ -1,0 +1,449 @@
+<h1> Recipes </h1>
+<table style="width: 100%;">
+	<thead>
+		<tr>
+			<th style="width: 10%;">
+				Category
+			</th>
+			<th style="width: 20%;">
+				Recipe				
+			</th>
+			<th style="width: 25%;">
+				Description
+			</th>
+			<th style="width: 15%;">				
+					Key Parameters
+			</th>
+			<th style="width: 30%;">
+				Sample devops pipelines
+			</th>
+		</tr>
+	</thead>
+	<tbody style="font-size: 80%;">
+		<tr>
+			<td rowspan="5">
+				Continuous Integration
+			</td>
+			<td>
+				<a href="../../mlops/recipes/ci/PublishBatchInferencePipeline.yml">
+					Publish a batch inference pipeline
+				</a>
+			</td>
+			<td>
+				Publishes a batch inference pipeline to the workspace &amp; optionally runs it
+			</td>
+			<td>
+				<ul>
+					<li>
+						pipeline yml path (string)
+					</li>
+					<li>
+						run pipeline (bool)
+					</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/PublishBatchInferencePipeline.png">
+							Sample pipeline output
+						</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/BatchInfForRiskModel.yml">Sample pipeline using this recipe (sklearn model)</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/img-model/BatchInfForImgModel.yml">Sample pipeline using recipe for batch scoring image data using GPUs (tensorflow 2.x model)</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/ci/RegisterPretrainedModel.yml">
+					Register Pretrained Model
+				</a>
+			</td>
+			<td>
+				Register a pretrained model stored in the repo (supports git lfs i.e. large file system)
+			</td>
+			<td>
+				<ul>
+					<li>
+						model name
+					</li>
+					<li>
+						model path
+					</li>
+					<li>
+						lfs (defaults to true)
+					</li>
+				</ul>
+				<p>
+					Accept &amp; gracefully handle null values on additional params: model framework, framework version, sample input &amp; output dataset
+				</p>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/RegisterPretrainedModel.png">
+							Sample pipeline output
+						</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/snippets/RegisterPretrainedRiskModel.yml">
+							Sample pipeline for registering structured model (sklearn)
+						</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/img-model/RegisterPretrainedImgModel.yml">
+							Sample pipeline for DL model (tensorflow 2.x)
+						</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/ci/RegisterModelFromMetadata.yml">
+					Register Model from run metadata file
+				</a>
+			</td>
+			<td>
+				Register a model from a metadata file from a training run in Azure ML
+			</td>
+			<td>
+				<ul>
+					<li>
+						model name
+					</li>
+					<li>
+						run metadata artifact: name of metadata file artifact (defaults to run-metadata
+					</li>
+				</ul>
+				<p>
+					It also outputs the model-metadata (output of model registration) into the devops pipeline. This can be used by downstream tasks like deploy.
+				</p>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/RegisterModelFromMetadata.png">
+							Sample pipeline output
+						</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/BuildReleasePipeline.yml">Sample pipeline using this recipe</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>				
+					<a href="../../mlops/recipes/ci/RunNewmanFunctionalTests.yml">Run functional tests on service endpoint</a>				
+			</td>
+			<td>
+				Run functional tests using newman (postman's cli version) and publishes the test results to Devops pipeline
+			</td>
+			<td>
+				<ul>
+					<li>
+						service name: name of registered service in Azure ML
+					</li>
+					<li>
+						postman colection file path
+					</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>						
+							<a href="imgs/RunNewmanFunctionalTests.png">Sample pipeline output</a>						
+					</li>
+					<li>						
+							<a href="imgs/RunNewmanFunctionalTests-Results.png">Sample test results output</a>						
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/snippets/RunFunctionalTestsForRiskModel.yml">
+							Sample pipeline using this recipe
+						</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/ci/Train.yml">
+					Run training in the cloud
+				</a>
+			</td>
+			<td>
+				&nbsp;Run the training in the specified cluster and publish the run metadata for optional downstream consumption in devops pipeline
+			</td>
+			<td>
+				<ul>
+					<li>
+						source dir
+					</li>
+					<li>
+						entry script
+					</li>
+					<li>
+						conda dependencies
+					</li>
+					<li>
+						model name
+					</li>
+					<li>
+						dataset name
+					</li>
+					<li>
+						aml compute cluster
+					</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/Train.png">
+							Sample pipeline output
+						</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/BuildReleasePipeline.yml">
+							Sample pipeline using this recipe
+						</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="5">
+				Continuous Deloyment
+			</td>
+			<td>
+				<a href="../../mlops/recipes/cd/DeployToACIFromRegisteredModel.yml">Deploy to ACI from Registered Model</a>
+			</td>
+			<td>
+				Given model name and version, this recipe deploys a registered model to Azure Container Instance
+			</td>
+			<td>
+				<ul>
+					<li>no_code_deploy (bool): if true then no need to provide inference config and deploy config</li>
+					<li>service name</li>
+					<li>model name</li>
+					<li>model version</li>
+					<li>inference config</li>
+					<li>deploy config</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/DeployToACIFromRegisteredModel.png">
+							Sample pipeline output
+						</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/ReleasePipelineForRegisteredModel.yml">Sample pipeline using this recipe (sklearn model)</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/img-model/ReleasePipelineForRegisteredImgModel.yml">Sample pipeline using recipe (tensorflow 2.x model)</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/cd/DeployToACIFromMetadata.yml">Deploy to ACI from Metadata</a>
+			</td>
+			<td>
+				Deploy a registered model from model metadata file (output of model registration) to ACI
+			</td>
+			<td>
+				<ul>
+					<li>model name</li>
+					<li>inference config</li>
+					<li>deploy config</li>
+					<li>model metadata artifact (defaults to model-metadata): input artifact in devops pipeline</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/DeployToACIFromMetadata.PNG">
+							Sample pipeline output
+						</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/BuildReleasePipeline.yml">
+							Sample pipeline using recipe
+						</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/cd/DeployToAKSFromRegisteredModel.yml">Deploy to AKS from Registered Model</a>
+			</td>
+			<td>Given aks cluster, model name and version, this recipe deploys a registered model to Azure Kubernetes Service</td>
+			<td>
+				<ul>
+					<li>aks cluster</li>
+					<li>no_code_deploy (bool): if true then no need to provide inference config and deploy config</li>
+					<li>service name</li>
+					<li>model name</li>
+					<li>model version</li>
+					<li>inference config</li>
+					<li>deploy config</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/DeployToAKSFromRegisteredModel.png">Sample pipeline output </a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/ReleasePipelineForRegisteredModel.yml">Sample pipeline using this recipe (sklearn model)</a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/img-model/ReleasePipelineForRegisteredImgModel.yml">Sample pipeline using recipe (tensorflow 2.x model)</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/cd/DeployToAKSFromMetadata.yml">Deploy to AKS from Metadata</a>
+			</td>
+			<td>
+				Deploy a registered model from model metadata file (output of model registration) to AKS
+			</td>
+			<td>
+				<ul>
+					<li>aks cluster</li>
+					<li>model name</li>
+					<li>inference config</li>
+					<li>deploy config</li>
+					<li>model metadata artifact (defaults to model-metadata): input artifact in devops pipeline</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/DeployToAKSFromMetadata.PNG">Sample pipeline output </a>
+					</li>
+					<li>
+						<a href="../../mlops/model_pipelines/risk-model/BuildReleasePipeline.yml"> Sample pipeline using recipe</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/cd/RunPipeline.yml">Run pipeline</a>
+			</td>
+			<td>
+				Runs a specified published pipeline
+			</td>
+			<td>
+				<ul>
+					<li>
+						pipeline id
+					</li>
+					<li>
+						experiment name
+					</li>
+				</ul>
+			</td>
+			<td>Batch Inference recipe uses this under the hood. Refer to it.</td>
+		</tr>
+		<tr>
+			<td rowspan="5">
+				IaC (Infrastructure as Code)
+			</td>
+			<td>
+				<a href="../../mlops/recipes/IaC/ProvisionMLWorkspace.yml">Provision ML workspace</a>
+			</td>
+			<td>
+				Provisions a new ML workspace along with a Azure ML compute cluster and AKS cluster. Also provisions Storage account, ACR, KeyVault &amp; App insights&nbsp;
+			</td>
+			<td>It sources the parameters through&nbsp;recipes/common/Variables.yml and&nbsp;recipes/IaC/arm/IaCAzureResourceManager.json</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/ProvisionMLWorkspace.png">
+							Sample pipeline output
+						</a>
+					</li>
+					<li>
+						<a href="../../mlops/recipes/IaC/ProvisionMLWorkspace.yml">Sample pipeline using this recipe</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/IaC/TearDownResourceGroup.yml">Tear down a resource group</a>
+			</td>
+			<td>
+				Tear down a resource group along with all its resources (workspace, clusters etc)
+			</td>
+			<td>
+				<p>It sources the parameters through&nbsp;recipes/common/Variables.yml. It primarily needs service connection name, resource group name and location.</p>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="../../mlops/recipes/IaC/TearDownResourceGroup.yml">
+							Sample pipeline using recipe
+						</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/IaC/ProvisionAKSCluster.yml">Provision AKS Cluster</a>
+			</td>
+			<td>Provisions a AKS cluster from Azure ML workspace</td>
+			<td>
+				<p>Note: Recipe is being updated to add more parameters</p>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/ProvisionAKSCluster.png">Sample pipeline output </a>
+					</li>
+					<li>
+						<a href="../../mlops/recipes/IaC/ProvisionMLWorkspace.yml">Sample pipeline using this recipe</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="../../mlops/recipes/IaC/ProvisionAMLComputeCluster.yml">Provision Azure ML Compute</a>
+			</td>
+			<td>Provisions Azure ML compute</td>
+			<td>
+				<ul>
+					<li>compute cluster name</li>
+					<li>cluster sku (i.e. sku of VM to use)</li>
+					<li>max nodes</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>
+						<a href="imgs/ProvisionAMLComputeCluster.png">Sample pipeline output </a>
+					</li>
+					<li>
+						<a href="../../mlops/recipes/IaC/ProvisionMLWorkspace.yml">Sample pipeline using this recipe</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
