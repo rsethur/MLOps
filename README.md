@@ -1,26 +1,15 @@
 # MLOps Recipes
 
-__Goal__  
-To Create a library of modular recipes (parameterized devops pipeline templates) which could then be composed to create custom end to end CI/CD pipelines for Machine Learning
+A library of minimalistic & modular recipes. Easily compose your custom end to end CI/CD pipelines for Machine Learning
 
-__Why care?__ To sustain business benefits of Machine learning across any organization, we need to bring in discipline, automation & best practices. Enter MLOps.
-
-__Approach__
-1. _Minimalistic_: Focus is on clean, understandable pipeline & code  
-2. _Modular_: Atomic recipes that could be referred and reused (e.g recipe: Deploy to production after approval)
+Check out the [Project website](https://rsethur.github.io/MLOps/) for more details
 
 __Status__: [Project board](https://github.com/rsethur/MLOps/projects/1)
 
 __Technologies__: Azure Machine Learning & Azure Devops
 
-__Technical Aspects__ 
-1. Fully CI/CD YAML based multistage pipeline (does not use classic release pipelines in Azure devops)
-2. Use YAML based variables template (no need to configure variable groups through UI)
-2. Gated releases (manual approvals)
-3. CLI based MLOps: use Azure ML CLI from Devops pipelines as a mechanism for interacting with the ML platform. Simple and clean.
-
 __Get Started__
-1. Understand what we are trying to do (below section)
+1. Check out the [Project website](https://rsethur.github.io/MLOps/) 
 2. [Setup the environment](docs/Setup.md)
 3. [Run an end to end MLOps pipeline](docs/StartBaseScenario.md)
 
@@ -29,7 +18,6 @@ _Note: Automated builds based on code/asset changes have been disabled by settin
 __MLOps Flow__
 ![MLOps Flow](docs/imgs/MLOpsFlow.jpg)
 
-<!-- The above diagram illustrates a possible end to end MLOps scenario. Our current Build-Release pipeline has a subset: `Training` :arrow_right: `Approval` :arrow_right: `Model Registration` :arrow_right: `Package` :arrow_right: `Deploy in test` :arrow_right: `Approval` :arrow_right: `Deploy to Production`-->
 <BR><br>__Notes on our Base scenario:__
 1. Directory Structure
     1. `mlops` contains the devops pipelines
