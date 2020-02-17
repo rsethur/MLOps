@@ -229,66 +229,8 @@
             </li>
         </ul>
         <div id="ciTabContent" class="tab-content">
-            <div class="tab-pane fade active show" id="batch_inference">
-                <table class="table table-striped table-dark  table-bordered">
-                    <tbody>
-                    <tr>
-                        <td><b>Recipe</b></td>
-                        <td><a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/PublishBatchInferencePipeline.yml">
-                            Publish a batch inference pipeline
-                        </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Description</b></td>
-                        <td>Publishes a batch inference pipeline to the workspace &amp;
-                            optionally runs it
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Key parameters</b></td>
-                        <td>
-                            <ul>
-                                <li>
-                                    pipeline yml path (string)
-                                </li>
-                                <li>
-                                    run pipeline (bool)
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Sample pipeline output</b></td>
-                        <td>
-                            <a href="imgs/PublishBatchInferencePipeline.png">
-                                image
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Sample devops pipelines</b></td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/BatchInfForRiskModel.yml">Sample pipeline
-                                        using this
-                                        recipe (sklearn model)</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/img-model/BatchInfForImgModel.yml">Sample pipeline
-                                        using recipe
-                                        for batch scoring image data using GPUs (tensorflow 2.x model)</a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-
-                    </tbody>
-                </table>
-            </div>
             <!-- Register Pretrained model-->
-            <div class="tab-pane fade show" id="register_pretrained_model">
+            <div class="tab-pane fade active show" id="register_pretrained_model">
                 <table class="table table-striped table-dark  table-bordered">
                     <tbody>
                     <tr>
@@ -475,6 +417,66 @@
                             </ul>
                         </td>
                     </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Batch inference-->
+            <div class="tab-pane fade show" id="batch_inference">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td><a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/PublishBatchInferencePipeline.yml">
+                            Publish a batch inference pipeline
+                        </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>Publishes a batch inference pipeline to the workspace &amp;
+                            optionally runs it
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    pipeline yaml path: path of batch inference pipeline yml file
+                                </li>
+                                <li>
+                                    run pipeline: whether to run the pipeline after publishing it
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/PublishBatchInferencePipeline.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/BatchInfForRiskModel.yml">Sample pipeline
+                                        using this
+                                        recipe (sklearn model)</a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/img-model/BatchInfForImgModel.yml">Sample pipeline
+                                        using recipe
+                                        for batch scoring image data using GPUs (tensorflow 2.x model)</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
                     </tbody>
                 </table>
             </div>
