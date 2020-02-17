@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
+
+    <!-- github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <title>MLOps Recipes</title>
+
+</head>
+<body>
+
+<div class="container">
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">MLOps Recipes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#intro">Intro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#getting_started">Getting started</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#ci">CI</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#cd">CD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#iac">IaC</a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <!-- Github fork button-->
+                    <a class="github-button" href="https://github.com/rsethur/mlops/fork"
+                       data-color-scheme="no-preference: dark; light: dark; dark: dark;" data-icon="octicon-repo-forked"
+                       data-size="large" data-show-count="true" aria-label="Fork rsethur/mlops on GitHub">Fork</a>
+                    <!-- github star button-->
+                    <a class="github-button" href="https://github.com/rsethur/mlops"
+                       data-color-scheme="no-preference: dark; light: dark; dark: dark;" data-icon="octicon-star"
+                       data-size="large" data-show-count="true" aria-label="Star rsethur/mlops on GitHub">Star</a>
+                    <!-- Twitter-->
+                    <a href="https://twitter.com/sethu20?ref_src=twsrc%5Etfw" class="twitter-follow-button"
+                       data-size="large" data-show-screen-name="false" data-show-count="false">Follow @sethu20</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <h1 class="display-3 text-info">MLOps Recipes</h1>
+        <p class="lead text-light">A library of minimalistic & modular recipes. Easily compose your custom end to end
+            CI/CD pipelines for Machine Learning</p>
+    </div>
+
+    <!-- Card deck for Intro -->
+    <div id="intro">
+        <h1 class="display-4 text-light">Intro</h1>
+
+        <!-- Card deck for introducing MLOps-->
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-header text-info"><h5>MLOps</h5></div>
+                <div class="card-body">MLOps helps you to manage the lifecycle & operationalize your ML
+                    models by extending devops principles. It brings in discipline, automation & best practices
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>Sample MLOps Flow</h5></div>
+                <img src="https://github.com/rsethur/MLOps/raw/master/docs/imgs/MLOpsFlow.jpg" class="card-img">
+                <!-- class="card-img-top" alt="..."> -->
+                <div class="modal fade bd-example-modal-lg show" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="dynamic-content">
+                                <img src="https://github.com/rsethur/MLOps/raw/master/docs/imgs/MLOpsFlow.jpg"
+                                     class="img-fluid" alt=""/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">View image</a>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>Technologies</h5></div>
+
+                <div class="card-body">We use Azure ML and Azure Devops in this repository</div>
+            </div>
+        </div>
+        <BR>
+        <!-- Principles-->
+        <h3 class="text-primary">Principles for the recipes</h3>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-header text-info"><h5>Minimalistic</h5></div>
+                <div class="card-body">Focus on core functionality while keeping the code/config clean &
+                    understandable
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>Modular</h5></div>
+                <div class="card-body">Atomic recipes that could be reused (e.g recipe: Deploy to production after
+                    approval)
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>Best of breed</h5></div>
+                <div class="card-body">Use best of breed frameworks for individual tasks e.g. postman/newman for
+                    functional testing
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>GitOps/IaC</h5></div>
+                <div class="card-body">Entire system is described declaratively: Following principles of GitOps/IaC
+                </div>
+            </div>
+        </div>
+
+        <!-- Approach-->
+        <BR>
+        <h3 class="text-primary">Devops approach</h3>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-header text-info"><h5>Templatized pipelines</h5></div>
+                <div class="card-body">Recipes are nothing but templatized devops steps (i.e. pipelines). Each recipe
+                    has set of input parameters and defined behaviour and can be mixed and matched independently
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>YAML pipelines</h5></div>
+                <div class="card-body">Fully CI/CD YAML based multistage pipeline (does not use classic release
+                    pipelines in Azure devops)
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>CLI based MLOps</h5></div>
+                <div class="card-body">Use Azure ML CLI from within Devops pipelines as a mechanism for interacting
+                    with the ML platform. Simple and clean
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>YAML based variables</h5></div>
+                <div class="card-body">Uses YAML based variables template (UI configuration of variable groups needed
+                    only in exceptional cases)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <BR>
+    <BR>
+    <BR>
+
+    <!-- Card deck for Getting started -->
+    <div id="getting_started">
+        <h1 class="display-4 text-light">Getting Started</h1>
+
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-header text-info"><h5>Step 1: Setup the environment</h5></div>
+                <div class="card-body">
+                    Follow the
+                    <a class="card-link" href="https://github.com/rsethur/MLOps/blob/master/docs/Setup.md">steps</a>
+                    to setup the prerequsites, devops project & optionally a local dev environment
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>Step 2: Run an end to end pipeline</h5></div>
+                <div class="card-body">
+                    Follow the
+                    <a class="card-link" href="https://github.com/rsethur/MLOps/blob/master/docs/StartBaseScenario.md">steps</a>
+                     to run an end to end MLOPs pipeline
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header text-info"><h5>Step 3: Contribute</h5></div>
+
+                <div class="card-body">Contribute if you can</div>
+            </div>
+        </div>
+        <BR>
+    </div>
+
+    <BR>
+    <BR>
+    <BR>
+    <!-- Tabs for CI Recipes-->
+    <div id="ci">
+        <h1 class="display-4 text-light">Continuous Integration Recipes</h1>
+        <br>
+        <ul class="nav nav-pills" style="font-size: 1.1rem">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#batch_inference">Batch Inference</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#register_pretrained_model">Register Pretrained Model</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#register_model_from_metadata">Register Model from
+                    Metadata</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#run_newman_functional_tests">Functional Tests</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#run_training">Train</a>
+            </li>
+        </ul>
+        <div id="ciTabContent" class="tab-content">
+            <div class="tab-pane fade active show" id="batch_inference">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td><a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/PublishBatchInferencePipeline.yml">
+                            Publish a batch inference pipeline
+                        </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>Publishes a batch inference pipeline to the workspace &amp;
+                            optionally runs it
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    pipeline yml path (string)
+                                </li>
+                                <li>
+                                    run pipeline (bool)
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/PublishBatchInferencePipeline.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/BatchInfForRiskModel.yml">Sample pipeline
+                                        using this
+                                        recipe (sklearn model)</a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/img-model/BatchInfForImgModel.yml">Sample pipeline
+                                        using recipe
+                                        for batch scoring image data using GPUs (tensorflow 2.x model)</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Register Pretrained model-->
+            <div class="tab-pane fade show" id="register_pretrained_model">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td><a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/RegisterPretrainedModel.yml">
+                            Register a pretrained model
+                        </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>Register a pretrained model stored in the repo (supports git
+                            lfs i.e. large file system)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    model name
+                                </li>
+                                <li>
+                                    model path
+                                </li>
+                                <li>
+                                    lfs (defaults to true)
+                                </li>
+                            </ul>
+                            <p>
+                                Accept &amp; gracefully handle null values on additional params:
+                            <ul>
+                                <li>Model framework</li>
+                                <li>framework version</li>
+                                <li>sample input dataset</li>
+                                <li>sample output dataset</li>
+                            </ul>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/RegisterPretrainedModel.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model//snippets/RegisterPretrainedRiskModel.yml">Sample
+                                        pipeline for registering structured model (sklearn)</a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/img-model/RegisterPretrainedImgModel.yml">Sample
+                                        pipeline for DL
+                                        model (tensorflow 2.x)</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Register Model form Metadata-->
+            <div class="tab-pane fade show" id="register_model_from_metadata">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/RegisterModelFromMetadata.yml">
+                                Register Model from run metadata file
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Register a model from a metadata json file from a training run
+                            in Azure ML
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    model name
+                                </li>
+                                <li>
+                                    run metadata artifact: name of metadata file artifact (defaults to run-metadata)
+                                </li>
+                            </ul>
+                            <p class="m-2">
+                                It also outputs the model-metadata (output of model registration) into the devops
+                                pipeline. This can
+                                be used by downstream tasks like deploy.
+                            </p>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/RegisterModelFromMetadata.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/BuildReleasePipeline.yml">Sample pipeline
+                                        using this recipe
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Run functional tests-->
+            <div class="tab-pane fade show" id="run_newman_functional_tests">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/RunNewmanFunctionalTests.yml">
+                                Run functional tests on service endpoint
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Run functional tests using newman (postman's cli version) and
+                            publishes the test results to Devops pipeline
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    service name: name of registered service in Azure ML
+                                </li>
+                                <li>
+                                    postman colection file path
+                                </li>
+                            </ul>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/RunNewmanFunctionalTests-Results.png">
+                                image (test results)
+                            </a><BR>
+                            <a href="imgs/RunNewmanFunctionalTests.png">
+                                image (devops output)
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/snippets/RunFunctionalTestsForRiskModel.yml">Sample
+                                        pipeline using this recipe</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Run training-->
+            <div class="tab-pane fade show" id="run_training">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/Train.yml">
+                                Run training in the cloud
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Run the training in the specified cluster and publish the run
+                            metadata for optional downstream consumption in devops pipeline
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    source dir
+                                </li>
+                                <li>
+                                    entry script
+                                </li>
+                                <li>
+                                    conda dependencies
+                                </li>
+                                <li>
+                                    model name
+                                </li>
+                                <li>
+                                    dataset name
+                                </li>
+                                <li>
+                                    aml compute cluster
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/Train.png">
+                                image
+                            </a>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/BuildReleasePipeline.yml">Sample pipeline
+                                        using this
+                                        recipe</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <BR>
+    <BR>
+    <BR>
+    <!-- Tabs for CD Recipes-->
+    <div id="cd">
+        <h1 class="display-4 text-light">Continuous Delivery Recipes</h1>
+        <br>
+        <ul class="nav nav-pills" style="font-size: 1.1rem">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#deploy_to_aci_from_registered_model">Deploy to ACI
+                    from Registered Model</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#deploy_to_aci_from_model_metadata">Deploy to ACI from model
+                    metadata</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#deploy_to_aks_from_registered_model">Deploy to AKS from
+                    registered model</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#deploy_to_aks_from_model_metadata">Deploy to AKS from model
+                    metadata</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#run_pipeline">Run pipeline</a>
+            </li>
+        </ul>
+        <!-- Deploy to ACI from Registered Model-->
+        <div id="cdTabContent" class="tab-content">
+            <div class="tab-pane fade active show" id="deploy_to_aci_from_registered_model">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td><a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/cd/DeployToACIFromRegisteredModel.yml">
+                            Deploy to ACI from Registered Model
+                        </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>Given model name and version, this recipe deploys a registered model to Azure Container
+                            Instance
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>no_code_deploy (bool): if true then no need to provide inference config and deploy
+                                    config
+                                </li>
+                                <li>service name</li>
+                                <li>model name</li>
+                                <li>model version</li>
+                                <li>inference config</li>
+                                <li>deploy config</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/DeployToACIFromRegisteredModel.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/ReleasePipelineForRegisteredModel.yml">Sample
+                                        pipeline
+                                        using this recipe (sklearn model)
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/img-model/ReleasePipelineForRegisteredImgModel.yml">Sample
+                                        pipeline using recipe (tensorflow 2.x model)
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Deploy to ACI from model metadata-->
+            <div class="tab-pane fade show" id="deploy_to_aci_from_model_metadata">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/cd/DeployToACIFromMetadata.yml">
+                                Deploy to ACI from model metadata file
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Deploy a registered model from model metadata file (output of model registration) to ACI
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>model name</li>
+                                <li>inference config</li>
+                                <li>deploy config</li>
+                                <li>model metadata artifact (defaults to model-metadata): input artifact in devops
+                                    pipeline
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/DeployToACIFromMetadata.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/BuildReleasePipeline.yml">Sample
+                                        pipeline</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Deploy to AKS from Registered Model-->
+            <div class="tab-pane fade show" id="deploy_to_aks_from_registered_model">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/RegisterModelFromMetadata.yml">
+                                Deploy to AKS from Registered Model
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Given an AKS cluster, model name and version, this recipe deploys a registered model to
+                            Azure Kubernetes Service
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>aks cluster</li>
+                                <li>no_code_deploy (bool): if true then no need to provide inference config and deploy
+                                    config
+                                </li>
+                                <li>service name</li>
+                                <li>model name</li>
+                                <li>model version</li>
+                                <li>inference config</li>
+                                <li>deploy config</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/DeployToAKSFromRegisteredModel.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/ReleasePipelineForRegisteredModel.yml">Sample
+                                        pipeline using this recipe (sklearn model)
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/img-model/ReleasePipelineForRegisteredImgModel.yml">Sample
+                                        pipeline using this recipe (tensorflow 2.x model)
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Deploy to AKS from model metadata-->
+            <div class="tab-pane fade show" id="deploy_to_aks_from_model_metadata">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/RunNewmanFunctionalTests.yml">
+                                Deploy to AKS from model metadata file
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Run functional tests using newman (postman's cli version) and
+                            publishes the test results to Devops pipeline
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>aks cluster</li>
+                                <li>model name</li>
+                                <li>inference config</li>
+                                <li>deploy config</li>
+                                <li>model metadata artifact (defaults to model-metadata): input artifact in devops
+                                    pipeline
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/DeployToAKSFromMetadata-Results.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/model_pipelines/risk-model/BuildReleasePipeline.yml">Sample
+                                        pipeline using this recipe</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Run pipeline-->
+            <div class="tab-pane fade show" id="run_pipeline">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/ci/Train.yml">
+                                Runs pipeline
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Runs a specified published pipeline
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    pipeline id
+                                </li>
+                                <li>
+                                    experiment name
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            Batch Inference recipe uses this under the hood. Refer to it
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            Batch Inference recipe uses this under the hood. Refer to it
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <BR>
+    <BR>
+    <BR>
+    <!-- Tab for IaC Recipes-->
+    <div id="iac">
+        <h1 class="display-4 text-light">Infrastructure as Code Recipes</h1>
+        <br>
+        <ul class="nav nav-pills" style="font-size: 1.1rem">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#provision_ml_workspace">Provision ML workspace</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#provision_aks_cluster">Provision AKS cluster</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#provision_aml_compute">Provision Azure ML
+                    compute</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#teardown_resource_group">Teardown resource group
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab content for IaC recipes-->
+        <div id="iacTabContent" class="tab-content">
+            <!-- Provision ML Workspace-->
+            <div class="tab-pane fade active show" id="provision_ml_workspace">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td><a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/cd/DeployToACIFromRegisteredModel.yml">
+                            Provision Azure ML workspace
+                        </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>Provisions a new ML workspace along with a Azure ML compute cluster and AKS cluster. Also
+                            provisions Storage account, ACR, KeyVault &amp; App insights
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            It sources the parameters through&nbsp;recipes/common/Variables.yml and&nbsp;recipes/IaC/arm/IaCAzureResourceManager.json
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/ProvisionMLWorkspace.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/IaC/ProvisionMLWorkspace.yml">Sample
+                                        pipeline using this recipe
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Provision AKS Cluster-->
+            <div class="tab-pane fade show" id="provision_aks_cluster">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/cd/DeployToACIFromMetadata.yml">
+                                Deploy to ACI from model metadata file
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Provisions a AKS cluster from Azure ML workspace
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            Note: Recipe is being updated to add more parameters
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/ProvisionAKSCluster.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/IaC/ProvisionMLWorkspace.yml">Sample
+                                        pipeline</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Provision Azure ML Compute-->
+            <div class="tab-pane fade show" id="provision_aml_compute">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/IaC/ProvisionAMLComputeCluster.yml">
+                                Provisions Azure ML compute
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Provisions a Azure ML compute cluster
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            <ul>
+                                <li>compute cluster name</li>
+                                <li>cluster sku (i.e. sku of VM to use)</li>
+                                <li>max nodes</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <a href="imgs/ProvisionAMLComputeCluster.png">
+                                image
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/IaC/ProvisionMLWorkspace.yml">Sample
+                                        pipeline using this recipe
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Teardown resource group-->
+            <div class="tab-pane fade show" id="teardown_resource_group">
+                <table class="table table-striped table-dark  table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><b>Recipe</b></td>
+                        <td>
+                            <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/IaC/TearDownResourceGroup.yml">
+                                Teardown a resource group
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>
+                            Tear down a resource group along with all its resources (workspace, clusters etc)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Key parameters</b></td>
+                        <td>
+                            It sources the parameters through&nbsp;recipes/common/Variables.yml. It primarily needs
+                            service connection name, resource group name and location.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample pipeline output</b></td>
+                        <td>
+                            <!-- no image for tear down-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Sample devops pipelines</b></td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/rsethur/MLOps/tree/master/mlops/recipes/IaC/TearDownResourceGroup.yml">Sample
+                                        pipeline using this recipe</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>
