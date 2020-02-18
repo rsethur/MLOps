@@ -6,7 +6,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - template: ../recipes/common/Variables.yml
+  - template: ../common/Variables.yml
 
 stages:
   - stage: CreateEnvironment
@@ -30,7 +30,7 @@ stages:
     displayName: "Create Azure ML compute & AKS clusters"
     jobs:
       # Provision Azure ML compute cluster
-      - template: ../recipes/IaC/ProvisionAMLComputeCluster.yml
+      - template: ../IaC/ProvisionAMLComputeCluster.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
@@ -39,7 +39,7 @@ stages:
           aml_compute_cluster: '${{ variables.AML_COMPUTE_CLUSTER }}'
 
       # Provision AKS cluster
-      - template: ../recipes/IaC/ProvisionAKSCluster.yml
+      - template: ../IaC/ProvisionAKSCluster.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
