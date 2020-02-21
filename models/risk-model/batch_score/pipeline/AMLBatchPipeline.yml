@@ -13,7 +13,7 @@ pipeline:
             models_id:
                 - risk-model:1
             input_datasets:
-                MyMinistInput:
+                credit_dataset:
                     dataset_name: credit_dataset
             outputs:
                 OutputData:
