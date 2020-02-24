@@ -13,7 +13,7 @@ pipeline:
             models_id:
                 - img-model:1
             input_datasets:
-                MyMinistInput:
+                img_dataset:
                     dataset_name: img_dataset
             outputs:
                 OutputData:
