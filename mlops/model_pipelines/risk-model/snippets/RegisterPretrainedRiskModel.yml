@@ -17,8 +17,8 @@ stages:
         parameters:
           rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
           workspace-name: ${{ variables['WORKSPACE'] }}
-          resource-group: ${{ variables.['RESOURCE_GROUP'] }}
-          name: ${{ variables.RISK_MODEL_NAME }}
+          resource-group: ${{ variables['RESOURCE_GROUP'] }}
+          name: ${{ variables['RISK_MODEL_NAME'] }}
           model-framework: 'ScikitLearn'
           model-framework-version: '0.20.3'
           model-path: 'models/risk-model/model/risk-model.joblib'
