@@ -37,7 +37,7 @@ jobs:
         ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
 
     ${{ if ne(parameters['run-metadata-file'], '') }}:
-      asset-path-cli: ' --asset-path outputs/${{ parameters.name }}'
+      asset-path-cli: --asset-path outputs/${{ parameters.name }}
     ${{ if eq(parameters['run-metadata-file'], '') }}:
       asset-path-cli: ' '
 
