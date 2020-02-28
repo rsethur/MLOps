@@ -38,6 +38,7 @@ stages:
           name: ${{ variables['RISK_MODEL_NAME'] }}'
           run-metadata-artifact: 'run-metadata'
           run-metadata-file: $(Pipeline.Workspace)/run-metadata/run.json
+          experiment-name: ${{ variables['RISK_MODEL_NAME'] }}-exp
 
   - stage: DeployToTest
     displayName: Deploy model to Test (Azure Container Instance)
