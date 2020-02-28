@@ -1,24 +1,73 @@
 parameters:
-  rm_service_connection: ''
-  resource_group: ''
-  workspace: ''
-  aks_cluster: ''
+  rm-service-connection: #Service connection for resource manager
+  print-cli-string: true #Print the constructed CLI
+  name:
+  agent-count:
+  cluster-purpose:
+  dns-service-ip:
+  docker-bridge-cidr:
+  load-balancer-subnet:
+  load-balancer-type:
+  location:
+  no-wait:
+  path:
+  resource-group:
+  service-cidr:
+  ssl-cert-file:
+  ssl-cname:
+  ssl-key-file:
+  ssl-leaf-domain-label:
+  ssl-overwrite-domain:
+  subnet-name:
+  vm-size:
+  vnet-name:
+  vnet-resourcegroup-name:
+  workspace-name:
 
 jobs:
-      - job: CreateAKSCluster
-        steps:
-          - task: AzureCLI@2
-            displayName: 'Install the CLI'
-            inputs:
-              scriptType: bash
-              azureSubscription:  ${{ parameters.rm_service_connection }}
-              scriptLocation: inlineScript
-              inlineScript: 'az extension add -n azure-cli-ml'
+- job: CreateAKSCluster
 
-          - task: AzureCLI@2
-            displayName: 'Provision AKS Cluster'
-            inputs:
-              scriptType: bash
-              azureSubscription:  ${{ parameters.rm_service_connection }}
-              scriptLocation: inlineScript
-              inlineScript: 'az ml computetarget create aks --name ${{ parameters.aks_cluster }} --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} --cluster-purpose FastProd'
+  variables:
+      #cli command to be used. e.g. az ml ..
+    cli-cmd: az ml computetarget create aks
+
+      #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
+    ${{ each param in parameters }}:
+      ${{ if ne(param.value, '') }}:
+        ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
+
+      #construct the final cli input by appending cli-cmd and all cli params
+    cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }}${{ variables['agent-count-cli']
+      }}${{ variables['cluster-purpose-cli'] }}${{ variables['dns-service-ip-cli']
+      }}${{ variables['docker-bridge-cidr-cli'] }}${{ variables['load-balancer-subnet-cli']
+      }}${{ variables['load-balancer-type-cli'] }}${{ variables['location-cli'] }}${{
+      variables['no-wait-cli'] }}${{ variables['path-cli'] }}${{ variables['resource-group-cli']
+      }}${{ variables['service-cidr-cli'] }}${{ variables['ssl-cert-file-cli'] }}${{
+      variables['ssl-cname-cli'] }}${{ variables['ssl-key-file-cli'] }}${{ variables['ssl-leaf-domain-label-cli']
+      }}${{ variables['ssl-overwrite-domain-cli'] }}${{ variables['subnet-name-cli']
+      }}${{ variables['vm-size-cli'] }}${{ variables['vnet-name-cli'] }}${{ variables['vnet-resourcegroup-name-cli']
+      }}${{ variables['workspace-name-cli'] }}
+
+  steps:
+    #Print the constructed CLI string if the print-cli-string flag is true
+  - ${{ if eq(parameters['print-cli-string'], true) }}:
+    - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
+      displayName: Print CLI string
+
+    #install the Azure ML CLI
+  - task: AzureCLI@2
+    displayName: Install the CLI
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: az extension add -n azure-cli-ml
+
+    #run the generated cli
+  - task: AzureCLI@2
+    displayName: 'Provision AKS Cluster'
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: ${{ variables['cli-input'] }}

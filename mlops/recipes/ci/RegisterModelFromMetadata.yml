@@ -1,35 +1,80 @@
 parameters:
-  rm_service_connection: ''
-  workspace: ''
-  resource_group: ''
-  model_name: ''
-  run_metadata_artifact: 'run-metadata'
-  model_metadata_artifact: 'model-metadata'
+  rm-service-connection: #Service connection for resource manager
+  print-cli-string: true #Print the constructed CLI
+  name:
+  asset-path:
+  cc:
+  description:
+  experiment-name:
+  gb:
+  gc:
+  model-framework:
+  model-framework-version:
+  model-path:
+  output-metadata-file:
+  path:
+  property:
+  resource-group:
+  run-id:
+  run-metadata-file:
+  sample-input-dataset-id:
+  sample-output-dataset-id:
+  tag:
+  workspace-name:
+  run-metadata-artifact: 'run-metadata'
+  model-metadata-artifact: 'model-metadata'
 
 jobs:
-      - job: RegisterJob
-        displayName: Register the model
-        steps:
-          - task: AzureCLI@2
-            displayName: 'Install the CLI'
-            inputs:
-              scriptType: bash
-              azureSubscription: ${{ parameters.rm_service_connection }}
-              scriptLocation: inlineScript
-              inlineScript: 'az extension add -n azure-cli-ml'
+- job: RegisterJob
 
-          - download: current
-            displayName: Download the run details
-            artifact: ${{ parameters.run_metadata_artifact }}
+  variables:
+      #cli command to be used. e.g. az ml ..
+    cli-cmd: az ml model register
 
-          - task: AzureCLI@2
-            displayName: 'Register the model'
-            inputs:
-              scriptType: bash
-              azureSubscription: ${{ parameters.rm_service_connection }}
-              scriptLocation: inlineScript
-              inlineScript: 'az ml model register --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} -f $(Pipeline.Workspace)/run-metadata/run.json --asset-path outputs/${{ parameters.model_name }} --experiment-name ${{ parameters.model_name }}-experiment -n ${{ parameters.model_name }} -t model.json'
+      #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
+    ${{ each param in parameters }}:
+      ${{ if ne(param.value, '') }}:
+        ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
 
-          - publish: $(System.DefaultWorkingDirectory)/model.json
-            displayName: Publish model metadata artifact
-            artifact: ${{ parameters.model_metadata_artifact }}
+      #construct the final cli input by appending cli-cmd and all cli params
+    cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }}${{ variables['asset-path-cli']
+      }}${{ variables['cc-cli'] }}${{ variables['description-cli'] }}${{ variables['experiment-name-cli']
+      }}${{ variables['gb-cli'] }}${{ variables['gc-cli'] }}${{ variables['model-framework-cli']
+      }}${{ variables['model-framework-version-cli'] }}${{ variables['model-path-cli']
+      }}${{ variables['output-metadata-file-cli'] }}${{ variables['path-cli'] }}${{
+      variables['property-cli'] }}${{ variables['resource-group-cli'] }}${{ variables['run-id-cli']
+      }}${{ variables['run-metadata-file-cli'] }}${{ variables['sample-input-dataset-id-cli']
+      }}${{ variables['sample-output-dataset-id-cli'] }}${{ variables['tag-cli'] }}${{
+      variables['workspace-name-cli'] }}
+
+  steps:
+    #Print the constructed CLI string if the print-cli-string flag is true
+  - ${{ if eq(parameters['print-cli-string'], true) }}:
+    - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
+      displayName: Print CLI string
+
+    #install the Azure ML CLI
+  - task: AzureCLI@2
+    displayName: Install the CLI
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: az extension add -n azure-cli-ml
+
+  - download: current
+      displayName: Download the run details
+      artifact: ${{ parameters.['run-metadata-artifact'] }}
+
+    #run the generated cli
+  - task: AzureCLI@2
+    displayName: Register the model
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: ${{ variables['cli-input'] }}
+
+  - publish: $(System.DefaultWorkingDirectory)/model.json
+      displayName: Publish model metadata artifact
+      artifact: ${{ parameters['model-metadata-artifact'] }}

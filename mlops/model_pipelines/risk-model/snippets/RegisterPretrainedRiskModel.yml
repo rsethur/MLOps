@@ -15,10 +15,10 @@ stages:
     jobs:
       - template: ../../../recipes/ci/RegisterPretrainedModel.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          model_name: '${{ variables.RISK_MODEL_NAME }}'
-          model_framework: 'ScikitLearn'
-          model_framework_version: '0.20.3'
-          model_path: 'models/risk-model/model/risk-model.joblib'
+          rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
+          workspace-name: ${{ variables['WORKSPACE'] }}
+          resource-group: ${{ variables.['RESOURCE_GROUP'] }}
+          name: ${{ variables.RISK_MODEL_NAME }}
+          model-framework: 'ScikitLearn'
+          model-framework-version: '0.20.3'
+          model-path: 'models/risk-model/model/risk-model.joblib'

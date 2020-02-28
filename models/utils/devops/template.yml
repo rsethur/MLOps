@@ -1,0 +1,41 @@
+parameters:
+  rm-service-connection: #Service connection for resource manager
+  print-cli-string: true #Print the constructed CLI
+jobs:
+  - job: jobName
+
+    variables:
+      #cli command to be used. e.g. az ml ..
+      cli-cmd:
+
+      #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
+      ${{ each param in parameters }}:
+        ${{ if ne(param.value, '') }}:
+          ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
+
+      #construct the final cli input by appending cli-cmd and all cli params
+      cli-input:
+
+    steps:
+    #Print the constructed CLI string if the print-cli-string flag is true
+    - ${{ if eq(parameters['print-cli-string'], true) }}:
+      - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
+        displayName: Print CLI string
+
+    #install the Azure ML CLI
+    - task: AzureCLI@2
+      displayName: 'Install the CLI'
+      inputs:
+        scriptType: bash
+        azureSubscription:  ${{ parameters['rm-service-connection'] }}
+        scriptLocation: inlineScript
+        inlineScript: 'az extension add -n azure-cli-ml'
+
+    #run the generated cli
+    - task: AzureCLI@2
+      displayName: 'TaskName'
+      inputs:
+        scriptType: bash
+        azureSubscription:  ${{ parameters['rm-service-connection'] }}
+        scriptLocation: inlineScript
+        inlineScript:  ${{ variables['cli-input'] }}

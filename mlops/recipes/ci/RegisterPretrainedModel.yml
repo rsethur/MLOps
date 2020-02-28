@@ -1,67 +1,80 @@
 parameters:
-  rm_service_connection: ''
-  workspace: ''
-  resource_group: ''
   lfs: true # indicates whether to use git large file system (lfs). Useful if pretrained model binaries are stored in git lfs.
-  model_name: ''
-  model_framework: ''
-  model_framework_version: ''
-  model_path: ''
-  sample_input_dataset_id: ''
-  sample_output_dataset_id: ''
-  model_metadata_artifact: 'model-metadata'
+  rm-service-connection: #Service connection for resource manager
+  print-cli-string: true #Print the constructed CLI
+  name:
+  asset-path:
+  cc:
+  description:
+  experiment-name:
+  gb:
+  gc:
+  model-framework:
+  model-framework-version:
+  model-path:
+  output-metadata-file:
+  path:
+  property:
+  resource-group:
+  run-id:
+  run-metadata-file:
+  sample-input-dataset-id:
+  sample-output-dataset-id:
+  tag:
+  workspace-name:
+  run-metadata-artifact: 'run-metadata'
+  model-metadata-artifact: 'model-metadata'
 
 jobs:
-  - job: RegisterJob
-    displayName: Register the pretrained model
-    variables:
-      # model-framework cli input
-      ${{ if ne(parameters.model_framework, '') }}:
-        model_framework_cli: --model-framework ${{ parameters.model_framework }}
+- job: RegisterJob
 
-      ${{ if eq(parameters.model_framework, '') }}:
-        model_framework_cli: ' '
+  variables:
+      #cli command to be used. e.g. az ml ..
+    cli-cmd: az ml model register
 
-      # model-framework-version cli input
-      ${{ if ne(parameters.model_framework_version, '') }}:
-        model_framework_version_cli: --model-framework-version ${{ parameters.model_framework_version }}
+      #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
+    ${{ each param in parameters }}:
+      ${{ if ne(param.value, '') }}:
+        ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
 
-      ${{ if eq(parameters.model_framework_version, '') }}:
-        model_framework_version_cli: ' '
+      #construct the final cli input by appending cli-cmd and all cli params
+    cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }}${{ variables['asset-path-cli']
+      }}${{ variables['cc-cli'] }}${{ variables['description-cli'] }}${{ variables['experiment-name-cli']
+      }}${{ variables['gb-cli'] }}${{ variables['gc-cli'] }}${{ variables['model-framework-cli']
+      }}${{ variables['model-framework-version-cli'] }}${{ variables['model-path-cli']
+      }}${{ variables['output-metadata-file-cli'] }}${{ variables['path-cli'] }}${{
+      variables['property-cli'] }}${{ variables['resource-group-cli'] }}${{ variables['run-id-cli']
+      }}${{ variables['run-metadata-file-cli'] }}${{ variables['sample-input-dataset-id-cli']
+      }}${{ variables['sample-output-dataset-id-cli'] }}${{ variables['tag-cli'] }}${{
+      variables['workspace-name-cli'] }}
 
-      # sample-input-dataset-id cli input
-      ${{ if ne(parameters.sample_input_dataset_id, '') }}:
-        sample_input_dataset_id_cli: --sample-input-dataset-id ${{ parameters.sample_input_dataset_id }}
+  steps:
+    #Print the constructed CLI string if the print-cli-string flag is true
+  - ${{ if eq(parameters['print-cli-string'], true) }}:
+    - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
+      displayName: Print CLI string
 
-      ${{ if eq(parameters.sample_input_dataset_id, '') }}:
-        sample_input_dataset_id_cli: ' '
+  - checkout: self
+      lfs: ${{ parameters.lfs }}
 
-      # sample-output-dataset-id cli input
-      ${{ if ne(parameters.sample_output_dataset_id, '') }}:
-        sample_output_dataset_id_cli: --sample-output-dataset-id ${{ parameters.sample_output_dataset_id }}
+    #install the Azure ML CLI
+  - task: AzureCLI@2
+    displayName: Install the CLI
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: az extension add -n azure-cli-ml
 
-      ${{ if eq(parameters.sample_output_dataset_id, '') }}:
-        sample_output_dataset_id_cli: ' '
-    steps:
-      - checkout: self
-        lfs: ${{ parameters.lfs }}
+    #run the generated cli
+  - task: AzureCLI@2
+    displayName: Register the model
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: ${{ variables['cli-input'] }}
 
-      - task: AzureCLI@2
-        displayName: 'Install the CLI'
-        inputs:
-          scriptType: bash
-          azureSubscription: ${{ parameters.rm_service_connection }}
-          scriptLocation: inlineScript
-          inlineScript: 'az extension add -n azure-cli-ml'
-
-      - task: AzureCLI@2
-        displayName: 'Register the model'
-        inputs:
-          scriptType: bash
-          azureSubscription: ${{ parameters.rm_service_connection }}
-          scriptLocation: inlineScript
-          inlineScript: az ml model register -n ${{ parameters.model_name }} -p ${{ parameters.model_path }} --workspace-name ${{ parameters.workspace }} --resource-group ${{ parameters.resource_group }} -t model.json $(model_framework_cli) $(model_framework_version_cli) $(sample_input_dataset_id_cli) $(sample_output_dataset_id_cli)
-
-      - publish: $(System.DefaultWorkingDirectory)/model.json
-        displayName: Publish model metadata artifact
-        artifact: ${{ parameters.model_metadata_artifact }}
+  - publish: $(System.DefaultWorkingDirectory)/model.json
+      displayName: Publish model metadata artifact
+      artifact: ${{ parameters['model-metadata-artifact'] }}
