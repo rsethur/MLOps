@@ -15,13 +15,14 @@ stages:
     jobs:
       - template: ../../recipes/cd/DeployToACIFromRegisteredModel.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.IMG_MODEL_ACI_SERVICE_NAME }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          model_name: '${{ variables.IMG_MODEL_NAME }}'
-          model_version: '1'
-          overwrite: true
+          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          name: '${{ variables.IMG_MODEL_ACI_SERVICE_NAME }}'
+          workspace-name: '${{ variables.WORKSPACE }}'
+          resource-group: '${{ variables.RESOURCE_GROUP }}'
+          model: '${{ variables.IMG_MODEL_NAME }}:1'
+          compute-type: aci
+          ic: $(Build.SourcesDirectory)/models/img-model/score/inference_config.yml
+          dc: $(Build.SourcesDirectory)/models/img-model/score/aci_deployment_config.yml
 
   - stage: DeployToProd
     displayName: Deploy to Prod (AKS)
@@ -33,11 +34,12 @@ stages:
 
       - template: ../../recipes/cd/DeployToAKSFromRegisteredModel.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.IMG_MODEL_AKS_SERVICE_NAME }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          model_name: '${{ variables.IMG_MODEL_NAME }}'
-          model_version: '1'
-          aks_cluster: '${{ variables.AKS_CLUSTER }}'
-          overwrite: true
+          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          name: '${{ variables.IMG_MODEL_AKS_SERVICE_NAME }}'
+          workspace-name: '${{ variables.WORKSPACE }}'
+          resource-group: '${{ variables.RESOURCE_GROUP }}'
+          model: '${{ variables.IMG_MODEL_NAME }}:1'
+          compute-type: aks
+          compute-target: ${{ variables.AKS_CLUSTER }}
+          ic: $(Build.SourcesDirectory)/models/img-model/score/inference_config.yml
+          dc: $(Build.SourcesDirectory)/models/img-model/score/aks_deployment_config.yml

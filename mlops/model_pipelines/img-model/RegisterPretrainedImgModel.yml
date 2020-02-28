@@ -15,10 +15,10 @@ stages:
     jobs:
       - template: ../../recipes/ci/RegisterModel.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          model_name: '${{ variables.IMG_MODEL_NAME }}'
-          model_framework: 'TensorFlow'
-          model_framework_version: '2.0.0'
-          model_path: 'models/img-model/model/'
+          rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
+          workspace-name: ${{ variables['WORKSPACE'] }}
+          resource-group: ${{ variables['RESOURCE_GROUP'] }}
+          name: ${{ variables['IMG_MODEL_NAME'] }}
+          model-framework: 'TensorFlow'
+          model-framework-version: '2.0.0'
+          model-path: 'models/img-model/model/'
