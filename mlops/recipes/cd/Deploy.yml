@@ -114,10 +114,10 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: az extension add -n azure-cli-ml
 
-  - ${{ if ne(parameters['model-metadata-file'], '') }}:
+  -   ${{ if ne(parameters['model-metadata-file'], '') }}:
     - download: current
       displayName: Download artifact model metadata
-      artifact: ${{ parameters['model-metadata-artifact' }}
+      artifact: ${{ parameters['model-metadata-artifact'] }}
 
     #run the generated cli
   - task: AzureCLI@2
