@@ -67,5 +67,6 @@ stages:
           workspace-name: '${{ variables.WORKSPACE }}'
           resource-group: '${{ variables.RESOURCE_GROUP }}'
           model-metadata-file: $(Pipeline.Workspace)/model-metadata/model.json
+          compute-target: aks
           ic: $(Build.SourcesDirectory)/models/risk-model/score/inference_config.yml
           dc: $(Build.SourcesDirectory)/models/risk-model/score/aks_deployment_config.yml
