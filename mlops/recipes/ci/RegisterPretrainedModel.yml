@@ -49,8 +49,6 @@ jobs:
       variables['workspace-name-cli'] }}
 
   steps:
-  - checkout: self
-      lfs: ${{ parameters.lfs }}
 
     #Print the constructed CLI string if the print-cli-string flag is true
   - ${{ if eq(parameters['print-cli-string'], true) }}:
