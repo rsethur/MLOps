@@ -73,6 +73,3 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: ${{ variables['cli-input'] }}
 
-  - publish: $(System.DefaultWorkingDirectory)/model.json
-      displayName: Publish model metadata artifact
-      artifact: ${{ parameters['model-metadata-artifact'] }}
