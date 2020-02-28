@@ -50,7 +50,7 @@ jobs:
 
   steps:
   - checkout: self
-      lfs: ${{ parameters['lfs'] }}
+      lfs: true
 
     #Print the constructed CLI string if the print-cli-string flag is true
   - ${{ if eq(parameters['print-cli-string'], true) }}:
