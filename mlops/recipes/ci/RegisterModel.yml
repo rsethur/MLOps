@@ -67,7 +67,7 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: az extension add -n azure-cli-ml
 
-  ${{ if ne(parameters['run-metadata-file'], '') }}:
+  - ${{ if ne(parameters['run-metadata-file'], '') }}:
     - download: current
       displayName: Download the run details
       artifact: ${{ parameters['run-metadata-artifact'] }}
