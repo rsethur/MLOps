@@ -74,6 +74,6 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: ${{ variables['cli-input'] }}
 
-  - publish: $(System.DefaultWorkingDirectory)/parameters['output-metadata-file']
+  - publish: $(System.DefaultWorkingDirectory)/${{ parameters['output-metadata-file'] }}
     displayName: Publish model metadata artifact
     artifact: ${{ parameters['model-metadata-artifact'] }}
