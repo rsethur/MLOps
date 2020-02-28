@@ -49,13 +49,13 @@ jobs:
       variables['workspace-name-cli'] }}
 
   steps:
+  - checkout: self
+      lfs: ${{ parameters.lfs }}
+
     #Print the constructed CLI string if the print-cli-string flag is true
   - ${{ if eq(parameters['print-cli-string'], true) }}:
     - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
       displayName: Print CLI string
-
-  - checkout: self
-      lfs: ${{ parameters.lfs }}
 
     #install the Azure ML CLI
   - task: AzureCLI@2
