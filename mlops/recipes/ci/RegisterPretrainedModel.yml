@@ -12,7 +12,7 @@ parameters:
   model-framework:
   model-framework-version:
   model-path:
-  output-metadata-file: 'model-metadata'
+  output-metadata-file: 'model.json'
   path:
   property:
   resource-group:
@@ -22,6 +22,7 @@ parameters:
   sample-output-dataset-id:
   tag:
   workspace-name:
+  model-metadata-artifact: 'model-metadata' #This will be the artifact name i the devops pipeline to store the output-metadata-file
 
 jobs:
 - job: RegisterJob
@@ -73,6 +74,6 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: ${{ variables['cli-input'] }}
 
-  - publish: $(System.DefaultWorkingDirectory)/model.json
+  - publish: $(System.DefaultWorkingDirectory)/parameters['output-metadata-file']
     displayName: Publish model metadata artifact
-    artifact: ${{ parameters['output-metadata-file'] }}
+    artifact: ${{ parameters['model-metadata-artifact'] }}
