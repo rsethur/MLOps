@@ -50,7 +50,7 @@ jobs:
 
   steps:
   - checkout: self
-      lfs: true
+    lfs: ${{ parameters['lfs'] }}
 
     #Print the constructed CLI string if the print-cli-string flag is true
   - ${{ if eq(parameters['print-cli-string'], true) }}:
@@ -76,5 +76,5 @@ jobs:
       inlineScript: ${{ variables['cli-input'] }}
 
   - publish: $(System.DefaultWorkingDirectory)/model.json
-      displayName: Publish model metadata artifact
-      artifact: ${{ parameters['model-metadata-artifact'] }}
+    displayName: Publish model metadata artifact
+    artifact: ${{ parameters['model-metadata-artifact'] }}
