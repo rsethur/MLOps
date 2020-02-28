@@ -15,7 +15,7 @@ parameters:
   cf:
   collect-model-data:
   compute-target:
-  compute-type:
+  compute-type: aci
   cuda-version:
   dc:
   description:
@@ -63,7 +63,8 @@ parameters:
   model-metadata-artifact: 'model-metadata'
 
 jobs:
-- job: DeployToACI
+- job: DeployJob
+  displayName: Deploy to ${{ variables['compute-type'] }}
 
   variables:
       #cli command to be used. e.g. az ml ..

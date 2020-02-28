@@ -20,6 +20,7 @@ stages:
           workspace-name: '${{ variables.WORKSPACE }}'
           resource-group: '${{ variables.RESOURCE_GROUP }}'
           model: '${{ variables.RISK_MODEL_NAME }}:1'
+          compute-type: aci
           ic: $(Build.SourcesDirectory)/models/risk-model/score/inference_config.yml
           dc: $(Build.SourcesDirectory)/models/risk-model/score/aci_deployment_config.yml
 

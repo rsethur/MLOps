@@ -48,6 +48,7 @@ stages:
           name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
           workspace-name: '${{ variables.WORKSPACE }}'
           resource-group: '${{ variables.RESOURCE_GROUP }}'
+          compute-type: aci
           model-metadata-file: $(Pipeline.Workspace)/model-metadata/model.json
           ic: $(Build.SourcesDirectory)/models/risk-model/score/inference_config.yml
           dc: $(Build.SourcesDirectory)/models/risk-model/score/aci_deployment_config.yml
@@ -66,7 +67,8 @@ stages:
           name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
           workspace-name: '${{ variables.WORKSPACE }}'
           resource-group: '${{ variables.RESOURCE_GROUP }}'
+          compute-type: aks
           model-metadata-file: $(Pipeline.Workspace)/model-metadata/model.json
-          compute-target: aks
+          compute-target: ${{ variables.AKS_CLUSTER }}
           ic: $(Build.SourcesDirectory)/models/risk-model/score/inference_config.yml
           dc: $(Build.SourcesDirectory)/models/risk-model/score/aks_deployment_config.yml
