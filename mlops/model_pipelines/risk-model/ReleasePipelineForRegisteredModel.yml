@@ -38,6 +38,6 @@ stages:
           workspace-name: '${{ variables.WORKSPACE }}'
           resource-group: '${{ variables.RESOURCE_GROUP }}'
           model: '${{ variables.RISK_MODEL_NAME }}:1'
-          compute-target: aks
+          compute-type: aks
           ic: $(Build.SourcesDirectory)/models/risk-model/score/inference_config.yml
           dc: $(Build.SourcesDirectory)/models/risk-model/score/aks_deployment_config.yml

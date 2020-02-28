@@ -121,7 +121,7 @@ jobs:
 
     #run the generated cli
   - task: AzureCLI@2
-    displayName: TaskName
+    displayName: Deploy
     inputs:
       scriptType: bash
       azureSubscription: ${{ parameters['rm-service-connection'] }}
