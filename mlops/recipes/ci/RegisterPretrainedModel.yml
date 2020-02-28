@@ -12,7 +12,7 @@ parameters:
   model-framework:
   model-framework-version:
   model-path:
-  output-metadata-file:
+  output-metadata-file: 'model-metadata'
   path:
   property:
   resource-group:
@@ -22,8 +22,6 @@ parameters:
   sample-output-dataset-id:
   tag:
   workspace-name:
-  run-metadata-artifact: 'run-metadata'
-  model-metadata-artifact: 'model-metadata'
 
 jobs:
 - job: RegisterJob
@@ -77,4 +75,4 @@ jobs:
 
   - publish: $(System.DefaultWorkingDirectory)/model.json
     displayName: Publish model metadata artifact
-    artifact: ${{ parameters['model-metadata-artifact'] }}
+    artifact: ${{ parameters['output-metadata-file'] }}
