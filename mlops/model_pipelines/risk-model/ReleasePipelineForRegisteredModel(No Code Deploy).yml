@@ -13,16 +13,14 @@ stages:
   - stage: DeployToTest
     displayName: Deploy model to Test (Azure Container Instance)
     jobs:
-      - template: ../../recipes/cd/DeployToACIFromRegisteredModel.yml
+      - template: ../../recipes/cd/Deploy.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          no_code_deploy: true
-          model_name: '${{ variables.RISK_MODEL_NAME }}'
-          model_version: '11'
-          overwrite: true
+          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
+          workspace-name: '${{ variables.WORKSPACE }}'
+          resource-group: '${{ variables.RESOURCE_GROUP }}'
+          model: '${{ variables.RISK_MODEL_NAME }}:1'
+          compute-type: aci
 
   - stage: DeployToProd
     displayName: Deploy to Prod (AKS)
@@ -32,14 +30,11 @@ stages:
         displayName: Approval for rolling out to production
         environment: 'Prod'
 
-      - template: ../../recipes/cd/DeployToAKSFromRegisteredModel.yml
+      - template: ../../recipes/cd/Deploy.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          no_code_deploy: true
-          model_name: '${{ variables.RISK_MODEL_NAME }}'
-          model_version: '11'
-          aks_cluster: '${{ variables.AKS_CLUSTER }}'
-          overwrite: true
+          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
+          workspace-name: '${{ variables.WORKSPACE }}'
+          resource-group: '${{ variables.RESOURCE_GROUP }}'
+          model: '${{ variables.RISK_MODEL_NAME }}:1'
+          compute-type: aks
