@@ -1,9 +1,8 @@
 parameters:
-  lfs: true # indicates whether to use git large file system (lfs). Useful if pretrained model binaries are stored in git lfs.
   rm-service-connection: #Service connection for resource manager
   print-cli-string: true #Print the constructed CLI
   name:
-  asset-path:
+  #asset-path: #Note: this is set as outputs/modelname in the 'variables' section below
   cc:
   description:
   experiment-name:
@@ -17,12 +16,13 @@ parameters:
   property:
   resource-group:
   run-id:
-  run-metadata-file:
+  run-metadata-file: #If you want to register from run metadata file, then in the caller set this parameter to $(Pipeline.Workspace)/run-metadata/run.json
   sample-input-dataset-id:
   sample-output-dataset-id:
   tag:
   workspace-name:
-  model-metadata-artifact: 'model-metadata' #This will be the artifact name i the devops pipeline to store the output-metadata-file
+  run-metadata-artifact: 'run-metadata'
+  model-metadata-artifact: 'model-metadata'
 
 jobs:
 - job: RegisterJob
@@ -36,6 +36,11 @@ jobs:
       ${{ if ne(param.value, '') }}:
         ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
 
+    ${{ if ne(parameters['run-metadata-file'], '') }}:
+      asset-path-cli: ' --asset-path outputs/${{ parameters.name }}'
+    ${{ if eq(parameters['run-metadata-file'], '') }}:
+      asset-path-cli: ' '
+
       #construct the final cli input by appending cli-cmd and all cli params
     cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }}${{ variables['asset-path-cli']
       }}${{ variables['cc-cli'] }}${{ variables['description-cli'] }}${{ variables['experiment-name-cli']
@@ -48,9 +53,6 @@ jobs:
       variables['workspace-name-cli'] }}
 
   steps:
-  - checkout: self
-    lfs: ${{ parameters['lfs'] }}
-
     #Print the constructed CLI string if the print-cli-string flag is true
   - ${{ if eq(parameters['print-cli-string'], true) }}:
     - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
@@ -64,6 +66,11 @@ jobs:
       azureSubscription: ${{ parameters['rm-service-connection'] }}
       scriptLocation: inlineScript
       inlineScript: az extension add -n azure-cli-ml
+
+  ${{ if ne(parameters['run-metadata-file'], '') }}:
+    - download: current
+        displayName: Download the run details
+        artifact: ${{ parameters.['run-metadata-artifact'] }}
 
     #run the generated cli
   - task: AzureCLI@2

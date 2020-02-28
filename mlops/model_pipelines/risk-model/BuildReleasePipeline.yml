@@ -30,23 +30,27 @@ stages:
         displayName: Approval for model registration
         environment: 'Test'
 
-      - template: ../../recipes/ci/RegisterModelFromMetadata.yml
+      - template: ../../recipes/ci/RegisterModel.yml
         parameters:
           rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
           workspace-name: ${{ variables['WORKSPACE'] }}
           resource-group: ${{ variables['RESOURCE_GROUP'] }}
           name: ${{ variables['RISK_MODEL_NAME'] }}'
+          run-metadata-artifact: 'run-metadata'
+          run-metadata-file: $(Pipeline.Workspace)/run-metadata/run.json
 
   - stage: DeployToTest
     displayName: Deploy model to Test (Azure Container Instance)
     jobs:
-      - template: ../../recipes/cd/DeployToACIFromMetadata.yml
+      - template: ../../recipes/cd/Deploy.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          model_name: '${{ variables.RISK_MODEL_NAME }}'
+          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
+          workspace-name: '${{ variables.WORKSPACE }}'
+          resource-group: '${{ variables.RESOURCE_GROUP }}'
+          model-metadata-file: $(Pipeline.Workspace)/model-metadata/model.json
+          ic: $(Build.SourcesDirectory)/models/risk-model/score/inference_config.yml
+          dc: $(Build.SourcesDirectory)/models/risk-model/score/aci_deployment_config.yml
 
   - stage: DeployToProd
     displayName: Deploy to Prod with approval
@@ -56,11 +60,12 @@ stages:
         displayName: Approval for rolling out to production
         environment: 'Prod'
 
-      - template: ../../recipes/cd/DeployToAKSFromMetadata.yml
+      - template: ../../recipes/cd/Deploy.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          service_name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          model_name: '${{ variables.RISK_MODEL_NAME }}'
-          aks_cluster: '${{ variables.AKS_CLUSTER }}'
+          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
+          name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
+          workspace-name: '${{ variables.WORKSPACE }}'
+          resource-group: '${{ variables.RESOURCE_GROUP }}'
+          model-metadata-file: $(Pipeline.Workspace)/model-metadata/model.json
+          ic: $(Build.SourcesDirectory)/models/risk-model/score/inference_config.yml
+          dc: $(Build.SourcesDirectory)/models/risk-model/score/aks_deployment_config.yml

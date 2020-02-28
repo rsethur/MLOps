@@ -1,0 +1,129 @@
+parameters:
+  rm-service-connection: #Service connection for resource manager
+  print-cli-string: true #Print the constructed CLI
+  name:
+  ae:
+  ai:
+  ar:
+  as:
+  at:
+  autoscale-max-replicas:
+  autoscale-min-replicas:
+  base-image:
+  base-image-registry:
+  cc:
+  cf:
+  collect-model-data:
+  compute-target:
+  compute-type:
+  cuda-version:
+  dc:
+  description:
+  dn:
+  ds:
+  ed:
+  eg:
+  entry-script:
+  environment-name:
+  environment-version:
+  failure-threshold:
+  gb:
+  gc:
+  ic:
+  id:
+  kp:
+  ks:
+  lo:
+  max-request-wait-time:
+  model:
+  model-metadata-file:
+  namespace:
+  no-wait: #Blank space as value means this parameter will be included in cli
+  nr:
+  overwrite: ' ' #Blank space as value means this parameter will be included in cli
+  path:
+  period-seconds:
+  pi:
+  po:
+  property:
+  replica-max-concurrent-requests:
+  resource-group:
+  rt:
+  sc:
+  scoring-timeout-ms:
+  sd:
+  se:
+  sk:
+  sp:
+  st:
+  tag:
+  timeout-seconds:
+  token-auth-enabled:
+  workspace-name:
+  model-metadata-artifact: 'model-metadata'
+
+jobs:
+- job: DeployToACI
+
+  variables:
+      #cli command to be used. e.g. az ml ..
+    cli-cmd: az ml model deploy
+
+      #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
+    ${{ each param in parameters }}:
+      ${{ if ne(param.value, '') }}:
+        ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
+
+      #construct the final cli input by appending cli-cmd and all cli params
+    cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }}${{ variables['ae-cli']
+      }}${{ variables['ai-cli'] }}${{ variables['ar-cli'] }}${{ variables['as-cli']
+      }}${{ variables['at-cli'] }}${{ variables['autoscale-max-replicas-cli'] }}${{
+      variables['autoscale-min-replicas-cli'] }}${{ variables['base-image-cli'] }}${{
+      variables['base-image-registry-cli'] }}${{ variables['cc-cli'] }}${{ variables['cf-cli']
+      }}${{ variables['collect-model-data-cli'] }}${{ variables['compute-target-cli']
+      }}${{ variables['compute-type-cli'] }}${{ variables['cuda-version-cli'] }}${{
+      variables['dc-cli'] }}${{ variables['description-cli'] }}${{ variables['dn-cli']
+      }}${{ variables['ds-cli'] }}${{ variables['ed-cli'] }}${{ variables['eg-cli']
+      }}${{ variables['entry-script-cli'] }}${{ variables['environment-name-cli']
+      }}${{ variables['environment-version-cli'] }}${{ variables['failure-threshold-cli']
+      }}${{ variables['gb-cli'] }}${{ variables['gc-cli'] }}${{ variables['ic-cli']
+      }}${{ variables['id-cli'] }}${{ variables['kp-cli'] }}${{ variables['ks-cli']
+      }}${{ variables['lo-cli'] }}${{ variables['max-request-wait-time-cli'] }}${{
+      variables['model-cli'] }}${{ variables['model-metadata-file-cli'] }}${{ variables['namespace-cli']
+      }}${{ variables['no-wait-cli'] }}${{ variables['nr-cli'] }}${{ variables['overwrite-cli']
+      }}${{ variables['path-cli'] }}${{ variables['period-seconds-cli'] }}${{ variables['pi-cli']
+      }}${{ variables['po-cli'] }}${{ variables['property-cli'] }}${{ variables['replica-max-concurrent-requests-cli']
+      }}${{ variables['resource-group-cli'] }}${{ variables['rt-cli'] }}${{ variables['sc-cli']
+      }}${{ variables['scoring-timeout-ms-cli'] }}${{ variables['sd-cli'] }}${{ variables['se-cli']
+      }}${{ variables['sk-cli'] }}${{ variables['sp-cli'] }}${{ variables['st-cli']
+      }}${{ variables['tag-cli'] }}${{ variables['timeout-seconds-cli'] }}${{ variables['token-auth-enabled-cli']
+      }}${{ variables['workspace-name-cli'] }}
+
+  steps:
+    #Print the constructed CLI string if the print-cli-string flag is true
+  - ${{ if eq(parameters['print-cli-string'], true) }}:
+    - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
+      displayName: Print CLI string
+
+    #install the Azure ML CLI
+  - task: AzureCLI@2
+    displayName: Install the CLI
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: az extension add -n azure-cli-ml
+
+  ${{ if ne(parameters['model-metadata-file'], '') }}:
+    - download: current
+      displayName: Download artifact model metadata
+      artifact: ${{ parameters['model-metadata-artifact' }}
+
+    #run the generated cli
+  - task: AzureCLI@2
+    displayName: TaskName
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: ${{ variables['cli-input'] }}
