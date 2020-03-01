@@ -35,7 +35,7 @@ stages:
           rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
           workspace-name: ${{ variables['WORKSPACE'] }}
           resource-group: ${{ variables['RESOURCE_GROUP'] }}
-          name: ${{ variables['RISK_MODEL_NAME'] }}'
+          name: ${{ variables['RISK_MODEL_NAME'] }}
           run-metadata-artifact: 'run-metadata'
           run-metadata-file: $(Pipeline.Workspace)/run-metadata/run.json
           experiment-name: ${{ variables['RISK_MODEL_NAME'] }}-exp
