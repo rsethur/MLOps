@@ -1,0 +1,35 @@
+{
+    "_experiment_name": "risk-model-exp",
+    "cancel_uri": "https://eastus2.experiments.azureml.net/execution/v1.0/subscriptions/60dcdfe6-7fbc-4c33-96f9-ef1e832d16a3/resourceGroups/setu49-rg/providers/Microsoft.MachineLearningServices/workspaces/setu49-ws/experiments/risk-model-exp/runId/risk-model-exp_1582920210_e1f0faee/cancel",
+    "created_by": {
+        "user_name": "0bd4de31-6d10-4f62-926f-64991758fad1",
+        "user_object_id": "771cb6a1-b2dc-4377-ae35-232594a64ff5",
+        "user_tenant_id": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+    },
+    "created_utc": "2020-02-28T20:03:35.249331Z",
+    "data_container_id": "dcid.risk-model-exp_1582920210_e1f0faee",
+    "diagnostics_uri": "https://eastus2.experiments.azureml.net/execution/v1.0/subscriptions/60dcdfe6-7fbc-4c33-96f9-ef1e832d16a3/resourceGroups/setu49-rg/providers/Microsoft.MachineLearningServices/workspaces/setu49-ws/experiments/risk-model-exp/runId/risk-model-exp_1582920210_e1f0faee/diagnostics",
+    "experiment_id": "aaf29250-8106-4006-8c1b-82bb0c98e9c5",
+    "heartbeat_enabled": false,
+    "hidden": false,
+    "properties": {
+        "ContentSnapshotId": "70c7c5c4-0fc3-4ff4-ade9-56b38e3400b7",
+        "_azureml.ComputeTargetType": "amlcompute",
+        "azureml.git.commit": "6b93cc63d75bf0d553174f666391d234e59e33b5",
+        "azureml.git.dirty": "False",
+        "azureml.git.repository_uri": "https://github.com/rsethur/MLOps",
+        "mlflow.source.git.commit": "6b93cc63d75bf0d553174f666391d234e59e33b5",
+        "mlflow.source.git.repoURL": "https://github.com/rsethur/MLOps"
+    },
+    "root_run_id": "risk-model-exp_1582920210_e1f0faee",
+    "root_run_uuid": "dff0cc58-9744-443f-8b07-2ce18fba4858",
+    "run_id": "risk-model-exp_1582920210_e1f0faee",
+    "run_number": 3,
+    "run_type": "azureml.scriptrun",
+    "run_uuid": "dff0cc58-9744-443f-8b07-2ce18fba4858",
+    "script_name": "train.py",
+    "status": "Completed",
+    "tags": {},
+    "target": "amlcluster",
+    "user_id": "771cb6a1-b2dc-4377-ae35-232594a64ff5"
+}

@@ -42,8 +42,7 @@ jobs:
       asset-path-cli: ' '
 
       #construct the final cli input by appending cli-cmd and all cli params
-    cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }}${{ variables['asset-path-cli']
-      }}${{ variables['cc-cli'] }}${{ variables['description-cli'] }}${{ variables['experiment-name-cli']
+    cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }}${{ variables['cc-cli'] }}${{ variables['description-cli'] }}${{ variables['experiment-name-cli']
       }}${{ variables['gb-cli'] }}${{ variables['gc-cli'] }}${{ variables['model-framework-cli']
       }}${{ variables['model-framework-version-cli'] }}${{ variables['model-path-cli']
       }}${{ variables['output-metadata-file-cli'] }}${{ variables['path-cli'] }}${{

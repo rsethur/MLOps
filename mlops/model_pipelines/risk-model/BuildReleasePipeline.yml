@@ -13,7 +13,7 @@ stages:
   - stage: Training
     displayName: Train the model
     jobs:
-      - template: ../../recipes/ci/Train.yml
+      - template: ../../recipes/ci/TestTrain.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
