@@ -36,8 +36,8 @@ jobs:
       ${{ if ne(param.value, '') }}:
         ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
 
-    ${{ if ne(parameters['run-metadata-file'], '') }}:
-      asset-path-cli: ' --asset-path outputs/${{ parameters.name }}'
+    #${{ if ne(parameters['run-metadata-file'], '') }}:
+    #  asset-path-cli: ' --asset-path outputs/${{ parameters.name }}'
     ${{ if eq(parameters['run-metadata-file'], '') }}:
       asset-path-cli: ' '
 
@@ -50,7 +50,7 @@ jobs:
       variables['property-cli'] }}${{ variables['resource-group-cli'] }}${{ variables['run-id-cli']
       }}${{ variables['run-metadata-file-cli'] }}${{ variables['sample-input-dataset-id-cli']
       }}${{ variables['sample-output-dataset-id-cli'] }}${{ variables['tag-cli'] }}${{
-      variables['workspace-name-cli'] }}
+      variables['workspace-name-cli'] }} --asset-path outputs/risk-model
 
   steps:
     #Print the constructed CLI string if the print-cli-string flag is true
