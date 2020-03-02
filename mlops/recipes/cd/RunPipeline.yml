@@ -1,4 +1,3 @@
-#For details of parameters refer to cli spec: https://docs.microsoft.com/en-us/cli/azure/ext/azure-cli-ml/ml/run?view=azure-cli-latest#ext-azure-cli-ml-az-ml-run-submit-pipeline
 parameters:
   rm-service-connection: #Service connection for resource manager
   print-cli-string: true #Print the constructed CLI
@@ -13,7 +12,6 @@ parameters:
   resource-group:
   subscription-id:
   workspace-name:
-
 jobs:
 - job: SubmitPipeline
 
