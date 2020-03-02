@@ -13,8 +13,6 @@ parameters:
   subscription-id:
   workspace-name:
 
-  steps:
-
   variables:
     #cli command to be used. e.g. az ml ..
     cli-cmd: az ml run submit-pipeline
@@ -31,6 +29,7 @@ parameters:
       }}${{ variables['pipeline-yaml-cli'] }}${{ variables['resource-group-cli'] }}${{
       variables['subscription-id-cli'] }}${{ variables['workspace-name-cli'] }}
 
+  steps:
     #Print the constructed CLI string if the print-cli-string flag is true
   - ${{ if eq(parameters['print-cli-string'], true) }}:
     - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
