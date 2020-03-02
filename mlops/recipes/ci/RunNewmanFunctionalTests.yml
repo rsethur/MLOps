@@ -15,7 +15,7 @@ jobs:
         displayName: 'Install the CLI'
         inputs:
           scriptType: bash
-          azureSubscription: ${{ parameters.rm-service-connection }}
+          azureSubscription: ${{ parameters['rm-service-connection'] }}
           scriptLocation: inlineScript
           inlineScript: 'az extension add -n azure-cli-ml'
 
