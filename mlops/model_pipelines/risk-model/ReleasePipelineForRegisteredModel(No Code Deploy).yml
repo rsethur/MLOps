@@ -38,3 +38,4 @@ stages:
           resource-group: ${{ variables['RESOURCE_GROUP'] }}
           model: ${{ variables['RISK_MODEL_NAME'] }}:1
           compute-type: aks
+          compute-target: ${{ variables.AKS_CLUSTER }}
