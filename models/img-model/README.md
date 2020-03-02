@@ -1,5 +1,6 @@
 ## Model Registration, Deployment & Batch Inference for Pretrained Image Classification Model
 
+##### Below are instructions for running via CLI from local dev environment. This is optional as there are [pipelines](mlops/model_pipelines/img-model) for all of the 
 1. Setup your [local dev environment](/docs/SetupLocalDevEnvironment.md). However use this for `Step 5` instead:
 <BR> `conda env create -f "models/img-model/batch_score/env/conda_dependencies.yml"`
 

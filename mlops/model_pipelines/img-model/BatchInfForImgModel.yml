@@ -18,7 +18,7 @@ stages:
           rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
           workspace-name:  ${{ variables['WORKSPACE'] }}
           resource-group:  ${{ variables['RESOURCE_GROUP'] }}
-          aml_pipeline_yml_path: models/img-model/batch_score/pipeline/AMLBatchPipeline.yml
-          aml_pipeline_name: img-img-pipeline
-          run_pipeline: true
-          run_experiment_name: img-batch-exp
+          aml-pipeline-yml-path: models/img-model/batch_score/pipeline/AMLBatchPipeline.yml
+          aml-pipeline-name: img-pipeline
+          run-pipeline: true
+          experiment-name: img-batch-exp
