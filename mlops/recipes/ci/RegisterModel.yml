@@ -1,3 +1,4 @@
+# For parameter details refer to cli spec: https://docs.microsoft.com/en-us/cli/azure/ext/azure-cli-ml/ml/model?view=azure-cli-latest#ext-azure-cli-ml-az-ml-model-register
 parameters:
   rm-service-connection: #Service connection for resource manager
   print-cli-string: true #Print the constructed CLI

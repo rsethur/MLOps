@@ -29,11 +29,10 @@ jobs:
     - script: pip install azureml-sdk azureml-contrib-pipeline-steps python-dotenv
       displayName: 'Install libraries'
 
-    - bash:
+    - bash: python -m models.utils.batch_inference.publish_batch_inf_pipeline --AML_PIPELINE_YML_PATH ${{ parameters['aml-pipeline-yml-path'] }} --AML_PIPELINE_NAME ${{ parameters['aml-pipeline-name'] }}
       name: publishScript
       workingDirectory: $(Build.SourcesDirectory)
       displayName: 'Publish Batch Inference Pipeline'
-      inlineScript: python -m models.utils.batch_inference.publish_batch_inf_pipeline --AML_PIPELINE_YML_PATH ${{ parameters['aml-pipeline-yml-path'] }} --AML_PIPELINE_NAME ${{ parameters['aml-pipeline-name'] }}
 
   - job: RunPipelineJob
     dependsOn: BatchInferencePipelinePublish
