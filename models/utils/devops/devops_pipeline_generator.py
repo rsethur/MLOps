@@ -1,3 +1,20 @@
+# Code for auto generating a recipe (azure devops YAML template) based on the CLI Spec
+# Instructions for usage:
+# 1. Copy the CLI spec from the docs (e.g. https://docs.microsoft.com/en-us/cli/azure/ext/azure-cli-ml/ml/model?view=azure-cli-latest#ext-azure-cli-ml-az-ml-model-register)
+#    Format it like this in a file e.g. cli_spec.txt
+#    az ml model register
+#    --name
+#    --asset-path
+#    --cc
+#   Note:
+#       (a) remove the square brackets and tab from the cli spec
+#       (b) the first paramter "--name" is in second line (in the cli spec it is in the first line itself)
+#       (c) remove the last parameter -v (this program generates parameters with double dash i.e. --).
+#
+# 2. Run this program by passing two parameters (clispec and output yaml template):
+# example: --input_file private/yaml/IaC/ProvisionAMLCompute/cli_spec.txt --output_file private/yaml/IaC/ProvisionAMLCompute/out.yml
+#
+# 3. Edit the yaml file (change job name etc).
 from ruamel.yaml import YAML
 import argparse
 import sys
