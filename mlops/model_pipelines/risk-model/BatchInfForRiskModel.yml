@@ -18,8 +18,7 @@ stages:
           rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
           workspace-name:  ${{ variables['WORKSPACE'] }}
           resource-group:  ${{ variables['RESOURCE_GROUP'] }}
-          model-name: ${{ variables['RISK_MODEL_NAME'] }}
           aml-pipeline-yml-path: models/risk-model/batch_score/pipeline/AMLBatchPipeline.yml
           aml-pipeline-name: risk-batchpipeline
           run-pipeline: true
-          run-experiment-name: risk-batch-exp
+          experiment-name: risk-batch-exp

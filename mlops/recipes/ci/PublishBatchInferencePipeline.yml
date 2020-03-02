@@ -9,7 +9,7 @@ parameters:
   aml-pipeline-yml-path: ''
   aml-pipeline-name: ''
   run-pipeline: ''
-  run-experiment-name: '' #This needs to be passed only when run-pipeline is true
+  experiment-name: '' #This needs to be passed only when run-pipeline is true
 
 jobs:
   - job: BatchInferencePipelinePublish
@@ -45,5 +45,5 @@ jobs:
         rm-service-connection: ${{ parameters['rm-service-connection'] }}
         workspace-name: ${{ parameters['workspace-name'] }}
         resource-group: ${{ parameters['resource-group'] }}
-        pipeline_id: '$(pipe_id)'
-        experiment-name: ${{ parameters['run-experiment-name'] }}
+        pipeline-id: '$(pipe_id)'
+        experiment-name: ${{ parameters['experiment-name'] }}

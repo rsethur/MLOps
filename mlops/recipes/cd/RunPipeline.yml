@@ -12,7 +12,7 @@ parameters:
   pipeline-yaml:
   resource-group:
   subscription-id:
-  workspace-name: 
+  workspace-name:
 
 jobs:
 - job: SubmitPipeline
