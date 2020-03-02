@@ -2,7 +2,7 @@ parameters:
   rm-service-connection: #Service connection for resource manager
   print-cli-string: true #Print the constructed CLI
   name:
-  #asset-path: #Note: this is set as outputs/modelname in the 'variables' section below
+  asset-path:
   cc:
   description:
   experiment-name:
@@ -28,22 +28,17 @@ jobs:
 - job: RegisterJob
 
   variables:
-      #cli command to be used. e.g. az ml ..
+    #cli command to be used. e.g. az ml ..
     cli-cmd: az ml model register
 
-      #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
+    #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
     ${{ each param in parameters }}:
       ${{ if ne(param.value, '') }}:
         ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
 
-    #${{ if ne(parameters['run-metadata-file'], '') }}:
-    #  asset-path-cli: ' --asset-path outputs/${{ parameters.name }}'
-    ${{ if eq(parameters['run-metadata-file'], '') }}:
-      asset-path-cli: ' '
-
-      #construct the final cli input by appending cli-cmd and all cli params
-    cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }} --asset-path outputs/risk-model
-      ${{ variables['cc-cli'] }}${{ variables['description-cli'] }}${{ variables['experiment-name-cli']
+    #construct the final cli input by appending cli-cmd and all cli params
+    cli-input: ${{ variables['cli-cmd'] }}${{ variables['name-cli'] }}${{ variables['asset-path-cli']
+      }}${{ variables['cc-cli'] }}${{ variables['description-cli'] }}${{ variables['experiment-name-cli']
       }}${{ variables['gb-cli'] }}${{ variables['gc-cli'] }}${{ variables['model-framework-cli']
       }}${{ variables['model-framework-version-cli'] }}${{ variables['model-path-cli']
       }}${{ variables['output-metadata-file-cli'] }}${{ variables['path-cli'] }}${{
@@ -53,7 +48,7 @@ jobs:
       variables['workspace-name-cli'] }}
 
   steps:
-    #Print the constructed CLI string if the print-cli-string flag is true
+  #Print the constructed CLI string if the print-cli-string flag is true
   - ${{ if eq(parameters['print-cli-string'], true) }}:
     - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
       displayName: Print CLI string
@@ -67,12 +62,13 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: az extension add -n azure-cli-ml
 
+  #if run-metadata-file param is present, then download the file from the pipeline (this is stored from a previous step in the pipeline e.g. Train)
   - ${{ if ne(parameters['run-metadata-file'], '') }}:
     - download: current
       displayName: Download the run details
       artifact: ${{ parameters['run-metadata-artifact'] }}
 
-    #run the generated cli
+  #run the generated cli
   - task: AzureCLI@2
     displayName: Register the model
     inputs:
@@ -81,6 +77,7 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: ${{ variables['cli-input'] }}
 
+  #Publish the model metadata to the devops pipeline so subsequent steps (like deploy) can access this)
   - publish: $(System.DefaultWorkingDirectory)/${{ parameters['output-metadata-file'] }}
     displayName: Publish model metadata artifact
     artifact: ${{ parameters['model-metadata-artifact'] }}

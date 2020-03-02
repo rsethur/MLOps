@@ -115,6 +115,7 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: az extension add -n azure-cli-ml
 
+     #if model-metadata-file param is present, then download the file from the pipeline (this is stored from a previous step in the pipeline e.g. RegisterModel)
   - ${{ if ne(parameters['model-metadata-file'], '') }}:
     - download: current
       displayName: Download artifact model metadata

@@ -13,7 +13,7 @@ stages:
   - stage: Training
     displayName: Train the model
     jobs:
-      - template: ../../recipes/ci/TestTrain.yml
+      - template: ../../recipes/ci/Train.yml
         parameters:
           rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
           workspace: '${{ variables.WORKSPACE }}'
@@ -38,6 +38,7 @@ stages:
           name: ${{ variables['RISK_MODEL_NAME'] }}
           run-metadata-artifact: 'run-metadata'
           run-metadata-file: $(Pipeline.Workspace)/run-metadata/run.json
+          asset-path: outputs/${{ variables['RISK_MODEL_NAME'] }}
           experiment-name: ${{ variables['RISK_MODEL_NAME'] }}-exp
 
   - stage: DeployToTest
