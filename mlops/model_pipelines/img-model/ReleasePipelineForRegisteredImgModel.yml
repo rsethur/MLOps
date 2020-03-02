@@ -15,11 +15,11 @@ stages:
     jobs:
       - template: ../../recipes/cd/DeployToACIFromRegisteredModel.yml
         parameters:
-          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          name: '${{ variables.IMG_MODEL_ACI_SERVICE_NAME }}'
-          workspace-name: '${{ variables.WORKSPACE }}'
-          resource-group: '${{ variables.RESOURCE_GROUP }}'
-          model: '${{ variables.IMG_MODEL_NAME }}:1'
+          rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
+          name: ${{ variables['IMG_MODEL_ACI_SERVICE_NAME'] }}
+          workspace-name: ${{ variables['WORKSPACE'] }}
+          resource-group: ${{ variables['RESOURCE_GROUP'] }}
+          model: ${{ variables['IMG_MODEL_NAME'] }}:1
           compute-type: aci
           ic: $(Build.SourcesDirectory)/models/img-model/score/inference_config.yml
           dc: $(Build.SourcesDirectory)/models/img-model/score/aci_deployment_config.yml
@@ -34,11 +34,11 @@ stages:
 
       - template: ../../recipes/cd/DeployToAKSFromRegisteredModel.yml
         parameters:
-          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          name: '${{ variables.IMG_MODEL_AKS_SERVICE_NAME }}'
-          workspace-name: '${{ variables.WORKSPACE }}'
-          resource-group: '${{ variables.RESOURCE_GROUP }}'
-          model: '${{ variables.IMG_MODEL_NAME }}:1'
+          rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
+          name: ${{ variables['IMG_MODEL_AKS_SERVICE_NAME'] }}
+          workspace-name: ${{ variables['WORKSPACE'] }}
+          resource-group: ${{ variables['RESOURCE_GROUP'] }}
+          model: ${{ variables['IMG_MODEL_NAME'] }}:1
           compute-type: aks
           compute-target: ${{ variables.AKS_CLUSTER }}
           ic: $(Build.SourcesDirectory)/models/img-model/score/inference_config.yml

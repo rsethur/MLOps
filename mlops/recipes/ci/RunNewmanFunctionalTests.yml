@@ -1,9 +1,9 @@
 parameters:
-  service_name: ''
-  postman_collection_file: ''
-  rm_service_connection: ''
-  workspace: ''
-  resource_group: ''
+  service-name: ''
+  postman-collection-file: ''
+  rm-service-connection: ''
+  workspace-name: ''
+  resource-group: ''
 
 jobs:
   - job: RunNewmanTests
@@ -15,7 +15,7 @@ jobs:
         displayName: 'Install the CLI'
         inputs:
           scriptType: bash
-          azureSubscription: ${{ parameters.rm_service_connection }}
+          azureSubscription: ${{ parameters.rm-service-connection }}
           scriptLocation: inlineScript
           inlineScript: 'az extension add -n azure-cli-ml'
 
@@ -23,12 +23,12 @@ jobs:
         displayName: 'Look up API Key and Service Endpoint'
         inputs:
           scriptType: bash
-          azureSubscription: ${{ parameters.rm_service_connection }}
+          azureSubscription: ${{ parameters['rm-service-connection'] }}
           scriptLocation: inlineScript
           inlineScript: |
-            az ml service get-keys --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "primaryKey" | xargs echo "##vso[task.setvariable variable=TMP_API_KEY]"
-            az ml service show --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "scoringUri" | xargs echo "##vso[task.setvariable variable=TMP_SCORING_URI]"
-            az ml service show --resource-group ${{ parameters.resource_group }} --workspace-name ${{ parameters.workspace }} -n  ${{ parameters.service_name }} --query "computeType" | xargs echo "##vso[task.setvariable variable=TMP_SERVICE_TYPE]"
+            az ml service get-keys --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  $${{ parameters['service-name'] }} --query "primaryKey" | xargs echo "##vso[task.setvariable variable=TMP_API_KEY]"
+            az ml service show --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  $${{ parameters['service-name'] }} --query "scoringUri" | xargs echo "##vso[task.setvariable variable=TMP_SCORING_URI]"
+            az ml service show --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  $${{ parameters['service-name'] }} --query "computeType" | xargs echo "##vso[task.setvariable variable=TMP_SERVICE_TYPE]"
 
       - task: ShellScript@2
         displayName: Install newman
@@ -38,7 +38,7 @@ jobs:
 
       - bash: |
           mkdir $(newman_test_dir)
-          newman run ${{ parameters.postman_collection_file }}  --global-var host="$(TMP_SCORING_URI)" --global-var api_key="$(TMP_API_KEY)" -r cli,junit --reporter-junit-export  $(newman_test_dir)
+          newman run ${{ parameters['postman-collection-file'] }}  --global-var host="$(TMP_SCORING_URI)" --global-var api_key="$(TMP_API_KEY)" -r cli,junit --reporter-junit-export  $(newman_test_dir)
         displayName: "Run tests"
         workingDirectory: $(Build.SourcesDirectory)
 

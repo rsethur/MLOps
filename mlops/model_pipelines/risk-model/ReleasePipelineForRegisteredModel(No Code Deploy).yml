@@ -15,11 +15,11 @@ stages:
     jobs:
       - template: ../../recipes/cd/Deploy.yml
         parameters:
-          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          name: '${{ variables.RISK_MODEL_ACI_SERVICE_NAME }}'
-          workspace-name: '${{ variables.WORKSPACE }}'
-          resource-group: '${{ variables.RESOURCE_GROUP }}'
-          model: '${{ variables.RISK_MODEL_NAME }}:1'
+          rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
+          name: ${{ variables['RISK_MODEL_ACI_SERVICE_NAME'] }}
+          workspace-name: ${{ variables['WORKSPACE'] }}
+          resource-group: ${{ variables['RESOURCE_GROUP'] }}
+          model: ${{ variables['RISK_MODEL_NAME'] }}:1
           compute-type: aci
 
   - stage: DeployToProd
@@ -32,9 +32,9 @@ stages:
 
       - template: ../../recipes/cd/Deploy.yml
         parameters:
-          rm-service-connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          name: '${{ variables.RISK_MODEL_AKS_SERVICE_NAME }}'
-          workspace-name: '${{ variables.WORKSPACE }}'
-          resource-group: '${{ variables.RESOURCE_GROUP }}'
-          model: '${{ variables.RISK_MODEL_NAME }}:1'
+          rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
+          name: ${{ variables['RISK_MODEL_AKS_SERVICE_NAME'] }}
+          workspace-name: ${{ variables['WORKSPACE'] }}
+          resource-group: ${{ variables['RESOURCE_GROUP'] }}
+          model: ${{ variables['RISK_MODEL_NAME'] }}:1
           compute-type: aks

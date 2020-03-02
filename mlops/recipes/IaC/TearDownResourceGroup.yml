@@ -11,8 +11,8 @@ variables:
 steps:
 - task: AzureResourceGroupDeployment@2
   inputs:
-    azureSubscription: '${{ variables.RM_SERVICE_CONNECTION }}'
+    azureSubscription: ${{ variables['RM_SERVICE_CONNECTION'] }}
     action: 'DeleteRG'
-    resourceGroupName: '${{ variables.RESOURCE_GROUP }}'
-    location: '${{ variables.LOCATION }}'
+    resourceGroupName: ${{ variables['RESOURCE_GROUP'] }}
+    location: ${{ variables['LOCATION'] }}
   displayName: 'Tear down the environment'

@@ -17,10 +17,10 @@ stages:
           - task: AzureResourceGroupDeployment@2
             displayName: 'Deploy MLOps resources to Azure'
             inputs:
-              azureSubscription: '${{ variables.RM_SERVICE_CONNECTION }}'
+              azureSubscription:  ${{ variables['RM_SERVICE_CONNECTION'] }}
               action: 'Create Or Update Resource Group'
-              resourceGroupName: '${{ variables.RESOURCE_GROUP }}'
-              location: '${{ variables.LOCATION }}'
+              resourceGroupName: ${{ variables['RESOURCE_GROUP'] }}
+              location: ${{ variables['LOCATION'] }}
               templateLocation: 'Linked artifact'
               csmFile: '$(Build.SourcesDirectory)/mlops/recipes/IaC/arm/IaCAzureResourceManager.json'
               overrideParameters: '-workspaceName ${{ variables.WORKSPACE }} -storageAccountName ${{ variables.STORAGE_ACCOUNT }} -keyVaultName ${{ variables.KEY_VAULT }} -applicationInsightsName ${{ variables.APP_INSIGHTS }} -location ${{ variables.LOCATION }} -containerRegistryName ${{ variables.ACR }}'
@@ -32,11 +32,11 @@ stages:
       # Provision Azure ML compute cluster
       - template: ../IaC/ProvisionAMLComputeCluster.yml
         parameters:
-          rm_service_connection: '${{ variables.RM_SERVICE_CONNECTION }}'
-          workspace: '${{ variables.WORKSPACE }}'
-          resource_group: '${{ variables.RESOURCE_GROUP }}'
-          aml_compute_sku: '${{ variables.AML_COMPUTE_SKU }}'
-          aml_compute_cluster: '${{ variables.AML_COMPUTE_CLUSTER }}'
+          rm-service-connection: ${{ variables['RM_SERVICE_CONNECTION'] }}
+          workspace-name: ${{ variables['WORKSPACE'] }}
+          resource-group: ${{ variables['RESOURCE_GROUP'] }}
+          vm-size: ${{ variables['AML_COMPUTE_SKU'] }}
+          name: ${{ variables['AML_COMPUTE_CLUSTER'] }}
 
       # Provision AKS cluster
       - template: ../IaC/ProvisionAKSCluster.yml

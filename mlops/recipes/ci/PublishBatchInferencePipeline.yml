@@ -1,15 +1,15 @@
-#NOTE: This is a stopgap fix until CLI support is released for batch inference. For python program to look up workspace
+#NOTE: This is a fix until CLI support is released for batch inference. For python program to look up workspace
 #we need to define the following variables in Azure Devops under MLOPSVG Variable group:
 #SUBSCRIPTION_ID, TENANT_ID, SP_APP_ID, SP_APP_SECRET
 
 parameters:
-  rm_service_connection: ''
-  workspace: ''
-  resource_group: ''
-  aml_pipeline_yml_path: ''
-  aml_pipeline_name: ''
-  run_pipeline: ''
-  run_experiment_name: '' #This needs to be passed only when run_pipeline is true
+  rm-service-connection: ''
+  workspace-name: ''
+  resource-group: ''
+  aml-pipeline-yml-path: ''
+  aml-pipeline-name: ''
+  run-pipeline: ''
+  run-experiment-name: '' #This needs to be passed only when run-pipeline is true
 
 jobs:
   - job: BatchInferencePipelinePublish
@@ -18,7 +18,7 @@ jobs:
       displayName: 'Install the CLI'
       inputs:
         scriptType: bash
-        azureSubscription: ${{ parameters.rm_service_connection }}
+        azureSubscription: ${{ parameters['rm-service-connection'] }}
         scriptLocation: inlineScript
         inlineScript: 'az extension add -n azure-cli-ml'
 
@@ -29,22 +29,22 @@ jobs:
     - script: pip install azureml-sdk azureml-contrib-pipeline-steps python-dotenv
       displayName: 'Install libraries'
 
-    - bash: 'python -m models.utils.batch_inference.publish_batch_inf_pipeline --AML_PIPELINE_YML_PATH ${{ parameters.aml_pipeline_yml_path }} --AML_PIPELINE_NAME ${{ parameters.aml_pipeline_name }}'
+    - bash:
       name: publishScript
       workingDirectory: $(Build.SourcesDirectory)
       displayName: 'Publish Batch Inference Pipeline'
+      inlineScript: python -m models.utils.batch_inference.publish_batch_inf_pipeline --AML_PIPELINE_YML_PATH ${{ parameters['aml-pipeline-yml-path'] }} --AML_PIPELINE_NAME ${{ parameters['aml-pipeline-name'] }}
 
   - job: RunPipelineJob
     dependsOn: BatchInferencePipelinePublish
-    condition: eq('${{ parameters.run_pipeline }}', true)
+    condition: eq(${{ parameters['run-pipeline'] }}, true)
     variables:
       pipe_id: $[ dependencies.BatchInferencePipelinePublish.outputs['publishScript.PIPELINE_ID'] ]
     steps:
     - template: ../../recipes/cd/RunPipeline.yml
       parameters:
-        rm_service_connection: '${{ parameters.rm_service_connection }}'
-        workspace: '${{ parameters.workspace }}'
-        resource_group: '${{ parameters.resource_group }}'
+        rm-service-connection: ${{ parameters['rm-service-connection'] }}
+        workspace-name: ${{ parameters['workspace-name'] }}
+        resource-group: ${{ parameters['resource-group'] }}
         pipeline_id: '$(pipe_id)'
-        run_experiment_name: '${{ parameters.run_experiment_name }}'
-
+        run-experiment-name: ${{ parameters['run-experiment-name'] }}

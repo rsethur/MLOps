@@ -1,26 +1,69 @@
-parameters:
-  rm_service_connection: ''
-  resource_group: ''
-  workspace: ''
-  aml_compute_sku: ''
-  aml_compute_cluster: ''
-  max_nodes: '3'
+# For parameter details refer to the cli spec: https://docs.microsoft.com/en-us/cli/azure/ext/azure-cli-ml/ml/computetarget/create?view=azure-cli-latest#ext-azure-cli-ml-az-ml-computetarget-create-amlcompute
+  rm-service-connection: #Service connection for resource manager
+  print-cli-string: true #Print the constructed CLI
+  max-nodes:
+  name:
+  vm-size:
+  admin-user-password:
+  admin-user-ssh-key:
+  admin-username:
+  description:
+  idle-seconds-before-scaledown:
+  min-nodes:
+  no-wait:
+  path:
+  remote-login-port-public-access:
+  resource-group:
+  subnet-name:
+  tag:
+  vm-priority:
+  vnet-name:
+  vnet-resourcegroup-name:
+  workspace-name:
 
 jobs:
-      - job: CreateAMLComputeCluster
-        steps:
-          - task: AzureCLI@2
-            displayName: 'Install the CLI'
-            inputs:
-              scriptType: bash
-              azureSubscription:  ${{ parameters.rm_service_connection }}
-              scriptLocation: inlineScript
-              inlineScript: 'az extension add -n azure-cli-ml'
+- job: ProvisionAMLCompute
 
-          - task: AzureCLI@2
-            displayName: 'Provision compute cluster for training'
-            inputs:
-              scriptType: bash
-              azureSubscription:  ${{ parameters.rm_service_connection }}
-              scriptLocation: inlineScript
-              inlineScript: 'az ml computetarget create amlcompute --max-nodes ${{ parameters.max_nodes }} --name ${{ parameters.aml_compute_cluster }} --vm-size ${{ parameters.aml_compute_sku }} --resource-group ${{ parameters.resource_group }} --vm-priority dedicated --workspace-name ${{ parameters.workspace }} --remote-login-port-public-access disabled'
+  variables:
+      #cli command to be used. e.g. az ml ..
+    cli-cmd: az ml computetarget create amlcompute
+
+      #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
+    ${{ each param in parameters }}:
+      ${{ if ne(param.value, '') }}:
+        ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
+
+      #construct the final cli input by appending cli-cmd and all cli params
+    cli-input: ${{ variables['cli-cmd'] }}${{ variables['max-nodes-cli'] }}${{ variables['name-cli']
+      }}${{ variables['vm-size-cli'] }}${{ variables['admin-user-password-cli'] }}${{
+      variables['admin-user-ssh-key-cli'] }}${{ variables['admin-username-cli'] }}${{
+      variables['description-cli'] }}${{ variables['idle-seconds-before-scaledown-cli']
+      }}${{ variables['min-nodes-cli'] }}${{ variables['no-wait-cli'] }}${{ variables['path-cli']
+      }}${{ variables['remote-login-port-public-access-cli'] }}${{ variables['resource-group-cli']
+      }}${{ variables['subnet-name-cli'] }}${{ variables['tag-cli'] }}${{ variables['vm-priority-cli']
+      }}${{ variables['vnet-name-cli'] }}${{ variables['vnet-resourcegroup-name-cli']
+      }}${{ variables['workspace-name-cli'] }}
+
+  steps:
+    #Print the constructed CLI string if the print-cli-string flag is true
+  - ${{ if eq(parameters['print-cli-string'], true) }}:
+    - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
+      displayName: Print CLI string
+
+    #install the Azure ML CLI
+  - task: AzureCLI@2
+    displayName: Install the CLI
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: az extension add -n azure-cli-ml
+
+    #run the generated cli
+  - task: AzureCLI@2
+    displayName: Provision AML compute cluster
+    inputs:
+      scriptType: bash
+      azureSubscription: ${{ parameters['rm-service-connection'] }}
+      scriptLocation: inlineScript
+      inlineScript: ${{ variables['cli-input'] }}
