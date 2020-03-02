@@ -1,54 +1,23 @@
 parameters:
-  rm-service-connection: #Service connection for resource manager
-  print-cli-string: true #Print the constructed CLI
-  datapaths:
-  experiment-name:
-  output-metadata-file:
-  output_file:
-  parameters:
-  path:
-  pipeline-id:
-  pipeline-yaml:
-  resource-group:
-  subscription-id:
-  workspace-name:
+  rm-service-connection: ''
+  workspace-name: ''
+  resource-group: ''
+  pipeline-id: ''
+  experiment-name: ''
 
-  variables:
-    #cli command to be used. e.g. az ml ..
-    cli-cmd: az ml run submit-pipeline
+steps:
+- task: AzureCLI@2
+  displayName: 'Install the CLI'
+  inputs:
+    scriptType: bash
+    azureSubscription: ${{ parameters['rm-service-connection'] }}
+    scriptLocation: inlineScript
+    inlineScript: 'az extension add -n azure-cli-ml'
 
-    #prepare parameters to be compatible with cli input: (a) format it to --param value (b) remove empty params
-    ${{ each param in parameters }}:
-      ${{ if ne(param.value, '') }}:
-        ${{ param.key }}-cli: ' --${{param.key}} ${{param.value}}'
-
-      #construct the final cli input by appending cli-cmd and all cli params
-    cli-input: ${{ variables['cli-cmd'] }}${{ variables['datapaths-cli'] }}${{ variables['experiment-name-cli']
-      }}${{ variables['output-metadata-file-cli'] }}${{ variables['output_file-cli']
-      }}${{ variables['parameters-cli'] }}${{ variables['path-cli'] }}${{ variables['pipeline-id-cli']
-      }}${{ variables['pipeline-yaml-cli'] }}${{ variables['resource-group-cli'] }}${{
-      variables['subscription-id-cli'] }}${{ variables['workspace-name-cli'] }}
-
-  steps:
-    #Print the constructed CLI string if the print-cli-string flag is true
-  - ${{ if eq(parameters['print-cli-string'], true) }}:
-    - script: "echo Generated CLI: ${{ variables['cli-input'] }}"
-      displayName: Print CLI string
-
-    #install the Azure ML CLI
-  - task: AzureCLI@2
-    displayName: Install the CLI
-    inputs:
-      scriptType: bash
-      azureSubscription: ${{ parameters['rm-service-connection'] }}
-      scriptLocation: inlineScript
-      inlineScript: az extension add -n azure-cli-ml
-
-    #run the generated cli
-  - task: AzureCLI@2
-    displayName: Submit the pipeline
-    inputs:
-      scriptType: bash
-      azureSubscription: ${{ parameters['rm-service-connection'] }}
-      scriptLocation: inlineScript
-      inlineScript: ${{ variables['cli-input'] }}
+- task: AzureCLI@2
+  displayName: 'Run the pipeline'
+  inputs:
+    scriptType: bash
+    azureSubscription: ${{ parameters['rm-service-connection'] }}
+    scriptLocation: inlineScript
+    inlineScript: az ml run submit-pipeline --pipeline-id ${{ parameters['pipeline-id'] }}  --workspace-name ${{ parameters['workspace-name'] }} --resource-group ${{ parameters['resource-group'] }} --experiment-name ${{ parameters['experiment-name'] }}
