@@ -26,9 +26,9 @@ jobs:
           azureSubscription: ${{ parameters['rm-service-connection'] }}
           scriptLocation: inlineScript
           inlineScript: |
-            az ml service get-keys --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  $${{ parameters['service-name'] }} --query "primaryKey" | xargs echo "##vso[task.setvariable variable=TMP_API_KEY]"
-            az ml service show --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  $${{ parameters['service-name'] }} --query "scoringUri" | xargs echo "##vso[task.setvariable variable=TMP_SCORING_URI]"
-            az ml service show --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  $${{ parameters['service-name'] }} --query "computeType" | xargs echo "##vso[task.setvariable variable=TMP_SERVICE_TYPE]"
+            az ml service get-keys --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  ${{ parameters['service-name'] }} --query "primaryKey" | xargs echo "##vso[task.setvariable variable=TMP_API_KEY]"
+            az ml service show --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  ${{ parameters['service-name'] }} --query "scoringUri" | xargs echo "##vso[task.setvariable variable=TMP_SCORING_URI]"
+            az ml service show --resource-group ${{ parameters['resource-group'] }} --workspace-name ${{ parameters['workspace-name'] }} -n  ${{ parameters['service-name'] }} --query "computeType" | xargs echo "##vso[task.setvariable variable=TMP_SERVICE_TYPE]"
 
       - task: ShellScript@2
         displayName: Install newman
