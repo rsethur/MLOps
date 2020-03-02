@@ -1,6 +1,10 @@
 ## Model Registration, Deployment & Batch Inference for Pretrained Image Classification Model
 
-##### Below are instructions for running via CLI from local dev environment. This is optional as there are [pipelines](mlops/model_pipelines/img-model) for all of the 
+##### Steps before you run batch pipeline
+1. You need to setup a FileDataset in Azure ML workspace named `img_dataset`. You can copy some files of Fashion mnist in it.
+2. Create a gpu cluster named `gpuc`
+
+##### Below are instructions for running via CLI from local dev environment. This is optional as there are [pipelines](mlops/model_pipelines/img-model) steps for all of the below 
 1. Setup your [local dev environment](/docs/SetupLocalDevEnvironment.md). However use this for `Step 5` instead:
 <BR> `conda env create -f "models/img-model/batch_score/env/conda_dependencies.yml"`
 
